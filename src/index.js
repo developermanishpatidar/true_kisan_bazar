@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './style.css';
+import './assets/css/normalize.css';
+import './assets/css/vendor.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
