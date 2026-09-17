@@ -596,12 +596,21 @@ const Header = () => {
             </div>
 
             <div className="col-lg-4">
-                <ul className="navbar-nav list-unstyled d-flex flex-row gap-3 gap-lg-5 justify-content-center flex-wrap align-items-center mb-0 fw-bold text-uppercase text-dark">
+                <ul className="navbar-nav list-unstyled d-flex flex-row gap-3 gap-lg-4 justify-content-center flex-wrap align-items-center mb-0 fw-bold text-dark">
                 <li className="nav-item active">
                     <Link to="#" className="nav-link">Home</Link>
                 </li>
+                <li className="nav-item">
+                    <Link to="#" className="nav-link">About Us</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="#" className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">Cart</Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="#" className="nav-link">Contact</Link>
+                </li>
                 <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle pe-3" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">Pages</Link>
+                    <Link className="nav-link dropdown-toggle pe-3" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">More</Link>
                     <ul className="dropdown-menu border-0 p-3 rounded-0 shadow" aria-labelledby="pages">
                     <li><Link to="#" className="dropdown-item">About Us </Link></li>
                     <li><Link to="#" className="dropdown-item">Shop </Link></li>
@@ -642,7 +651,8 @@ const Header = () => {
               <div className="col-sm-8 col-lg-2 d-flex gap-5 align-items-center justify-content-center justify-content-sm-end">
                 <div className="tkb-header-actions">
                   <Link to="/enquiry" className="tkb-btn-buy-sell">Buy &amp; Sell</Link>
-                  <div className="tkb-account-wrap">
+                  <Link to="/login" className="tkb-btn-buy-sell">Login</Link>
+                  {/* <div className="tkb-account-wrap">
                     <button type="button" className="tkb-btn-account" id="accountMenuToggle" aria-expanded="false" aria-controls="accountPopup">
                       <span className="tkb-btn-account-icon" aria-hidden="true">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -691,7 +701,7 @@ const Header = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="tkb-account-backdrop" id="accountPopupBackdrop"></div>

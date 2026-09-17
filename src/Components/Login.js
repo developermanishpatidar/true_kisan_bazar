@@ -49,10 +49,16 @@ const Login = () => {
                     <select id="countrySelect" className="tkb-login-select" name="country">
                     <option value="IN" selected>🇮🇳 India</option>
                     <option value="US">🇺🇸 United States</option>
-                    <option value="AE">🇦🇪 United Arab Emirates</option>
+                    <option value="UAE">u🇦🇪 United Arab Emirates</option>
                     </select>
                 </div>
-
+                <div className="tkb-login-field">
+                    <label for="businessSelect">Business Type</label>
+                    <select id="businessSelect" className="tkb-login-select" name="business">
+                    <option value="seller" selected>Seller</option>
+                    <option value="buyer">Buyer</option>
+                    </select>
+                </div>
                 <div className="tkb-login-phone-row">
                     <span aria-hidden="true">🇮🇳</span>
                     <span className="tkb-login-dial">+91</span>
