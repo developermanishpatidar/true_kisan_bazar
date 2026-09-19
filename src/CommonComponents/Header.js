@@ -7,7 +7,6 @@ const Header = () => {
   useEffect(()=> {
       var accountPopupCleanup;
       (function () {
-        "use strict";
 
         function initAccountPopup() {
           var toggle = document.getElementById("accountMenuToggle");

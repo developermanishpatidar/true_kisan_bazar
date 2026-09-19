@@ -5,7 +5,6 @@ import Footer from '../CommonComponents/Footer';
 const ProductList = () => {
   useEffect(() => {
         (function () {
-            "use strict";
 
             function initAccountPopup() {
                 var toggle = document.getElementById("accountMenuToggle");
