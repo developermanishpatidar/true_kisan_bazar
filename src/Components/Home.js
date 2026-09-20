@@ -9,7 +9,7 @@ import Discount from './Discount';
 import FeatureProduct from './FeatureProduct';
 import Form from './Form';
 import PopularProduct from './PopularProduct';
-import JustArrived from './JustArrived';
+// import JustArrived from './JustArrived';
 import RecentBlog from './RecentBlog';
 import DownloadApp from './DownloadApp';
 import Feature from './Feature';
