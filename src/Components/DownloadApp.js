@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import img_app_store from '../assets/images/img-app-store.png';
 // import img_google_play from '../assets/images/img-google-play.png';
 import banner_onlineapp from '../assets/images/banner-onlineapp.png';
