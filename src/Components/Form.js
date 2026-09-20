@@ -13,12 +13,12 @@ const Form = () => {
                 <div className="row justify-content-center">
                 <div className="col-md-5 p-3">
                     <div className="section-header">
-                    <h2 className="section-title display-5 text-light">Get 25% Discount on your first purchase</h2>
+                    <h2 className="section-title display-5 text-light">Post your first enquiry today</h2>
                     </div>
-                    <p>Just Sign Up & Register it now to become member.</p>
+                    <p>Free to post. Verified buyers. Today's rate before you agree a price.</p>
                 </div>
-                <div className="col-md-5 p-3">
-                    <form>
+                <div className="col-md-8 p-3">
+                    {/* <form>
                     <div className="mb-3">
                         <label for="name" className="form-label d-none">Name</label>
                         <input type="text"
@@ -31,8 +31,10 @@ const Form = () => {
                     <div className="d-grid gap-2">
                         <button type="submit" className="btn btn-dark btn-md rounded-0">Submit</button>
                     </div>
-                    </form>
-                    
+                    </form> */}
+                    <div className="d-grid gap-2 justify-content-center">
+                        <button type="submit" className="btn btn-dark btn-md rounded-5">I have a crop to sell</button>
+                    </div>
                 </div>
                 
                 </div>

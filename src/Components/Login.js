@@ -1,8 +1,88 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.svg';
 
 const Login = () => {
+
+   useEffect(() => {
+
+      (function () {
+
+        function initLogin() {
+          var form = document.getElementById("loginPhoneForm");
+          if (!form) {
+            return;
+          }
+
+          var terms = document.getElementById("acceptTerms");
+          var nextBtn = document.getElementById("loginNextBtn");
+          var phoneStep = document.getElementById("loginPhoneStep");
+          var otpStep = document.getElementById("loginOtpStep");
+          var phoneInput = document.getElementById("mobileNumber");
+          var stepPhone = document.getElementById("stepPhone");
+          var stepOtp = document.getElementById("stepOtp");
+
+          function syncNext() {
+            if (nextBtn && terms && phoneInput) {
+              nextBtn.disabled = !(terms.checked && phoneInput.value.replace(/\D/g, "").length >= 10);
+            }
+          }
+
+          if (terms) {
+            terms.addEventListener("change", syncNext);
+          }
+          if (phoneInput) {
+            phoneInput.addEventListener("input", syncNext);
+          }
+          syncNext();
+
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (nextBtn && nextBtn.disabled) {
+              return;
+            }
+            if (phoneStep) {
+              phoneStep.hidden = true;
+            }
+            if (otpStep) {
+              otpStep.hidden = false;
+            }
+            if (stepPhone) {
+              stepPhone.classList.add("is-done");
+              stepPhone.classList.remove("is-current");
+            }
+            if (stepOtp) {
+              stepOtp.classList.add("is-current");
+            }
+          });
+
+          var otpForm = document.getElementById("loginOtpForm");
+          if (otpForm) {
+            var otpInputs = otpForm.querySelectorAll(".tkb-otp-inputs input");
+            otpInputs.forEach(function (input, index) {
+              input.addEventListener("input", function () {
+                input.value = input.value.replace(/\D/g, "").slice(0, 1);
+                if (input.value && otpInputs[index + 1]) {
+                  otpInputs[index + 1].focus();
+                }
+              });
+              input.addEventListener("keydown", function (event) {
+                if (event.key === "Backspace" && !input.value && otpInputs[index - 1]) {
+                  otpInputs[index - 1].focus();
+                }
+              });
+            });
+
+            otpForm.addEventListener("submit", function (event) {
+              event.preventDefault();
+              window.location.href = "profile.html";
+            });
+          }
+        }
+        initLogin();
+      })();
+   }, []) 
+
   return (
     <div>
         <header className="tkb-login-top">
@@ -39,7 +119,7 @@ const Login = () => {
             <div className="tkb-login-mark">
                 <img src={logo} alt="" />
             </div>
-            <h1 className="tkb-login-brand">MaiKisaan</h1>
+            <h1 className="tkb-login-brand">Fasal Setu</h1>
 
             <div id="loginPhoneStep">
                 <h2 className="tkb-login-heading">Enter Phone number for verification</h2>

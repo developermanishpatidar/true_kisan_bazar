@@ -37,8 +37,8 @@ const Home = () => {
                 <h2 className="display-1 ls-1"><span className="fw-bold text-primary">Organic</span> Foods at your <span className="fw-bold">Doorsteps</span></h2>
                 <p className="fs-4">Dignissim massa diam elementum.</p>
                 <div className="d-flex gap-3">
-                <Link to="#" className="btn btn-primary text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Start Shopping</Link>
-                <Link to="#" className="btn btn-dark text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Join Now</Link>
+                <Link to="/login" className="btn btn-primary text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Seller Login</Link>
+                <Link to="/login" className="btn btn-dark text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Buyer Login</Link>
                 </div>
                 <div className="row my-5">
                 <div className="col">
@@ -118,7 +118,7 @@ const Home = () => {
         <FeatureProduct />
         <Form />
         <PopularProduct />
-        <JustArrived />
+        {/* <JustArrived /> */}
         <RecentBlog />
         <DownloadApp />
         <Feature />

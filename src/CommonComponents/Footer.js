@@ -54,25 +54,25 @@ const Footer = () => {
             </div>
             <div className="col-md-2 col-sm-6">
                 <div className="footer-menu">
-                <h5 className="widget-title">Organic</h5>
+                <h5 className="widget-title">Menu</h5>
                 <ul className="menu-list list-unstyled">
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">About us</Link>
+                    <Link to="#" className="nav-link">Crops</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Conditions </Link>
+                    <Link to="#" className="nav-link">Seeds </Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Our Journals</Link>
+                    <Link to="#" className="nav-link">Mandi Rate</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Careers</Link>
+                    <Link to="#" className="nav-link">About Us</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Affiliate Programme</Link>
+                    <Link to="#" className="nav-link">Contact</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Ultras Press</Link>
+                    <Link to="#" className="nav-link">Blog</Link>
                     </li>
                 </ul>
                 </div>
@@ -82,22 +82,22 @@ const Footer = () => {
                 <h5 className="widget-title">Quick Links</h5>
                 <ul className="menu-list list-unstyled">
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Offers</Link>
+                    <Link to="#" className="nav-link">Kisan Yojana</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Discount Coupons</Link>
+                    <Link to="#" className="nav-link">Kisan Stories</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Stores</Link>
+                    <Link to="#" className="nav-link">Kisan Tips</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Track Order</Link>
+                    <Link to="#" className="nav-link">Kisan Guides</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Shop</Link>
+                    <Link to="#" className="nav-link">Agri Guides</Link>
                     </li>
                     <li className="menu-item">
-                    <Link to="#" className="nav-link">Info</Link>
+                    <Link to="#" className="nav-link">Crop Guides</Link>
                     </li>
                 </ul>
                 </div>
@@ -107,6 +107,9 @@ const Footer = () => {
                 <h5 className="widget-title">Customer Service</h5>
                 <ul className="menu-list list-unstyled">
                     <li className="menu-item">
+                    <Link to="#" className="nav-link">Support</Link>
+                    </li>
+                    <li className="menu-item">
                     <Link to="#" className="nav-link">FAQ</Link>
                     </li>
                     <li className="menu-item">
@@ -115,44 +118,35 @@ const Footer = () => {
                     <li className="menu-item">
                     <Link to="#" className="nav-link">Privacy Policy</Link>
                     </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Returns & Refunds</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Cookie Guidelines</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Delivery Information</Link>
-                    </li>
                 </ul>
                 </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6">
                 <div className="footer-menu">
-                <h5 className="widget-title">Subscribe Us</h5>
-                <p>Subscribe to our newsletter to get updates about our grand offers.</p>
-                <form className="d-flex mt-3 gap-0" action="#">
+                <h5 className="widget-title">Get in Touch</h5>
+                <p>contact@fasalsetu.com</p>
+                {/* <form className="d-flex mt-3 gap-0" action="#">
                     <input className="form-control rounded-start rounded-0 bg-light" type="email" placeholder="Email Address" aria-label="Email Address" />
                     <button className="btn btn-dark rounded-end rounded-0" type="submit">Subscribe</button>
-                </form>
+                </form> */}
                 </div>
             </div>
             
             </div>
         </div>
         </footer>
-        {/* <div id="footer-bottom">
+        <div id="footer-bottom" style={{backgroundColor: "darkgrey"}}>
         <div className="container-lg">
             <div className="row">
             <div className="col-md-6 copyright">
-                <p>© 2024 Organic. All rights reserved.</p>
+                <p>© 2026 Fasal Setu. All rights reserved.</p>
             </div>
-            <div className="col-md-6 credit-link text-start text-md-end">
+            {/* <div className="col-md-6 credit-link text-start text-md-end">
                 <p>HTML Template by <Link to="https://templatesjungle.com/">TemplatesJungle</Link> Distributed By <Link to="https://themewagon.com">ThemeWagon</Link> </p>
-            </div>
+            </div> */}
             </div>
         </div>
-        </div> */}
+        </div>
     </div>
   )
 }
