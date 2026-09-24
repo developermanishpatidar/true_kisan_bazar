@@ -49,7 +49,7 @@ const useThemeSwipers = () => {
         new Swiper(el, {
           modules: [Navigation],
           slidesPerView: 5,
-          spaceBetween: 30,
+          spaceBetween: 16,
           speed: 500,
           navigation: {
             nextEl: section.querySelector('.products-carousel-next'),

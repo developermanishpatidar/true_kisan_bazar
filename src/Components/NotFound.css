@@ -1,0 +1,171 @@
+.tkb-notfound-page {
+  min-height: 100vh;
+  background: #f6faf6;
+}
+
+.tkb-notfound {
+  position: relative;
+  padding: 4.5rem 0 5rem;
+  overflow: hidden;
+}
+
+.tkb-notfound::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(25, 160, 71, 0.16), transparent 60%),
+    linear-gradient(180deg, #eef7f0 0%, #f6faf6 55%);
+  pointer-events: none;
+}
+
+.tkb-notfound-card {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e4efe4;
+  border-radius: 24px;
+  padding: 2.75rem 1.75rem 2.25rem;
+  box-shadow: 0 18px 40px rgba(22, 53, 28, 0.08);
+}
+
+.tkb-notfound-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 0.35rem;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(25, 160, 71, 0.1);
+  border: 1px solid rgba(25, 160, 71, 0.22);
+  color: #165b2f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tkb-notfound-code {
+  margin: 0;
+  font-size: clamp(5rem, 14vw, 7.5rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  background: linear-gradient(180deg, #19a047 0%, #0b2f17 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tkb-notfound h1 {
+  margin: 0.35rem 0 0.85rem;
+  font-size: clamp(1.55rem, 3.2vw, 2.15rem);
+  font-weight: 800;
+  color: #16351c;
+  line-height: 1.2;
+}
+
+.tkb-notfound-copy {
+  margin: 0 auto 1.6rem;
+  max-width: 520px;
+  color: #4b6350;
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.tkb-notfound-path {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.1rem 0.45rem;
+  border-radius: 6px;
+  background: #f0f7f1;
+  color: #165b2f;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  word-break: break-all;
+}
+
+.tkb-notfound-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+}
+
+.tkb-notfound-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid #cfe3d2;
+  color: #165b2f;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  background: #fff;
+}
+
+.tkb-notfound-ghost:hover {
+  background: #f4fbf4;
+  color: #0b2f17;
+}
+
+.tkb-notfound-shortcuts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid #e4efe4;
+  text-align: left;
+}
+
+.tkb-notfound-shortcuts a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 14px;
+  border: 1px solid #e4efe4;
+  background: #f8fcf8;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.tkb-notfound-shortcuts a:hover {
+  border-color: #19a047;
+  background: #fff;
+}
+
+.tkb-notfound-shortcuts strong {
+  color: #16351c;
+  font-size: 0.95rem;
+}
+
+.tkb-notfound-shortcuts span {
+  color: #4b6350;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 575.98px) {
+  .tkb-notfound {
+    padding: 2.5rem 0 3.5rem;
+  }
+
+  .tkb-notfound-card {
+    padding: 2rem 1.15rem 1.5rem;
+    border-radius: 18px;
+  }
+
+  .tkb-notfound-shortcuts {
+    grid-template-columns: 1fr;
+  }
+}

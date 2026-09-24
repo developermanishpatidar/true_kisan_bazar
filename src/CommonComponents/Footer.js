@@ -2,151 +2,219 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.svg';
 
+const FooterIcon = ({ children }) => (
+  <span className="tkb-footer-icon" aria-hidden="true">{children}</span>
+);
+
 const Footer = () => {
   return (
-    <div>
-        <svg xmlns="http://www.w3.org/2000/svg" style={{display: "none"}}>
-            <defs>
-                <symbol xmlns="http://www.w3.org/2000/svg" id="facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M15.12 5.32H17V2.14A26.11 26.11 0 0 0 14.26 2c-2.72 0-4.58 1.66-4.58 4.7v2.62H6.61v3.56h3.07V22h3.68v-9.12h3.06l.46-3.56h-3.52V7.05c0-1.05.28-1.73 1.76-1.73Z"/></symbol>
-                <symbol xmlns="http://www.w3.org/2000/svg" id="twitter" viewBox="0 0 24 24"><path fill="currentColor" d="M22.991 3.95a1 1 0 0 0-1.51-.86a7.48 7.48 0 0 1-1.874.794a5.152 5.152 0 0 0-3.374-1.242a5.232 5.232 0 0 0-5.223 5.063a11.032 11.032 0 0 1-6.814-3.924a1.012 1.012 0 0 0-.857-.365a.999.999 0 0 0-.785.5a5.276 5.276 0 0 0-.242 4.769l-.002.001a1.041 1.041 0 0 0-.496.89a3.042 3.042 0 0 0 .027.439a5.185 5.185 0 0 0 1.568 3.312a.998.998 0 0 0-.066.77a5.204 5.204 0 0 0 2.362 2.922a7.465 7.465 0 0 1-3.59.448A1 1 0 0 0 1.45 19.3a12.942 12.942 0 0 0 7.01 2.061a12.788 12.788 0 0 0 12.465-9.363a12.822 12.822 0 0 0 .535-3.646l-.001-.2a5.77 5.77 0 0 0 1.532-4.202Zm-3.306 3.212a.995.995 0 0 0-.234.702c.01.165.009.331.009.488a10.824 10.824 0 0 1-.454 3.08a10.685 10.685 0 0 1-10.546 7.93a10.938 10.938 0 0 1-2.55-.301a9.48 9.48 0 0 0 2.942-1.564a1 1 0 0 0-.602-1.786a3.208 3.208 0 0 1-2.214-.935q.224-.042.445-.105a1 1 0 0 0-.08-1.943a3.198 3.198 0 0 1-2.25-1.726a5.3 5.3 0 0 0 .545.046a1.02 1.02 0 0 0 .984-.696a1 1 0 0 0-.4-1.137a3.196 3.196 0 0 1-1.425-2.673c0-.066.002-.133.006-.198a13.014 13.014 0 0 0 8.21 3.48a1.02 1.02 0 0 0 .817-.36a1 1 0 0 0 .206-.867a3.157 3.157 0 0 1-.087-.729a3.23 3.23 0 0 1 3.226-3.226a3.184 3.184 0 0 1 2.345 1.02a.993.993 0 0 0 .921.298a9.27 9.27 0 0 0 1.212-.322a6.681 6.681 0 0 1-1.026 1.524Z"/></symbol>
-                <symbol xmlns="http://www.w3.org/2000/svg" id="youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23 9.71a8.5 8.5 0 0 0-.91-4.13a2.92 2.92 0 0 0-1.72-1A78.36 78.36 0 0 0 12 4.27a78.45 78.45 0 0 0-8.34.3a2.87 2.87 0 0 0-1.46.74c-.9.83-1 2.25-1.1 3.45a48.29 48.29 0 0 0 0 6.48a9.55 9.55 0 0 0 .3 2a3.14 3.14 0 0 0 .71 1.36a2.86 2.86 0 0 0 1.49.78a45.18 45.18 0 0 0 6.5.33c3.5.05 6.57 0 10.2-.28a2.88 2.88 0 0 0 1.53-.78a2.49 2.49 0 0 0 .61-1a10.58 10.58 0 0 0 .52-3.4c.04-.56.04-3.94.04-4.54ZM9.74 14.85V8.66l5.92 3.11c-1.66.92-3.85 1.96-5.92 3.08Z"/></symbol>
-                <symbol xmlns="http://www.w3.org/2000/svg" id="instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M17.34 5.46a1.2 1.2 0 1 0 1.2 1.2a1.2 1.2 0 0 0-1.2-1.2Zm4.6 2.42a7.59 7.59 0 0 0-.46-2.43a4.94 4.94 0 0 0-1.16-1.77a4.7 4.7 0 0 0-1.77-1.15a7.3 7.3 0 0 0-2.43-.47C15.06 2 14.72 2 12 2s-3.06 0-4.12.06a7.3 7.3 0 0 0-2.43.47a4.78 4.78 0 0 0-1.77 1.15a4.7 4.7 0 0 0-1.15 1.77a7.3 7.3 0 0 0-.47 2.43C2 8.94 2 9.28 2 12s0 3.06.06 4.12a7.3 7.3 0 0 0 .47 2.43a4.7 4.7 0 0 0 1.15 1.77a4.78 4.78 0 0 0 1.77 1.15a7.3 7.3 0 0 0 2.43.47C8.94 22 9.28 22 12 22s3.06 0 4.12-.06a7.3 7.3 0 0 0 2.43-.47a4.7 4.7 0 0 0 1.77-1.15a4.85 4.85 0 0 0 1.16-1.77a7.59 7.59 0 0 0 .46-2.43c0-1.06.06-1.4.06-4.12s0-3.06-.06-4.12ZM20.14 16a5.61 5.61 0 0 1-.34 1.86a3.06 3.06 0 0 1-.75 1.15a3.19 3.19 0 0 1-1.15.75a5.61 5.61 0 0 1-1.86.34c-1 .05-1.37.06-4 .06s-3 0-4-.06a5.73 5.73 0 0 1-1.94-.3a3.27 3.27 0 0 1-1.1-.75a3 3 0 0 1-.74-1.15a5.54 5.54 0 0 1-.4-1.9c0-1-.06-1.37-.06-4s0-3 .06-4a5.54 5.54 0 0 1 .35-1.9A3 3 0 0 1 5 5a3.14 3.14 0 0 1 1.1-.8A5.73 5.73 0 0 1 8 3.86c1 0 1.37-.06 4-.06s3 0 4 .06a5.61 5.61 0 0 1 1.86.34a3.06 3.06 0 0 1 1.19.8a3.06 3.06 0 0 1 .75 1.1a5.61 5.61 0 0 1 .34 1.9c.05 1 .06 1.37.06 4s-.01 3-.06 4ZM12 6.87A5.13 5.13 0 1 0 17.14 12A5.12 5.12 0 0 0 12 6.87Zm0 8.46A3.33 3.33 0 1 1 15.33 12A3.33 3.33 0 0 1 12 15.33Z"/></symbol>
-                <symbol xmlns="http://www.w3.org/2000/svg" id="amazon" viewBox="0 0 24 24"><path fill="currentColor" d="M1.04 17.52q.1-.16.32-.02a21.308 21.308 0 0 0 10.88 2.9a21.524 21.524 0 0 0 7.74-1.46q.1-.04.29-.12t.27-.12a.356.356 0 0 1 .47.12q.17.24-.11.44q-.36.26-.92.6a14.99 14.99 0 0 1-3.84 1.58A16.175 16.175 0 0 1 12 22a16.017 16.017 0 0 1-5.9-1.09a16.246 16.246 0 0 1-4.98-3.07a.273.273 0 0 1-.12-.2a.215.215 0 0 1 .04-.12Zm6.02-5.7a4.036 4.036 0 0 1 .68-2.36A4.197 4.197 0 0 1 9.6 7.98a10.063 10.063 0 0 1 2.66-.66q.54-.06 1.76-.16v-.34a3.562 3.562 0 0 0-.28-1.72a1.5 1.5 0 0 0-1.32-.6h-.16a2.189 2.189 0 0 0-1.14.42a1.64 1.64 0 0 0-.62 1a.508.508 0 0 1-.4.46L7.8 6.1q-.34-.08-.34-.36a.587.587 0 0 1 .02-.14a3.834 3.834 0 0 1 1.67-2.64A6.268 6.268 0 0 1 12.26 2h.5a5.054 5.054 0 0 1 3.56 1.18a3.81 3.81 0 0 1 .37.43a3.875 3.875 0 0 1 .27.41a2.098 2.098 0 0 1 .18.52q.08.34.12.47a2.856 2.856 0 0 1 .06.56q.02.43.02.51v4.84a2.868 2.868 0 0 0 .15.95a2.475 2.475 0 0 0 .29.62q.14.19.46.61a.599.599 0 0 1 .12.32a.346.346 0 0 1-.16.28q-1.66 1.44-1.8 1.56a.557.557 0 0 1-.58.04q-.28-.24-.49-.46t-.3-.32a4.466 4.466 0 0 1-.29-.39q-.2-.29-.28-.39a4.91 4.91 0 0 1-2.2 1.52a6.038 6.038 0 0 1-1.68.2a3.505 3.505 0 0 1-2.53-.95a3.553 3.553 0 0 1-.99-2.69Zm3.44-.4a1.895 1.895 0 0 0 .39 1.25a1.294 1.294 0 0 0 1.05.47a1.022 1.022 0 0 0 .17-.02a1.022 1.022 0 0 1 .15-.02a2.033 2.033 0 0 0 1.3-1.08a3.13 3.13 0 0 0 .33-.83a3.8 3.8 0 0 0 .12-.73q.01-.28.01-.92v-.5a7.287 7.287 0 0 0-1.76.16a2.144 2.144 0 0 0-1.76 2.22Zm8.4 6.44a.626.626 0 0 1 .12-.16a3.14 3.14 0 0 1 .96-.46a6.52 6.52 0 0 1 1.48-.22a1.195 1.195 0 0 1 .38.02q.9.08 1.08.3a.655.655 0 0 1 .08.36v.14a4.56 4.56 0 0 1-.38 1.65a3.84 3.84 0 0 1-1.06 1.53a.302.302 0 0 1-.18.08a.177.177 0 0 1-.08-.02q-.12-.06-.06-.22a7.632 7.632 0 0 0 .74-2.42a.513.513 0 0 0-.08-.32q-.2-.24-1.12-.24q-.34 0-.8.04q-.5.06-.92.12a.232.232 0 0 1-.16-.04a.065.065 0 0 1-.02-.08a.153.153 0 0 1 .02-.06Z"/></symbol>
-            </defs>
-        </svg>
-      <footer className="py-5" style={{backgroundColor: 'darkgray'}}>
+    <div className="tkb-footer-wrap">
+      <footer className="tkb-footer">
         <div className="container-lg">
-            <div className="row">
+          <div className="row g-4 gy-5">
+            <div className="col-lg-3 col-md-6">
+              <div className="tkb-footer-brand">
+                <Link to="/" className="tkb-footer-logo">
+                  <img src={logo} width="180" height="48" alt="Fasal Junction" />
+                </Link>
+                <p className="tkb-footer-tagline">Connecting farmers, buyers and sellers across India with trusted crop trade.</p>
+                <div className="tkb-footer-social">
+                  <Link to="#" aria-label="Facebook">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.12 5.32H17V2.14A26.11 26.11 0 0 0 14.26 2c-2.72 0-4.58 1.66-4.58 4.7v2.62H6.61v3.56h3.07V22h3.68v-9.12h3.06l.46-3.56h-3.52V7.05c0-1.05.28-1.73 1.76-1.73Z"/></svg>
+                  </Link>
+                  <Link to="#" aria-label="Twitter">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14.7 10.3 22 2h-2.2l-6.2 7-5-7H2.5l7.7 10.8L2 22h2.2l6.8-7.7L16.3 22H22l-7.3-11.7Zm-2.4 2.7-1.1-1.5-6.2-8.3h2.7l4.9 6.6 1.1 1.5 6.5 8.7h-2.7l-5.2-7z"/></svg>
+                  </Link>
+                  <Link to="#" aria-label="YouTube">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12.2s-.2-3.4-1-4.2c-.9-1-2-1-2.5-1.1C16.4 6.6 12 6.6 12 6.6h0s-4.4 0-7.5.3c-.5.1-1.6.1-2.5 1.1-.8.8-1 4.2-1 4.2S.8 15.6 1.6 16.5c.9 1 2.1.9 2.6 1C6.8 17.8 12 17.9 12 17.9s4.4 0 7.5-.3c.5-.1 1.7-.1 2.5-1.1.8-.9 1-4.3 1-4.3zM9.8 15.3V9.2l5.5 3.05z"/></svg>
+                  </Link>
+                  <Link to="#" aria-label="Instagram">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+                  </Link>
+                  <Link to="#" aria-label="LinkedIn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 9H4V20h2.5zM5.2 4A1.6 1.6 0 1 0 5.2 7.2 1.6 1.6 0 0 0 5.2 4zM20 20h-2.5v-5.6c0-1.7-.7-2.3-1.7-2.3s-1.9.8-1.9 2.4V20H11.4s.1-9.3 0-10.3H14v1.6c.6-1 1.7-1.9 3.5-1.9 2.4 0 4.1 1.6 4.1 5.1z"/></svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
 
-            <div className="col-lg-3 col-md-6 col-sm-6">
-                <div className="footer-menu">
-                <img src={logo} width="240" height="70" alt="logo" />
-                <div className="social-links mt-3">
-                    <ul className="d-flex list-unstyled gap-2">
-                    <li>
-                        <Link to="#" className="btn btn-outline-light">
-                        <svg width="16" height="16"><use xlinkHref="#facebook"></use></svg>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="#" className="btn btn-outline-light">
-                        <svg width="16" height="16"><use xlinkHref="#twitter"></use></svg>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="#" className="btn btn-outline-light">
-                        <svg width="16" height="16"><use xlinkHref="#youtube"></use></svg>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="#" className="btn btn-outline-light">
-                        <svg width="16" height="16"><use xlinkHref="#instagram"></use></svg>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="#" className="btn btn-outline-light">
-                        <svg width="16" height="16"><use xlinkHref="#amazon"></use></svg>
-                        </Link>
-                    </li>
-                    </ul>
-                </div>
-                </div>
+            <div className="col-lg-2 col-md-6 col-sm-6">
+              <h5 className="tkb-footer-title">Menu</h5>
+              <ul className="tkb-footer-links">
+                <li>
+                  <Link to="/">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10.5V19h11V10.5"/></svg>
+                    </FooterIcon>
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 3c2.8 4.2 7 6.4 7 11a7 7 0 1 1-14 0c0-4.6 4.2-6.8 7-11Z"/><path d="M12 14.5v4"/></svg>
+                    </FooterIcon>
+                    Crops
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M4.9 6.5l2.1 2.1M17 15.4l2.1 2.1M3 12h3M18 12h3M4.9 17.5 7 15.4M17 8.6l2.1-2.1"/></svg>
+                    </FooterIcon>
+                    Seeds
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/mandi-rate">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 11h16M12 4v15"/></svg>
+                    </FooterIcon>
+                    Mandi Rate
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c.6-3.4 3.1-5.2 6.5-5.2s5.9 1.8 6.5 5.2"/></svg>
+                    </FooterIcon>
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+                    </FooterIcon>
+                    Contact
+                  </Link>
+                </li>
+              </ul>
             </div>
-            <div className="col-md-2 col-sm-6">
-                <div className="footer-menu">
-                <h5 className="widget-title">Menu</h5>
-                <ul className="menu-list list-unstyled">
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Crops</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Seeds </Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Mandi Rate</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">About Us</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Contact</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Blog</Link>
-                    </li>
-                </ul>
-                </div>
+
+            <div className="col-lg-2 col-md-6 col-sm-6">
+              <h5 className="tkb-footer-title">Quick Links</h5>
+              <ul className="tkb-footer-links">
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M7 4h10v16H7z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+                    </FooterIcon>
+                    Kisan Yojana
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M5 19V6h9l5 4v9z"/><path d="M14 6v4h5"/></svg>
+                    </FooterIcon>
+                    Kisan Stories
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg>
+                    </FooterIcon>
+                    Kisan Tips
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 4h9l3 3v13H6z"/><path d="M15 4v4h4M8 12h8M8 16h6"/></svg>
+                    </FooterIcon>
+                    Kisan Guides
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 18c2-6 6-9 8-14 2 5 6 8 8 14"/><path d="M7 18h10"/></svg>
+                    </FooterIcon>
+                    Agri Guides
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 21s7-4.4 7-11a7 7 0 1 0-14 0c0 6.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                    </FooterIcon>
+                    Crop Guides
+                  </Link>
+                </li>
+              </ul>
             </div>
-            <div className="col-md-2 col-sm-6">
-                <div className="footer-menu">
-                <h5 className="widget-title">Quick Links</h5>
-                <ul className="menu-list list-unstyled">
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Kisan Yojana</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Kisan Stories</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Kisan Tips</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Kisan Guides</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Agri Guides</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Crop Guides</Link>
-                    </li>
-                </ul>
-                </div>
+
+            <div className="col-lg-2 col-md-6 col-sm-6">
+              <h5 className="tkb-footer-title">Customer Service</h5>
+              <ul className="tkb-footer-links">
+                <li>
+                  <Link to="/contact">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v.5M12 11v5"/></svg>
+                    </FooterIcon>
+                    Support
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="8"/><path d="M9.6 9.5a2.4 2.4 0 1 1 3.8 2c-.8.5-1.4 1-1.4 2v.3M12 16.5h.01"/></svg>
+                    </FooterIcon>
+                    FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h2a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg>
+                    </FooterIcon>
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 3 5 6v6c0 5 3.2 8.4 7 9.5 3.8-1.1 7-4.5 7-9.5V6z"/></svg>
+                    </FooterIcon>
+                    Privacy Policy
+                  </Link>
+                </li>
+              </ul>
             </div>
-            <div className="col-md-2 col-sm-6">
-                <div className="footer-menu">
-                <h5 className="widget-title">Customer Service</h5>
-                <ul className="menu-list list-unstyled">
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Support</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">FAQ</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Contact</Link>
-                    </li>
-                    <li className="menu-item">
-                    <Link to="#" className="nav-link">Privacy Policy</Link>
-                    </li>
-                </ul>
-                </div>
+
+            <div className="col-lg-3 col-md-6">
+              <h5 className="tkb-footer-title">Get in Touch</h5>
+              <ul className="tkb-footer-contact">
+                <li>
+                  <FooterIcon>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+                  </FooterIcon>
+                  <Link to="mailto:contact@fasaljunction.com">contact@fasaljunction.com</Link>
+                </li>
+                <li>
+                  <FooterIcon>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h2a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/></svg>
+                  </FooterIcon>
+                  <Link to="tel:+911800123456">1800-123-456</Link>
+                </li>
+                <li>
+                  <FooterIcon>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 21s7-4.4 7-11a7 7 0 1 0-14 0c0 6.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                  </FooterIcon>
+                  <span>India</span>
+                </li>
+              </ul>
             </div>
-            <div className="col-lg-3 col-md-6 col-sm-6">
-                <div className="footer-menu">
-                <h5 className="widget-title">Get in Touch</h5>
-                <p>contact@fasalsetu.com</p>
-                {/* <form className="d-flex mt-3 gap-0" action="#">
-                    <input className="form-control rounded-start rounded-0 bg-light" type="email" placeholder="Email Address" aria-label="Email Address" />
-                    <button className="btn btn-dark rounded-end rounded-0" type="submit">Subscribe</button>
-                </form> */}
-                </div>
-            </div>
-            
-            </div>
+          </div>
         </div>
-        </footer>
-        <div id="footer-bottom" style={{backgroundColor: "darkgrey"}}>
+      </footer>
+      <div className="tkb-footer-bottom">
         <div className="container-lg">
-            <div className="row">
-            <div className="col-md-6 copyright">
-                <p>© 2026 Fasal Setu. All rights reserved.</p>
-            </div>
-            {/* <div className="col-md-6 credit-link text-start text-md-end">
-                <p>HTML Template by <Link to="https://templatesjungle.com/">TemplatesJungle</Link> Distributed By <Link to="https://themewagon.com">ThemeWagon</Link> </p>
-            </div> */}
-            </div>
+          <p>© 2026 Fasal Junction. All rights reserved.</p>
         </div>
-        </div>
+      </div>
     </div>
   )
 }

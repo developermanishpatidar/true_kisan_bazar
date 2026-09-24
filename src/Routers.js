@@ -5,6 +5,11 @@ import ProductDetails from "./Components/ProductDetails";
 import Login from "./Components/Login";
 import ProductList from "./Components/ProductList";
 import Profile from "./Components/Profile";
+import About from "./Components/About";
+import Contact from "./Components/Contact";
+import MandiRate from "./Components/MandiRate";
+import Blog from "./Components/Blog";
+import NotFound from "./Components/NotFound";
 
 const Routers = () => {
   return (
@@ -16,6 +21,12 @@ const Routers = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/product-list" element={<ProductList />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/support" element={<Contact />} />
+        <Route path="/mandi-rate" element={<MandiRate />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

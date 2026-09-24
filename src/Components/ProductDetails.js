@@ -1,27 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import Header from '../CommonComponents/Header';
 import { Link } from 'react-router-dom';
 
+const GALLERY_IMAGES = [
+    {
+      full: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800&h=600&fit=crop',
+      thumb: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop',
+      alt: 'Banana plantation thumbnail 1',
+    },
+    {
+      full: 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800&h=600&fit=crop',
+      thumb: 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=200&h=200&fit=crop',
+      alt: 'Banana plantation thumbnail 2',
+    },
+    {
+      full: 'https://images.unsplash.com/photo-1528825871115-3582a0260b03?w=800&h=600&fit=crop',
+      thumb: 'https://images.unsplash.com/photo-1528825871115-3582a0260b03?w=200&h=200&fit=crop',
+      alt: 'Banana plantation thumbnail 3',
+    },
+    {
+      full: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=800&h=600&fit=crop',
+      thumb: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=200&h=200&fit=crop',
+      alt: 'Green banana bunch thumbnail 4',
+    },
+  ];
+
 const ProductDetails = () => {
-  useEffect(()=>{
-    (function () {
-      var mainImage = document.getElementById('mainProductImage');
-      var thumbs = document.querySelectorAll('.product-thumb');
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-      thumbs.forEach(function (thumb) {
-        thumb.addEventListener('click', function () {
-          var imageUrl = thumb.getAttribute('data-image');
-          mainImage.src = imageUrl;
-          mainImage.alt = thumb.querySelector('img').alt;
-
-          thumbs.forEach(function (item) {
-            item.classList.remove('active');
-          });
-          thumb.classList.add('active');
-        });
-      });
-    })();
-  },[])
   return (
     <div>
         <Header />
@@ -34,21 +40,23 @@ const ProductDetails = () => {
                 <div className="col-lg-4">
                     <div className="product-gallery">
                     <div className="product-gallery-main">
-                        <img id="mainProductImage" src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800&h=600&fit=crop" alt="Green bananas on tree" />
+                        <img
+                          src={GALLERY_IMAGES[activeImageIndex].full}
+                          alt={GALLERY_IMAGES[activeImageIndex].alt}
+                        />
                     </div>
                     <div className="product-gallery-thumbs">
-                        <button type="button" className="product-thumb active" data-image="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800&h=600&fit=crop" aria-label="View image 1">
-                        <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&h=200&fit=crop" alt="Banana plantation thumbnail 1" />
-                        </button>
-                        <button type="button" className="product-thumb" data-image="https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800&h=600&fit=crop" aria-label="View image 2">
-                        <img src="https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=200&h=200&fit=crop" alt="Banana plantation thumbnail 2" />
-                        </button>
-                        <button type="button" className="product-thumb" data-image="https://images.unsplash.com/photo-1528825871115-3582a0260b03?w=800&h=600&fit=crop" aria-label="View image 3">
-                        <img src="https://images.unsplash.com/photo-1528825871115-3582a0260b03?w=200&h=200&fit=crop" alt="Banana plantation thumbnail 3" />
-                        </button>
-                        <button type="button" className="product-thumb" data-image="https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=800&h=600&fit=crop" aria-label="View image 4">
-                        <img src="https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=200&h=200&fit=crop" alt="Green banana bunch thumbnail 4" />
-                        </button>
+                        {GALLERY_IMAGES.map((image, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            className={`product-thumb${index === activeImageIndex ? ' active' : ''}`}
+                            onClick={() => setActiveImageIndex(index)}
+                            aria-label={`View image ${index + 1}`}
+                          >
+                            <img src={image.thumb} alt={image.alt} />
+                          </button>
+                        ))}
                     </div>
                     </div>
                 </div>

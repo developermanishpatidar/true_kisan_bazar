@@ -1,24 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import Header from '../CommonComponents/Header'
 import Footer from '../CommonComponents/Footer';
 
 const Enquiry = () => {
-    useEffect(()=>{
-        (function () {
-            var typeButtons = document.querySelectorAll('.enquiry-type-btn');
-            var typeInput = document.getElementById('enquiryType');
+    const [enquiryType, setEnquiryType] = useState('buy');
 
-            typeButtons.forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                typeButtons.forEach(function (item) {
-                    item.classList.remove('active');
-                });
-                btn.classList.add('active');
-                typeInput.value = btn.getAttribute('data-type');
-                });
-            });
-        })();
-    },[])
   return (
     <div>
       <Header />  
@@ -37,20 +23,20 @@ const Enquiry = () => {
 
                 <div className="col-lg-7">
                     <div className="enquiry-form-card">
-                    <form className="enquiry-form" action="#" method="post" enctype="multipart/form-data">
+                    <form className="enquiry-form" action="#" method="post" encType="multipart/form-data">
 
                         <div className="enquiry-type-toggle" role="group" aria-label="Enquiry type">
-                        <button type="button" className="enquiry-type-btn active" data-type="buy">Buy</button>
-                        <button type="button" className="enquiry-type-btn" data-type="sell">Sell</button>
-                        <input type="hidden" name="enquiry_type" id="enquiryType" value="buy" />
+                        <button type="button" className={`enquiry-type-btn${enquiryType === 'buy' ? ' active' : ''}`} onClick={() => setEnquiryType('buy')}>Buy</button>
+                        <button type="button" className={`enquiry-type-btn${enquiryType === 'sell' ? ' active' : ''}`} onClick={() => setEnquiryType('sell')}>Sell</button>
+                        <input type="hidden" name="enquiry_type" value={enquiryType} />
                         </div>
 
                         <div className="row g-3 g-md-4">
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="productCategory">Product Category<span className="enquiry-required">*</span></label>
+                            <label className="enquiry-label" htmlFor="productCategory">Product Category<span className="enquiry-required">*</span></label>
                             <div className="enquiry-select-wrap">
-                            <select className="enquiry-input enquiry-select" id="productCategory" name="product_category" required>
-                                <option value="" selected disabled>Select Category</option>
+                            <select className="enquiry-input enquiry-select" id="productCategory" name="product_category" defaultValue="" required>
+                                <option value="" disabled>Select Category</option>
                                 <option value="fruits">Fruits</option>
                                 <option value="vegetables">Vegetables</option>
                                 <option value="grains">Grains</option>
@@ -60,28 +46,28 @@ const Enquiry = () => {
                         </div>
 
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="subCategory">Sub Category<span className="enquiry-required">*</span></label>
+                            <label className="enquiry-label" htmlFor="subCategory">Sub Category<span className="enquiry-required">*</span></label>
                             <div className="enquiry-select-wrap">
-                            <select className="enquiry-input enquiry-select" id="subCategory" name="sub_category" required>
-                                <option value="" selected disabled>Select Sub Category</option>
+                            <select className="enquiry-input enquiry-select" id="subCategory" name="sub_category" defaultValue="" required>
+                                <option value="" disabled>Select Sub Category</option>
                             </select>
                             </div>
                         </div>
 
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="variety">Variety / Sub-Sub-Category<span className="enquiry-required">*</span></label>
+                            <label className="enquiry-label" htmlFor="variety">Variety / Sub-Sub-Category<span className="enquiry-required">*</span></label>
                             <div className="enquiry-select-wrap">
-                            <select className="enquiry-input enquiry-select" id="variety" name="variety" required>
-                                <option value="" selected disabled>Select Variety</option>
+                            <select className="enquiry-input enquiry-select" id="variety" name="variety" defaultValue="" required>
+                                <option value="" disabled>Select Variety</option>
                             </select>
                             </div>
                         </div>
 
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="grade">Grade</label>
+                            <label className="enquiry-label" htmlFor="grade">Grade</label>
                             <div className="enquiry-select-wrap">
-                            <select className="enquiry-input enquiry-select" id="grade" name="grade">
-                                <option value="" selected disabled>Enter Grade (e.g. A, B, C)</option>
+                            <select className="enquiry-input enquiry-select" id="grade" name="grade" defaultValue="">
+                                <option value="" disabled>Enter Grade (e.g. A, B, C)</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
@@ -90,10 +76,10 @@ const Enquiry = () => {
                         </div>
 
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="location">Location<span className="enquiry-required">*</span></label>
+                            <label className="enquiry-label" htmlFor="location">Location<span className="enquiry-required">*</span></label>
                             <div className="enquiry-select-wrap">
-                            <select className="enquiry-input enquiry-select" id="location" name="location" required>
-                                <option value="" selected disabled>Enter location</option>
+                            <select className="enquiry-input enquiry-select" id="location" name="location" defaultValue="" required>
+                                <option value="" disabled>Enter location</option>
                                 <option value="delhi">Delhi</option>
                                 <option value="mumbai">Mumbai</option>
                                 <option value="pune">Pune</option>
@@ -103,12 +89,12 @@ const Enquiry = () => {
                         </div>
 
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="quantity">Quantity<span className="enquiry-required">*</span></label>
+                            <label className="enquiry-label" htmlFor="quantity">Quantity<span className="enquiry-required">*</span></label>
                             <div className="enquiry-quantity-wrap">
                             <input type="number" className="enquiry-input enquiry-quantity-input" id="quantity" name="quantity" placeholder="Enter quantity" min="0" step="any" required />
                             <div className="enquiry-quantity-unit">
-                                <select className="enquiry-unit-select" name="quantity_unit" aria-label="Quantity unit">
-                                <option value="kg" selected>kg</option>
+                                <select className="enquiry-unit-select" name="quantity_unit" aria-label="Quantity unit" defaultValue="kg">
+                                <option value="kg">kg</option>
                                 <option value="ton">Ton</option>
                                 <option value="quintal">Quintal</option>
                                 </select>
@@ -117,10 +103,10 @@ const Enquiry = () => {
                         </div>
 
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="expectedPrice">Expected Price<span className="enquiry-required">*</span></label>
+                            <label className="enquiry-label" htmlFor="expectedPrice">Expected Price<span className="enquiry-required">*</span></label>
                             <div className="enquiry-select-wrap">
-                            <select className="enquiry-input enquiry-select" id="expectedPrice" name="expected_price" required>
-                                <option value="" selected disabled>Expected Price*</option>
+                            <select className="enquiry-input enquiry-select" id="expectedPrice" name="expected_price" defaultValue="" required>
+                                <option value="" disabled>Expected Price*</option>
                                 <option value="10-20">&#8377;10 - &#8377;20</option>
                                 <option value="20-50">&#8377;20 - &#8377;50</option>
                                 <option value="50+">&#8377;50+</option>
@@ -129,10 +115,10 @@ const Enquiry = () => {
                         </div>
 
                         <div className="col-md-6">
-                            <label className="enquiry-label" for="minExpectedPrice">Minimum Expected Price</label>
+                            <label className="enquiry-label" htmlFor="minExpectedPrice">Minimum Expected Price</label>
                             <div className="enquiry-select-wrap">
-                            <select className="enquiry-input enquiry-select" id="minExpectedPrice" name="min_expected_price">
-                                <option value="" selected disabled>Minimum Expected Price</option>
+                            <select className="enquiry-input enquiry-select" id="minExpectedPrice" name="min_expected_price" defaultValue="">
+                                <option value="" disabled>Minimum Expected Price</option>
                                 <option value="5-10">&#8377;5 - &#8377;10</option>
                                 <option value="10-15">&#8377;10 - &#8377;15</option>
                                 <option value="15+">&#8377;15+</option>
@@ -141,7 +127,7 @@ const Enquiry = () => {
                         </div>
 
                         <div className="col-12">
-                            <label className="enquiry-label" for="harvestingDate">Harvesting Date</label>
+                            <label className="enquiry-label" htmlFor="harvestingDate">Harvesting Date</label>
                             <div className="enquiry-date-wrap">
                             <input type="date" className="enquiry-input enquiry-date-input" id="harvestingDate" name="harvesting_date" />
                             <span className="enquiry-date-icon" aria-hidden="true">
@@ -156,12 +142,12 @@ const Enquiry = () => {
                         </div>
 
                         <div className="col-12">
-                            <label className="enquiry-label" for="additionalNotes">Additional Notes</label>
+                            <label className="enquiry-label" htmlFor="additionalNotes">Additional Notes</label>
                             <textarea className="enquiry-input enquiry-textarea" id="additionalNotes" name="additional_notes" rows="4" placeholder="Any additional information..."></textarea>
                         </div>
 
                         <div className="col-12">
-                            <label className="enquiry-upload-box" for="photos">
+                            <label className="enquiry-upload-box" htmlFor="photos">
                             <input type="file" className="enquiry-upload-input" id="photos" name="photos" accept="image/*" multiple />
                             <span className="enquiry-upload-icon" aria-hidden="true">
                                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">

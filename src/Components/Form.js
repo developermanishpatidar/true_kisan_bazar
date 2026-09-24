@@ -1,51 +1,32 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import banner_newsletter from '../assets/images/banner-newsletter.jpg';
 
 const Form = () => {
   return (
-    <div>
-      <section>
-        <div className="container-lg">
-
-            {/* <div className="bg-secondary text-light py-5 my-5" style="background: url('images/banner-newsletter.jpg') no-repeat; background-size: cover;"> */}
-            <div className="bg-secondary text-light py-5 my-5" style={{backgroundImage: `url(${banner_newsletter})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}} >
-            <div className="container">
-                <div className="row justify-content-center">
-                <div className="col-md-5 p-3">
-                    <div className="section-header">
-                    <h2 className="section-title display-5 text-light">Post your first enquiry today</h2>
-                    </div>
-                    <p>Free to post. Verified buyers. Today's rate before you agree a price.</p>
-                </div>
-                <div className="col-md-8 p-3">
-                    {/* <form>
-                    <div className="mb-3">
-                        <label for="name" className="form-label d-none">Name</label>
-                        <input type="text"
-                        className="form-control form-control-md rounded-0" name="name" id="name" placeholder="Name" />
-                    </div>
-                    <div className="mb-3">
-                        <label for="email" className="form-label d-none">Email</label>
-                        <input type="email" className="form-control form-control-md rounded-0" name="email" id="email" placeholder="Email Address" />
-                    </div>
-                    <div className="d-grid gap-2">
-                        <button type="submit" className="btn btn-dark btn-md rounded-0">Submit</button>
-                    </div>
-                    </form> */}
-                    <div className="d-grid gap-2 justify-content-center">
-                        <button type="submit" className="btn btn-dark btn-md rounded-5">I have a crop to sell</button>
-                    </div>
-                </div>
-                
-                </div>
-                
+    <section className="tkb-cta-section">
+      <div className="container-lg">
+        <div className="tkb-cta-banner" style={{ backgroundImage: `url(${banner_newsletter})` }}>
+          <div className="tkb-cta-overlay">
+            <div className="tkb-cta-copy">
+              <p className="tkb-cta-kicker">Start trading today</p>
+              <h2>Post your first enquiry today</h2>
+              <p className="tkb-cta-text">Free to post. Verified buyers. Today’s rate before you agree a price.</p>
+              <ul className="tkb-cta-points">
+                <li>No listing fee</li>
+                <li>Verified traders</li>
+                <li>Live mandi rates</li>
+              </ul>
+              <div className="tkb-cta-actions">
+                <Link to="/enquiry" className="tkb-cta-btn tkb-cta-btn--primary">I have a crop to sell</Link>
+                <Link to="/enquiry" className="tkb-cta-btn tkb-cta-btn--ghost">I want to buy</Link>
+              </div>
             </div>
-            </div>
-            
+          </div>
         </div>
-        </section>
-    </div>
-  )
-}
+      </div>
+    </section>
+  );
+};
 
 export default Form;

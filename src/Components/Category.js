@@ -1,100 +1,75 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import category_thumb_1 from '../assets/images/category-thumb-1.jpg'
-import category_thumb_2 from '../assets/images/category-thumb-2.jpg'
-import category_thumb_3 from '../assets/images/category-thumb-3.jpg'
-import category_thumb_4 from '../assets/images/category-thumb-4.jpg'
-import category_thumb_5 from '../assets/images/category-thumb-5.jpg'
-import category_thumb_6 from '../assets/images/category-thumb-6.jpg'
-import category_thumb_7 from '../assets/images/category-thumb-7.jpg'
-import category_thumb_8 from '../assets/images/category-thumb-8.jpg'
+import catVegetables from '../assets/images/cat-vegetables.jpg'
+import catOilseeds from '../assets/images/cat-oilseeds.jpg'
+import catFruits from '../assets/images/cat-fruits.jpg'
+import catPulses from '../assets/images/cat-pulses.jpg'
+import catCashcrops from '../assets/images/cat-cashcrops.jpg'
+import catFlower from '../assets/images/cat-flower.jpg'
+import catSpices from '../assets/images/cat-spices.jpg'
+import catDryfruits from '../assets/images/cat-dryfruits.jpg'
+import catFertilizer from '../assets/images/cat-fertilizer.jpg'
+import catAnimalfeed from '../assets/images/cat-animalfeed.jpg'
 
+const categories = [
+  { name: 'Vegetables', img: catVegetables, count: '120+', icon: '#cat-vegetables' },
+  { name: 'Oil Seeds', img: catOilseeds, count: '85+', icon: '#cat-oilseeds' },
+  { name: 'Fruits', img: catFruits, count: '95+', icon: '#cat-fruits' },
+  { name: 'Pulse & Legumes', img: catPulses, count: '70+', icon: '#cat-pulses' },
+  { name: 'Cash Crops', img: catCashcrops, count: '60+', icon: '#cat-cashcrops' },
+  { name: 'Flower', img: catFlower, count: '45+', icon: '#cat-flower' },
+  { name: 'Spices', img: catSpices, count: '80+', icon: '#cat-spices' },
+  { name: 'Dry Fruits', img: catDryfruits, count: '55+', icon: '#cat-dryfruits' },
+  { name: 'Organic Fertilizer', img: catFertilizer, count: '40+', icon: '#cat-fertilizer' },
+  { name: 'Animal Feed', img: catAnimalfeed, count: '35+', icon: '#cat-animalfeed' },
+];
 
 const Category = () => {
 
   return (
-    <div>
-      <section className="py-5 overflow-hidden">
-        <div className="container-lg">
-            <div className="row">
-            <div className="col-md-12">
+    <section className="tkb-category-section">
+      <div className="container-lg">
 
-                <div className="section-header d-flex flex-wrap justify-content-between mb-5">
-                <h2 className="section-title">Category</h2>
+        {/* Section Header */}
+        <div className="tkb-category-header">
+          <div className="tkb-category-header-left">
+            <div className="tkb-category-header-icon">
+              🌿
+            </div>
+            <div>
+              <h2 className="tkb-category-heading">
+                Shop by <span>Category</span>
+              </h2>
+              <p className="tkb-category-subtitle">
+                Browse our wide range of fresh & organic products
+              </p>
+            </div>
+          </div>
 
-                <div className="d-flex align-items-center">
-                    <Link to="#" className="btn btn-primary me-2">View All</Link>
-                    <div className="swiper-buttons">
-                    <button className="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
-                    <button className="swiper-next category-carousel-next btn btn-yellow">❯</button>
-                    </div>
-                </div>
-                </div>
-                
-            </div>
-            </div>
-            <div className="row">
-            <div className="col-md-12">
-
-                <div className="category-carousel swiper">
-                <div className="swiper-wrapper">
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_1} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_2} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Breads & Sweets</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_3} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_4} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Beverages</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_5} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Meat Products</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_6} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Breads</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_7} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_8} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Breads & Sweets</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_1} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_2} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Beverages</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_3} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Meat Products</h4>
-                    </Link>
-                    <Link to="#" className="nav-link swiper-slide text-center">
-                    <img src={category_thumb_4} className="rounded-circle" alt="Category Thumbnail" />
-                    <h4 className="fs-6 mt-3 fw-normal category-title">Breads</h4>
-                    </Link>
-                    
-                </div>
-                </div>
-
-            </div>
-            </div>
+          <div className="tkb-category-header-actions">
+            <Link to="#" className="tkb-category-view-all">
+              View All →
+            </Link>
+            <button className="tkb-category-nav-btn" aria-label="Previous">❮</button>
+            <button className="tkb-category-nav-btn" aria-label="Next">❯</button>
+          </div>
         </div>
-        </section>
-    </div>
+
+        {/* Category Grid */}
+        <div className="tkb-category-grid">
+          {categories.map((cat, index) => (
+            <Link to="#" className="tkb-category-card" key={index}>
+              <span className="tkb-category-badge">{cat.count}</span>
+              <div className="tkb-category-img-wrap">
+                <img src={cat.img} alt={cat.name} />
+              </div>
+              <h4 className="tkb-category-name">{cat.name}</h4>
+            </Link>
+          ))}
+        </div>
+
+      </div>
+    </section>
   )
 }
 

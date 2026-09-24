@@ -1,99 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import logo  from '../assets/images/logo.svg'
 
 const Header = () => {
 
-  useEffect(()=> {
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  // const popupRef = useRef(null);
 
-      var accountPopupCleanup;
-      (function () {
+  // const toggleAccountPopup = useCallback((e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   setIsAccountOpen((prev) => !prev);
+  // }, []);
 
-        function initAccountPopup() {
-          var toggle = document.getElementById("accountMenuToggle");
-          var popup = document.getElementById("accountPopup");
-          var backdrop = document.getElementById("accountPopupBackdrop");
-          if (!toggle || !popup) {
-            return function cleanupNoop() {};
-          }
+  const closeAccountPopup = useCallback(() => {
+    setIsAccountOpen(false);
+  }, []);
 
-          // Guard against double-initialization. React 18 Strict Mode
-          // (and any accidental double-mount of this component) runs this
-          // effect twice, which used to attach two click listeners to the
-          // same button. One click would then open AND immediately close
-          // the popup in the same tick, making it look like nothing happened.
-          if (toggle.dataset.tkbAccountInit === "true") {
-            return function cleanupNoop() {};
-          }
-          toggle.dataset.tkbAccountInit = "true";
+  // const handlePopupClick = useCallback((e) => {
+  //   e.stopPropagation();
+  // }, []);
 
-          function closePopup() {
-            popup.classList.remove("is-open");
-            toggle.setAttribute("aria-expanded", "false");
-            if (backdrop) {
-              backdrop.classList.remove("is-open");
-            }
-          }
-
-          function openPopup() {
-            popup.classList.add("is-open");
-            toggle.setAttribute("aria-expanded", "true");
-            if (backdrop) {
-              backdrop.classList.add("is-open");
-            }
-          }
-
-          function handleToggleClick(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (popup.classList.contains("is-open")) {
-              closePopup();
-            } else {
-              openPopup();
-            }
-          }
-
-          function handleKeydown(event) {
-            if (event.key === "Escape") {
-              closePopup();
-            }
-          }
-
-          function stopPropagation(event) {
-            event.stopPropagation();
-          }
-
-          toggle.addEventListener("click", handleToggleClick);
-
-          if (backdrop) {
-            backdrop.addEventListener("click", closePopup);
-          }
-
-          document.addEventListener("keydown", handleKeydown);
-
-          popup.addEventListener("click", stopPropagation);
-
-          // Cleanup so a re-run of this effect (Strict Mode's
-          // mount -> cleanup -> mount, or an unmount) removes exactly the
-          // listeners this call added, and clears the guard flag.
-          return function cleanup() {
-            toggle.removeEventListener("click", handleToggleClick);
-            if (backdrop) {
-              backdrop.removeEventListener("click", closePopup);
-            }
-            document.removeEventListener("keydown", handleKeydown);
-            popup.removeEventListener("click", stopPropagation);
-            delete toggle.dataset.tkbAccountInit;
-          };
-        }
-        accountPopupCleanup = initAccountPopup();
-      })();
-      return function () {
-        if (typeof accountPopupCleanup === "function") {
-          accountPopupCleanup();
-        }
-      };
-  },[])
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeydown = (e) => {
+      if (e.key === 'Escape') {
+        setIsAccountOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeydown);
+    return () => document.removeEventListener('keydown', handleKeydown);
+  }, []);
 
   return (
     <div>
@@ -120,6 +57,16 @@ const Header = () => {
                 <symbol xmlns="http://www.w3.org/2000/svg" id="household" viewBox="0 0 14 14"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12.36 6H1.64a1 1 0 0 0-1 1.13l.73 5.5a1 1 0 0 0 1 .87h9.24a1 1 0 0 0 1-.87l.73-5.5A1.001 1.001 0 0 0 12.36 6M4.5 8.5V11M7 8.5V11m2.5-2.5V11"/><path d="M9.48 1.54A2.79 2.79 0 0 1 11.78 4L12 6M2 6l.22-2a2.79 2.79 0 0 1 2.3-2.44"/><path d="M9.5 1.75A1.25 1.25 0 0 1 8.25 3h-2.5a1.25 1.25 0 0 1 0-2.5h2.5A1.25 1.25 0 0 1 9.5 1.75"/></g></symbol>
                 <symbol xmlns="http://www.w3.org/2000/svg" id="personal" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22.012 14.74a3.504 3.504 0 0 1-7.008 0c0-2.628 3.5-7.009 3.5-7.009s3.508 4.381 3.508 7.009M9.998 9.233H3.99a2.002 2.002 0 0 0-2.002 2.002v10.013c0 1.106.896 2.002 2.002 2.002h6.008A2.002 2.002 0 0 0 12 21.248V11.235a2.002 2.002 0 0 0-2.002-2.002M4.766 6.23h4.456a.776.776 0 0 1 .778.775v2.228H3.99V7.005a.776.776 0 0 1 .776-.775M14 2.752l-.447-.895A2 2 0 0 0 11.764.75H2.989m4.005 13.489v4.005m-2.002-2.002h4.004M6.994.75v5.48"/></symbol>
                 <symbol xmlns="http://www.w3.org/2000/svg" id="pet" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M1.5 9.5c.552 0 1-.672 1-1.5s-.448-1.5-1-1.5s-1 .672-1 1.5s.448 1.5 1 1.5m3-4.5c.552 0 1-.672 1-1.5S5.052 2 4.5 2s-1 .672-1 1.5s.448 1.5 1 1.5m5 0c.552 0 1-.672 1-1.5S10.052 2 9.5 2s-1 .672-1 1.5s.448 1.5 1 1.5m3 4.5c.552 0 1-.672 1-1.5s-.448-1.5-1-1.5s-1 .672-1 1.5s.448 1.5 1 1.5M10 10c0 1.38-1.62 2-3 2s-3-.62-3-2s1-3.5 3-3.5s3 2.12 3 3.5"/></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-vegetables" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.27 21.7s9.87-6.14 4.93-11.08L2.27 21.7Z"/><path d="M6.16 18.05l1.77-1.77"/><path d="M4.12 15.52l1.77-1.77"/><path d="M15.54 8.46a5 5 0 0 1 7.07 0"/><path d="M12.8 5.7a5 5 0 0 1 7.07 0"/><path d="M10.06 2.95a5 5 0 0 1 7.07 0"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-oilseeds" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-fruits" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-pulses" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.165 18.002C7.14 17.77 5 14.747 5 11.5 5 8 7.239 2 12 2s7 6 7 9.5c0 3.247-2.14 6.27-5.165 6.502"/><path d="M12 18c-2.572 0-4-3.093-4-6.5C8 8.5 9.5 4 12 4s4 4.5 4 7.5c0 3.407-1.428 6.5-4 6.5z"/><path d="M12 2v20"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-cashcrops" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22L16 8"/><path d="M3.47 12.53L5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53L9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53L13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-flower" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1"/><path d="M9 8a3 3 0 1 0 0 6m0-6H8"/><path d="M9 14a3 3 0 1 0 3 3m-3-3v-1"/><path d="M12 17a3 3 0 1 0 3-3m-3 3h1"/><path d="M15 14a3 3 0 1 0 0-6m0 6h1"/><path d="M15 8h-1"/><circle cx="12" cy="11" r="1"/><path d="M12 17v5"/><path d="M10 22h4"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-spices" viewBox="0 0 24 24"><path fill="currentColor" d="M14.178 9.766a9.981 9.981 0 0 0 4.827-2.622V4.003h-14v3.141a9.98 9.98 0 0 0 4.827 2.622a2.5 2.5 0 0 1 4.346 0m.208 2a2.501 2.501 0 0 1-4.762 0a11.941 11.941 0 0 1-4.62-2.015v10.252h14V9.75a11.942 11.942 0 0 1-4.618 2.016M4.005 2.004h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1h-16a1 1 0 0 1-1-1v-18a1 1 0 0 1 1-1"/></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-dryfruits" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="14" rx="7" ry="8"/><path d="M12 6V3"/><path d="M10 3.5c.7-.3 1.3-.5 2-.5s1.3.2 2 .5"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-fertilizer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8Z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2Z"/></g></symbol>
+                <symbol xmlns="http://www.w3.org/2000/svg" id="cat-animalfeed" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18V4h-2l-1-2H7l-1 2H3z"/><path d="M18 22l1-15H5l1 15z"/></g></symbol>
             </defs>
         </svg>
       {/* <div className="preloader-wrapper">
@@ -182,61 +129,61 @@ const Header = () => {
         <ul className="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
           <li className="nav-item border-dashed active">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#fruits"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-vegetables"></use></svg>
               <span>Vegetables</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#dairy"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-oilseeds"></use></svg>
               <span>Oil Seeds</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#meat"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-fruits"></use></svg>
               <span>Fruits</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#seafood"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-pulses"></use></svg>
               <span>Pulse and Legumes</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#bakery"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-cashcrops"></use></svg>
               <span>Cash Crops</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#canned"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-flower"></use></svg>
               <span>Flower</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#frozen"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-spices"></use></svg>
               <span>Spices</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#pasta"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-dryfruits"></use></svg>
               <span>Dry Fruits</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#breakfast"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-fertilizer"></use></svg>
               <span>Organic Fertilizer</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#snacks"></use></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-animalfeed"></use></svg>
               <span>Animal Feed</span>
             </Link>
           </li>
@@ -299,9 +246,9 @@ const Header = () => {
     </div>
       <header>
         <div className="container-fluid">
-            <div className="row py-3 border-bottom">
+            <div className="row py-3 border-bottom align-items-center">
             
-            <div className="col-sm-4 col-lg-2 text-center text-sm-start d-flex gap-3 justify-content-center justify-content-md-start">
+            <div className="col-sm-4 col-lg-2 text-center text-sm-start d-flex gap-3 align-items-center justify-content-center justify-content-md-start">
                 <div className="d-flex align-items-center my-3 my-sm-0">
                 <Link to="/">
                     <img src={logo} alt="logo" className="img-fluid" />
@@ -313,31 +260,19 @@ const Header = () => {
                 </button>
             </div>
             
-            <div className="col-sm-6 offset-sm-2 offset-md-0 col-lg-3">
-                <div className="search-bar row bg-light p-2 rounded-4">
-                {/* <div className="col-md-4 d-none d-md-block">
-                    <select className="form-select border-0 bg-transparent">
-                    <option>All Categories</option>
-                    <option>Groceries</option>
-                    <option>Drinks</option>
-                    <option>Chocolates</option>
-                    </select>
-                </div> */}
-                <div className="col-11 col-md-7">
-                    <form id="search-form" className="text-center" action="#" method="post">
+            <div className="col-sm-8 col-md-6 offset-md-0 col-lg-3">
+                <div className="search-bar tkb-header-search bg-light p-2 rounded-4">
+                    <form id="search-form" action="#" method="post">
                     <input type="text" className="form-control border-0 bg-transparent" placeholder="Search for more than 20,000 products" />
                     </form>
-                </div>
-                <div className="col-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/></svg>
-                </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/></svg>
                 </div>
             </div>
 
             <div className="col-lg-4">
                 <ul className="navbar-nav list-unstyled d-flex flex-row gap-3 gap-lg-4 justify-content-center flex-wrap align-items-center mb-0 fw-bold text-dark">
                 <li className="nav-item active">
-                    <Link to="#" className="nav-link">Home</Link>
+                    <Link to="/" className="nav-link">Home</Link>
                 </li>
                 <li className="nav-item">
                     <Link to="#" className="nav-link">Crops</Link>
@@ -348,15 +283,23 @@ const Header = () => {
                 <li className="nav-item">
                     <Link to="#" className="nav-link">Seeds</Link>
                 </li>
-                <li className="nav-item">
-                    <Link to="#" className="nav-link">Mandi Rate</Link>
+                <li className="nav-item tkb-nav-mandi-item">
+                    <Link to="/mandi-rate" className="nav-link tkb-nav-mandi-link">
+                        Mandi Rates
+                        <span className="tkb-header-live-badge" aria-label="Live rates">
+                            <span className="tkb-live-radar-dot">
+                                <span className="tkb-live-radar-ping"></span>
+                            </span>
+                            LIVE
+                        </span>
+                    </Link>
                 </li>
                 <li className="nav-item dropdown">
                     <Link className="nav-link dropdown-toggle pe-3" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">More</Link>
                     <ul className="dropdown-menu border-0 p-3 rounded-0 shadow" aria-labelledby="pages">
-                      <li><Link to="#" className="dropdown-item">About Us </Link></li>
-                      <li><Link to="#" className="dropdown-item">Contact </Link></li>
-                      <li><Link to="#" className="dropdown-item">Blog </Link></li>
+                      <li><Link to="/about" className="dropdown-item">About Us </Link></li>
+                      <li><Link to="/contact" className="dropdown-item">Contact </Link></li>
+                      <li><Link to="/blog" className="dropdown-item">Blog </Link></li>
                     </ul>
                 </li>
                 </ul>
@@ -381,16 +324,16 @@ const Header = () => {
                 </li>
                 </ul>
             </div> */}
-              <div className="col-sm-8 col-lg-3 d-flex gap-5 align-items-center justify-content-center justify-content-sm-end">
+              <div className="col-sm-8 col-lg-3 d-flex align-items-center justify-content-center justify-content-sm-end">
                 <div className="tkb-header-actions">
-                  <select name="language" className="tkb-btn-buy-sell">
-                    <option value="english" selected>English</option>
+                  <select name="language" className="tkb-btn-buy-sell tkb-lang-select" aria-label="Language" defaultValue="english">
+                    <option value="english">English</option>
                     <option value="hindi">Hindi</option>
                   </select>
                   <Link to="/enquiry" className="tkb-btn-buy-sell">Buy &amp; Sell</Link>
                   <Link to="/login" className="tkb-btn-buy-sell">Login</Link>
                   {/* <div className="tkb-account-wrap">
-                    <button type="button" className="tkb-btn-account" id="accountMenuToggle" aria-expanded="false" aria-controls="accountPopup">
+                    <button type="button" className="tkb-btn-account" id="accountMenuToggle" onClick={toggleAccountPopup} aria-expanded={isAccountOpen} aria-controls="accountPopup">
                       <span className="tkb-btn-account-icon" aria-hidden="true">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <circle cx="12" cy="8" r="3.2"/>
@@ -399,7 +342,7 @@ const Header = () => {
                       </span>
                       Account
                     </button>
-                    <div className="tkb-account-popup" id="accountPopup" role="menu" aria-label="Your Account">
+                    <div className={`tkb-account-popup${isAccountOpen ? ' is-open' : ''}`} id="accountPopup" ref={popupRef} role="menu" aria-label="Your Account" onClick={handlePopupClick}>
                       <h3 className="tkb-account-popup-title">Your Account</h3>
                       <ul className="tkb-account-popup-list">
                         <li>
@@ -441,7 +384,7 @@ const Header = () => {
                   </div> */}
                 </div>
               </div>
-              <div className="tkb-account-backdrop" id="accountPopupBackdrop"></div>
+              <div className={`tkb-account-backdrop${isAccountOpen ? ' is-open' : ''}`} id="accountPopupBackdrop" onClick={closeAccountPopup}></div>
             </div>
         </div>
         </header>
