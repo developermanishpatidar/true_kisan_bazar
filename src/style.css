@@ -4575,7 +4575,7 @@ header .row.border-bottom {
   display: inline-flex;
   align-items: center;
   gap: 3.5px;
-  box-shadow: green;
+  box-shadow: 0 0 10px rgba(255, 23, 68, 0.65), 0 2px 4px rgba(0, 0, 0, 0.15);
   animation: liveBadgePulse 1.8s ease-in-out infinite;
   pointer-events: none;
   line-height: 1.2;
