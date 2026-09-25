@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 
 const About = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="tkb-page">
       <Header />
@@ -11,9 +14,9 @@ const About = () => {
         <section className="tkb-about-hero">
           <div className="tkb-about-hero-bg" aria-hidden="true" />
           <div className="container-lg tkb-about-hero-inner">
-            <p className="tkb-section-kicker tkb-section-kicker--light">Who we are</p>
-            <h1>A trusted marketplace for India’s farmers, buyers and sellers</h1>
-            <p>Fasal Junction connects crop trade with live mandi rates, verified enquiries and a simpler way to buy and sell produce.</p>
+            <p className="tkb-section-kicker tkb-section-kicker--light">{t('about.kicker')}</p>
+            <h1>{t('about.hero_title')}</h1>
+            <p>{t('about.hero_desc')}</p>
           </div>
         </section>
 
@@ -26,18 +29,13 @@ const About = () => {
                 </div>
               </div>
               <div className="col-lg-6">
-                <p className="tkb-section-kicker">Our story</p>
-                <h2 className="tkb-page-title">Built to make crop trade fair, fast and local</h2>
-                <p className="tkb-page-copy">
-                  Farmers often sell without knowing today’s rate. Buyers spend time chasing lots that are already gone.
-                  Fasal Junction brings both sides onto one platform so quantity, variety, location and price are clear before anyone agrees a deal.
-                </p>
-                <p className="tkb-page-copy">
-                  From first enquiry to verified contact, the goal is simple: fewer middle steps, better information, and a marketplace that works as well on a phone as it does in the mandi.
-                </p>
+                <p className="tkb-section-kicker">{t('about.story_kicker')}</p>
+                <h2 className="tkb-page-title">{t('about.story_title')}</h2>
+                <p className="tkb-page-copy">{t('about.story_p1')}</p>
+                <p className="tkb-page-copy">{t('about.story_p2')}</p>
                 <div className="tkb-about-actions">
-                  <Link to="/enquiry" className="tkb-cta-btn tkb-cta-btn--primary">Post an enquiry</Link>
-                  <Link to="/product-list" className="tkb-about-text-link">Browse listings</Link>
+                  <Link to="/enquiry" className="tkb-cta-btn tkb-cta-btn--primary">{t('about.post_enquiry')}</Link>
+                  <Link to="/product-list" className="tkb-about-text-link">{t('about.browse_listings')}</Link>
                 </div>
               </div>
             </div>
@@ -47,8 +45,8 @@ const About = () => {
         <section className="tkb-about-values">
           <div className="container-lg">
             <div className="tkb-values-header">
-              <p className="tkb-values-kicker">What drives us</p>
-              <h2 className="tkb-values-title">Built on clear principles</h2>
+              <p className="tkb-values-kicker">{t('about.values_kicker')}</p>
+              <h2 className="tkb-values-title">{t('about.values_title')}</h2>
             </div>
             <div className="row g-4">
               <div className="col-md-4">
@@ -56,8 +54,8 @@ const About = () => {
                   <span className="tkb-value-icon" aria-hidden="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                   </span>
-                  <h3>Mission</h3>
-                  <p>Give every farmer and trader a trusted place to post, compare rates and close crop deals with confidence.</p>
+                  <h3>{t('about.mission')}</h3>
+                  <p>{t('about.mission_desc')}</p>
                 </article>
               </div>
               <div className="col-md-4">
@@ -65,8 +63,8 @@ const About = () => {
                   <span className="tkb-value-icon" aria-hidden="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
                   </span>
-                  <h3>Vision</h3>
-                  <p>Become India's most used crop marketplace, where mandi prices and verified enquiries sit side by side.</p>
+                  <h3>{t('about.vision')}</h3>
+                  <p>{t('about.vision_desc')}</p>
                 </article>
               </div>
               <div className="col-md-4">
@@ -74,8 +72,8 @@ const About = () => {
                   <span className="tkb-value-icon" aria-hidden="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.86 0 3.58.57 5 1.54"/><path d="M21 3l-9 9"/></svg>
                   </span>
-                  <h3>Promise</h3>
-                  <p>Free to post, clear lot details, and live rates before you agree a price — with support when you need it.</p>
+                  <h3>{t('about.promise')}</h3>
+                  <p>{t('about.promise_desc')}</p>
                 </article>
               </div>
             </div>
@@ -85,8 +83,8 @@ const About = () => {
         <section className="tkb-about-stats">
           <div className="container-lg">
             <div className="tkb-stats-header">
-              <span className="tkb-stats-badge">Milestones</span>
-              <h2 className="tkb-stats-heading">Our Success</h2>
+              <span className="tkb-stats-badge">{t('about.milestones')}</span>
+              <h2 className="tkb-stats-heading">{t('about.our_success')}</h2>
             </div>
             <div className="tkb-stats-timeline">
               <div className="tkb-stats-line" aria-hidden="true"></div>
@@ -94,22 +92,22 @@ const About = () => {
                 <div className="tkb-stat-item">
                   <div className="tkb-stat-dot" aria-hidden="true"></div>
                   <strong>200+</strong>
-                  <span>Farms Across<br />232,000 Acres</span>
+                  <span>{t('about.farms_across')}<br />{t('about.acres')}</span>
                 </div>
                 <div className="tkb-stat-item">
                   <div className="tkb-stat-dot" aria-hidden="true"></div>
                   <strong>20+</strong>
-                  <span>Countries Global<br />Expansion</span>
+                  <span>{t('about.countries')}<br />{t('about.expansion')}</span>
                 </div>
                 <div className="tkb-stat-item">
                   <div className="tkb-stat-dot" aria-hidden="true"></div>
                   <strong>250+</strong>
-                  <span>Customers</span>
+                  <span>{t('about.customers')}</span>
                 </div>
                 <div className="tkb-stat-item">
                   <div className="tkb-stat-dot" aria-hidden="true"></div>
                   <strong>95%</strong>
-                  <span>Customer<br />Satisfaction Rate</span>
+                  <span>{t('about.customer')}<br />{t('about.satisfaction_rate')}</span>
                 </div>
               </div>
             </div>
@@ -119,17 +117,17 @@ const About = () => {
         <section className="tkb-about-offer">
           <div className="container-lg">
             <div className="text-center mb-4">
-              <p className="tkb-section-kicker">What we offer</p>
-              <h2 className="tkb-page-title">A complete crop-trade workflow</h2>
+              <p className="tkb-section-kicker">{t('about.offer_kicker')}</p>
+              <h2 className="tkb-page-title">{t('about.offer_title')}</h2>
             </div>
             <div className="row g-4">
               {[
-                ['Buy & Sell', 'Post a crop or purchase enquiry with variety, quantity and location.'],
-                ['Mandi rates', 'Check today’s rate before you negotiate so the deal stays fair.'],
-                ['Verified listings', 'See farmer details, buyer views and lot photos in one card.'],
-                ['Directory', 'Find farmers, buyers and manufacturers by crop and region.'],
-                ['Guides & tips', 'Practical kisan stories, yojana notes and crop how-tos.'],
-                ['Mobile app', 'Trade on the go with the same enquiry flow on your phone.'],
+                [t('about.offer_buy_sell'), t('about.offer_buy_sell_desc')],
+                [t('about.offer_mandi'), t('about.offer_mandi_desc')],
+                [t('about.offer_listings'), t('about.offer_listings_desc')],
+                [t('about.offer_directory'), t('about.offer_directory_desc')],
+                [t('about.offer_guides'), t('about.offer_guides_desc')],
+                [t('about.offer_mobile'), t('about.offer_mobile_desc')],
               ].map(([title, text]) => (
                 <div className="col-md-6 col-lg-4" key={title}>
                   <article className="tkb-offer-card">

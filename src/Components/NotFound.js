@@ -1,19 +1,21 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import './NotFound.css';
 
-const SHORTCUTS = [
-  { to: '/', label: 'Home', hint: 'Back to the marketplace' },
-  { to: '/product-list', label: 'Listings', hint: 'Browse crops for sale' },
-  { to: '/mandi-rate', label: 'Mandi rates', hint: 'Check live prices' },
-  { to: '/enquiry', label: 'Enquiry', hint: 'Post a buy or sell request' },
-];
-
 const NotFound = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const attemptedPath = location.pathname || '/';
+
+  const SHORTCUTS = [
+    { to: '/', label: t('not_found.home'), hint: t('not_found.home_hint') },
+    { to: '/product-list', label: t('not_found.listings'), hint: t('not_found.listings_hint') },
+    { to: '/mandi-rate', label: t('not_found.mandi_rates'), hint: t('not_found.mandi_rates_hint') },
+    { to: '/enquiry', label: t('not_found.enquiry'), hint: t('not_found.enquiry_hint') },
+  ];
 
   return (
     <div className="tkb-page tkb-notfound-page">
@@ -22,16 +24,15 @@ const NotFound = () => {
         <section className="tkb-notfound" aria-labelledby="notfound-title">
           <div className="container-lg">
             <div className="tkb-notfound-card">
-              <p className="tkb-notfound-kicker">Page not found</p>
+              <p className="tkb-notfound-kicker">{t('not_found.kicker')}</p>
               <p className="tkb-notfound-code" aria-hidden="true">404</p>
-              <h1 id="notfound-title">This harvest path does not exist</h1>
+              <h1 id="notfound-title">{t('not_found.title')}</h1>
               <p className="tkb-notfound-copy">
-                We could not find <span className="tkb-notfound-path">{attemptedPath}</span> on Fasal Junction.
-                It may have been moved, or the link might be incorrect.
+                {t('not_found.message')} <span className="tkb-notfound-path">{attemptedPath}</span> {t('not_found.message_suffix')}
               </p>
               <div className="tkb-notfound-actions">
-                <Link to="/" className="tkb-cta-btn tkb-cta-btn--primary">Go to home</Link>
-                <Link to="/contact" className="tkb-notfound-ghost">Contact support</Link>
+                <Link to="/" className="tkb-cta-btn tkb-cta-btn--primary">{t('not_found.go_home')}</Link>
+                <Link to="/contact" className="tkb-notfound-ghost">{t('not_found.contact_support')}</Link>
               </div>
               <ul className="tkb-notfound-shortcuts">
                 {SHORTCUTS.map((item) => (

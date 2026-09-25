@@ -1,9 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import logo from '../assets/images/logo.svg';
 import loginArt from '../assets/images/img-login.jpg';
 
 const Login = () => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState('phone');
   const [country, setCountry] = useState('IN');
@@ -79,17 +81,25 @@ const Login = () => {
           <span className="tkb-login-dash" aria-hidden="true" />
           <span className={`tkb-login-step ${step === 'otp' ? 'is-current' : ''}`}>
             <span className="tkb-login-step-index" aria-hidden="true">2</span>
-            OTP verification
+            {t('login.step_otp')}
           </span>
           <span className="tkb-login-dash" aria-hidden="true" />
           <span className="tkb-login-step">
             <span className="tkb-login-step-index" aria-hidden="true">3</span>
-            Onboarding Dashboard
+            {t('login.step_dashboard')}
           </span>
         </nav>
 
         <div className="tkb-login-tools">
-          <button type="button" className="tkb-lang-btn">English ▾</button>
+          <select
+            className="tkb-lang-btn"
+            value={i18n.language === 'hi' ? 'hi' : 'en'}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+            style={{ border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 'inherit', fontWeight: 'inherit', color: 'inherit' }}
+          >
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+          </select>
           <button type="button" className="tkb-help-btn" aria-label="Help">?</button>
         </div>
       </header>
@@ -98,8 +108,8 @@ const Login = () => {
         <div className="tkb-login-visual">
           <img src={loginArt} alt="" />
           <div className="tkb-login-visual-copy">
-            <h2>Welcome to Fasal Junction</h2>
-            <p>Connect with farmers, buyers and sellers in a trusted crop marketplace.</p>
+            <h2>{t('login.welcome_heading')}</h2>
+            <p>{t('login.welcome_desc')}</p>
           </div>
         </div>
 
@@ -112,11 +122,11 @@ const Login = () => {
 
             {step === 'phone' ? (
               <>
-                <h2 className="tkb-login-heading">Enter phone number for verification</h2>
+                <h2 className="tkb-login-heading">{t('login.step_phone')}</h2>
                 <form className="tkb-login-form" onSubmit={handlePhoneSubmit}>
                   <div className="tkb-login-grid">
                     <div className="tkb-login-field">
-                      <label htmlFor="countrySelect">Country</label>
+                      <label htmlFor="countrySelect">{t('login.country')}</label>
                       <select
                         id="countrySelect"
                         className="tkb-login-select"
@@ -130,7 +140,7 @@ const Login = () => {
                       </select>
                     </div>
                     <div className="tkb-login-field">
-                      <label htmlFor="businessSelect">Business Type</label>
+                      <label htmlFor="businessSelect">{t('login.business_type')}</label>
                       <select
                         id="businessSelect"
                         className="tkb-login-select"
@@ -138,14 +148,14 @@ const Login = () => {
                         value={business}
                         onChange={(event) => setBusiness(event.target.value)}
                       >
-                        <option value="seller">Seller</option>
-                        <option value="buyer">Buyer</option>
+                        <option value="seller">{t('login.seller')}</option>
+                        <option value="buyer">{t('login.buyer')}</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="tkb-login-field">
-                    <label htmlFor="mobileNumber">Mobile number</label>
+                    <label htmlFor="mobileNumber">{t('login.mobile_number')}</label>
                     <div className="tkb-login-phone-row">
                       <span className="tkb-login-flag" aria-hidden="true">{flag}</span>
                       <span className="tkb-login-dial">{dialCode}</span>
@@ -155,7 +165,7 @@ const Login = () => {
                         name="mobile"
                         inputMode="numeric"
                         autoComplete="tel"
-                        placeholder="10-digit mobile number"
+                        placeholder={t('login.mobile_placeholder')}
                         maxLength="10"
                         value={digits}
                         onChange={(event) => setPhone(event.target.value)}
@@ -168,7 +178,7 @@ const Login = () => {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                     </svg>
-                    Don’t worry! Your details are safe with us.
+                    {t('login.safe_message')}
                   </p>
 
                   <label className="tkb-login-terms">
@@ -179,18 +189,18 @@ const Login = () => {
                       checked={accepted}
                       onChange={(event) => setAccepted(event.target.checked)}
                     />
-                    <span>I accept all the <Link to="#">Terms</Link> and <Link to="#">Privacy Policy</Link></span>
+                    <span>{t('login.terms_accept')} <Link to="#">{t('login.terms')}</Link> & <Link to="#">{t('login.privacy_policy')}</Link></span>
                   </label>
 
                   <button type="submit" className="tkb-login-next" disabled={!canContinue}>
-                    Next
+                    {t('login.next')}
                   </button>
                 </form>
               </>
             ) : (
               <>
-                <h2 className="tkb-login-heading">OTP verification</h2>
-                <p className="tkb-login-safe">Enter the 4-digit code sent to {dialCode} {digits}.</p>
+                <h2 className="tkb-login-heading">{t('login.otp_heading')}</h2>
+                <p className="tkb-login-safe">{t('login.otp_message')} {dialCode} {digits}.</p>
                 <form className="tkb-login-form" onSubmit={handleOtpSubmit}>
                   <div className="tkb-otp-inputs">
                     {otp.map((value, index) => (
@@ -209,10 +219,10 @@ const Login = () => {
                     ))}
                   </div>
                   <button type="submit" className="tkb-login-next" disabled={!otpComplete}>
-                    Verify &amp; Continue
+                    {t('login.verify_continue')}
                   </button>
                   <button type="button" className="tkb-login-back" onClick={() => setStep('phone')}>
-                    Change number
+                    {t('login.change_number')}
                   </button>
                 </form>
               </>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import logo  from '../assets/images/logo.svg'
 
 const Header = () => {
 
+  const { t, i18n } = useTranslation();
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   // const popupRef = useRef(null);
 
@@ -120,7 +122,7 @@ const Header = () => {
     <div className="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
 
       <div className="offcanvas-header justify-content-between">
-        <h4 className="fw-normal text-uppercase fs-6">Category</h4>
+        <h4 className="fw-normal text-uppercase fs-6">{t('header.category')}</h4>
         <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
 
@@ -130,61 +132,61 @@ const Header = () => {
           <li className="nav-item border-dashed active">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-vegetables"></use></svg>
-              <span>Vegetables</span>
+              <span>{t('categories.vegetables')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-oilseeds"></use></svg>
-              <span>Oil Seeds</span>
+              <span>{t('categories.oil_seeds')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-fruits"></use></svg>
-              <span>Fruits</span>
+              <span>{t('categories.fruits')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-pulses"></use></svg>
-              <span>Pulse and Legumes</span>
+              <span>{t('categories.pulse_legumes')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-cashcrops"></use></svg>
-              <span>Cash Crops</span>
+              <span>{t('categories.cash_crops')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-flower"></use></svg>
-              <span>Flower</span>
+              <span>{t('categories.flower')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-spices"></use></svg>
-              <span>Spices</span>
+              <span>{t('categories.spices')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-dryfruits"></use></svg>
-              <span>Dry Fruits</span>
+              <span>{t('categories.dry_fruits')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-fertilizer"></use></svg>
-              <span>Organic Fertilizer</span>
+              <span>{t('categories.organic_fertilizer')}</span>
             </Link>
           </li>
           <li className="nav-item border-dashed">
             <Link to="#" className="nav-link d-flex align-items-center gap-3 text-dark p-2">
               <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cat-animalfeed"></use></svg>
-              <span>Animal Feed</span>
+              <span>{t('categories.animal_feed')}</span>
             </Link>
           </li>
           {/* <li className="nav-item border-dashed">
@@ -263,7 +265,7 @@ const Header = () => {
             <div className="col-sm-8 col-md-6 offset-md-0 col-lg-3">
                 <div className="search-bar tkb-header-search bg-light p-2 rounded-4">
                     <form id="search-form" action="#" method="post">
-                    <input type="text" className="form-control border-0 bg-transparent" placeholder="Search for more than 20,000 products" />
+                    <input type="text" className="form-control border-0 bg-transparent" placeholder={t('header.search_placeholder')} />
                     </form>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/></svg>
                 </div>
@@ -272,34 +274,34 @@ const Header = () => {
             <div className="col-lg-4">
                 <ul className="navbar-nav list-unstyled d-flex flex-row gap-3 gap-lg-4 justify-content-center flex-wrap align-items-center mb-0 fw-bold text-dark">
                 <li className="nav-item active">
-                    <Link to="/" className="nav-link">Home</Link>
+                    <Link to="/" className="nav-link">{t('header.home')}</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="#" className="nav-link">Crops</Link>
+                    <Link to="#" className="nav-link">{t('header.crops')}</Link>
                 </li>
                 {/* <li className="nav-item">
                     <Link to="#" className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">Cart</Link>
                 </li> */}
                 <li className="nav-item">
-                    <Link to="#" className="nav-link">Seeds</Link>
+                    <Link to="#" className="nav-link">{t('header.seeds')}</Link>
                 </li>
                 <li className="nav-item tkb-nav-mandi-item">
                     <Link to="/mandi-rate" className="nav-link tkb-nav-mandi-link">
-                        Mandi Rates
+                        {t('header.mandi_rates')}
                         <span className="tkb-header-live-badge" aria-label="Live rates">
                             <span className="tkb-live-radar-dot">
                                 <span className="tkb-live-radar-ping"></span>
                             </span>
-                            LIVE
+                            {t('header.live')}
                         </span>
                     </Link>
                 </li>
                 <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle pe-3" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">More</Link>
+                    <Link className="nav-link dropdown-toggle pe-3" role="button" id="pages" data-bs-toggle="dropdown" aria-expanded="false">{t('header.more')}</Link>
                     <ul className="dropdown-menu border-0 p-3 rounded-0 shadow" aria-labelledby="pages">
-                      <li><Link to="/about" className="dropdown-item">About Us </Link></li>
-                      <li><Link to="/contact" className="dropdown-item">Contact </Link></li>
-                      <li><Link to="/blog" className="dropdown-item">Blog </Link></li>
+                      <li><Link to="/about" className="dropdown-item">{t('header.about_us')} </Link></li>
+                      <li><Link to="/contact" className="dropdown-item">{t('header.contact')} </Link></li>
+                      <li><Link to="/blog" className="dropdown-item">{t('header.blog')} </Link></li>
                     </ul>
                 </li>
                 </ul>
@@ -326,12 +328,21 @@ const Header = () => {
             </div> */}
               <div className="col-sm-8 col-lg-3 d-flex align-items-center justify-content-center justify-content-sm-end">
                 <div className="tkb-header-actions">
-                  <select name="language" className="tkb-btn-buy-sell tkb-lang-select" aria-label="Language" defaultValue="english">
+                  <select
+                    name="language"
+                    className="tkb-btn-buy-sell tkb-lang-select"
+                    aria-label="Language"
+                    value={i18n.language === 'hi' ? 'hindi' : 'english'}
+                    onChange={(e) => {
+                      const lang = e.target.value === 'hindi' ? 'hi' : 'en';
+                      i18n.changeLanguage(lang);
+                    }}
+                  >
                     <option value="english">English</option>
-                    <option value="hindi">Hindi</option>
+                    <option value="hindi">हिन्दी</option>
                   </select>
-                  <Link to="/enquiry" className="tkb-btn-buy-sell">Buy &amp; Sell</Link>
-                  <Link to="/login" className="tkb-btn-buy-sell">Login</Link>
+                  <Link to="/enquiry" className="tkb-btn-buy-sell">{t('header.buy_sell')}</Link>
+                  <Link to="/login" className="tkb-btn-buy-sell">{t('header.login')}</Link>
                   {/* <div className="tkb-account-wrap">
                     <button type="button" className="tkb-btn-account" id="accountMenuToggle" onClick={toggleAccountPopup} aria-expanded={isAccountOpen} aria-controls="accountPopup">
                       <span className="tkb-btn-account-icon" aria-hidden="true">

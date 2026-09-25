@@ -3221,7 +3221,6 @@ select.tkb-lang-select option {
   align-items: center;
   gap: 0.65rem;
   position: relative;
-  z-index: 1081;
 }
 
 .tkb-header-search {

@@ -6,6 +6,7 @@ import './assets/css/vendor.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import App from './App';
+import './i18n';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
