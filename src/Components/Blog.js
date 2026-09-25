@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import './Blog.css';
@@ -318,8 +319,20 @@ const CATEGORIES = [
   'Soil Health'
 ];
 
+const CATEGORY_MAP = {
+  'All': { en: 'All', hi: 'सभी विषय' },
+  'Organic Farming': { en: 'Organic Farming', hi: 'जैविक खेती' },
+  'Technology': { en: 'Technology', hi: 'कृषि तकनीक' },
+  'Market Insights': { en: 'Market Insights', hi: 'बाज़ार अंतर्दृष्टि' },
+  'Crop Guide': { en: 'Crop Guide', hi: 'फसल मार्गदर्शिका' },
+  'Government Schemes': { en: 'Government Schemes', hi: 'सरकारी योजनाएं' },
+  'Soil Health': { en: 'Soil Health', hi: 'मृदा स्वास्थ्य' }
+};
+
 /* ─── Component ─── */
 const Blog = () => {
+  const { t, i18n } = useTranslation();
+  const isHi = i18n.language === 'hi';
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [openArticle, setOpenArticle] = useState(null);
@@ -362,11 +375,11 @@ const Blog = () => {
             <div className="blog-hero-inner">
               <span className="blog-hero-kicker">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                Kisan Knowledge Hub
+                {t('blog_page.kicker')}
               </span>
-              <h1 className="blog-hero-title">Blogs &amp; Kisan Guides</h1>
+              <h1 className="blog-hero-title">{t('blog_page.hero_title')}</h1>
               <p className="blog-hero-subtitle">
-                Expert articles, seasonal tips, and market insights to help Indian farmers grow smarter and earn better.
+                {t('blog_page.hero_desc')}
               </p>
 
               {/* Search */}
@@ -379,7 +392,7 @@ const Blog = () => {
                 <input
                   className="blog-search-input"
                   type="text"
-                  placeholder="Search articles, topics, or tags..."
+                  placeholder={t('blog_page.search_placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -399,7 +412,7 @@ const Blog = () => {
                   className={`blog-cat-pill${selectedCategory === cat ? ' active' : ''}`}
                   onClick={() => setSelectedCategory(cat)}
                 >
-                  {cat}
+                  {CATEGORY_MAP[cat]?.[i18n.language] || cat}
                 </button>
               ))}
             </div>
@@ -412,11 +425,11 @@ const Blog = () => {
             {featured && (
               <div className="blog-featured-card" onClick={() => setOpenArticle(featured)}>
                 <div className="blog-featured-image">
-                  <span className="blog-featured-badge">★ Featured</span>
+                  <span className="blog-featured-badge">{isHi ? '★ विशेष' : '★ Featured'}</span>
                   <img src={featured.image} alt={featured.title} loading="lazy" />
                 </div>
                 <div className="blog-featured-content">
-                  <span className="blog-featured-tag">{featured.category}</span>
+                  <span className="blog-featured-tag">{CATEGORY_MAP[featured.category]?.[i18n.language] || featured.category}</span>
                   <h2 className="blog-featured-title">{featured.title}</h2>
                   <p className="blog-featured-excerpt">{featured.excerpt}</p>
                   <div className="blog-author-row">
@@ -427,7 +440,7 @@ const Blog = () => {
                         <p className="blog-author-role">{featured.date} · {featured.readTime}</p>
                       </div>
                     </div>
-                    <span className="blog-read-cta">Read →</span>
+                    <span className="blog-read-cta">{isHi ? 'पढ़ें →' : 'Read →'}</span>
                   </div>
                 </div>
               </div>
@@ -437,15 +450,15 @@ const Blog = () => {
             {grid.length > 0 && (
               <>
                 <div className="blog-section-header">
-                  <h2 className="blog-section-title">Latest Articles</h2>
-                  <span className="blog-count-badge">{grid.length} articles</span>
+                  <h2 className="blog-section-title">{isHi ? 'नवीनतम लेख' : 'Latest Articles'}</h2>
+                  <span className="blog-count-badge">{isHi ? `${grid.length} लेख` : `${grid.length} articles`}</span>
                 </div>
 
                 <div className="blog-grid">
                   {grid.map((article) => (
                     <div className="blog-card" key={article.id} onClick={() => setOpenArticle(article)}>
                       <div className="blog-card-image">
-                        <span className="blog-card-tag">{article.category}</span>
+                        <span className="blog-card-tag">{CATEGORY_MAP[article.category]?.[i18n.language] || article.category}</span>
                         <img src={article.image} alt={article.title} loading="lazy" />
                       </div>
                       <div className="blog-card-body">
@@ -473,10 +486,10 @@ const Blog = () => {
             {/* Empty state */}
             {filtered.length === 0 && (
               <div className="blog-empty-state">
-                <h3>No articles found</h3>
-                <p>Try a different search term or category.</p>
+                <h3>{t('blog_page.no_articles')}</h3>
+                <p>{isHi ? 'कोई भिन्न खोज शब्द या श्रेणी आज़माएँ।' : 'Try a different search term or category.'}</p>
                 <button className="blog-reset-btn" onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}>
-                  Reset Filters
+                  {isHi ? 'फ़िल्टर रीसेट करें' : 'Reset Filters'}
                 </button>
               </div>
             )}
@@ -484,23 +497,23 @@ const Blog = () => {
             {/* Newsletter */}
             <div className="blog-newsletter-box">
               <div className="blog-newsletter-content">
-                <span className="blog-newsletter-badge">📩 Newsletter</span>
-                <h3>Get Farming Tips in Your Inbox</h3>
-                <p>Weekly expert advice, mandi price alerts, and seasonal crop guides — delivered free.</p>
+                <span className="blog-newsletter-badge">{isHi ? '📩 न्यूज़लेटर' : '📩 Newsletter'}</span>
+                <h3>{isHi ? 'अपने इनबॉक्स में कृषि टिप्स प्राप्त करें' : 'Get Farming Tips in Your Inbox'}</h3>
+                <p>{isHi ? 'साप्ताहिक विशेषज्ञ सलाह, मंडी भाव अलर्ट और मौसमी फसल गाइड — मुफ़्त पाएँ।' : 'Weekly expert advice, mandi price alerts, and seasonal crop guides — delivered free.'}</p>
               </div>
               {newsletterDone ? (
-                <span className="blog-newsletter-success">✓ Subscribed! Check your email.</span>
+                <span className="blog-newsletter-success">{isHi ? '✓ सदस्यता ले ली गई! अपना ईमेल जांचें।' : '✓ Subscribed! Check your email.'}</span>
               ) : (
                 <form className="blog-newsletter-form" onSubmit={handleNewsletterSubmit}>
                   <input
                     className="blog-newsletter-input"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder={isHi ? 'अपना ईमेल दर्ज करें' : 'Enter your email'}
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     required
                   />
-                  <button type="submit" className="blog-newsletter-btn">Subscribe</button>
+                  <button type="submit" className="blog-newsletter-btn">{isHi ? 'सब्सक्राइब करें' : 'Subscribe'}</button>
                 </form>
               )}
             </div>
@@ -518,7 +531,7 @@ const Blog = () => {
               <img src={openArticle.image} alt={openArticle.title} />
             </div>
             <div className="blog-modal-body">
-              <span className="blog-modal-tag">{openArticle.category}</span>
+              <span className="blog-modal-tag">{CATEGORY_MAP[openArticle.category]?.[i18n.language] || openArticle.category}</span>
               <h2 className="blog-modal-title">{openArticle.title}</h2>
               <div className="blog-modal-author-bar">
                 <img className="blog-author-avatar" src={openArticle.authorImg} alt={openArticle.author} />
@@ -534,7 +547,7 @@ const Blog = () => {
               </div>
               {openArticle.takeaways && (
                 <div className="blog-modal-takeaways">
-                  <h4>🌾 Key Takeaways</h4>
+                  <h4>🌾 {t('blog_page.key_takeaways')}</h4>
                   <ul>
                     {openArticle.takeaways.map((t, i) => (
                       <li key={i}>{t}</li>

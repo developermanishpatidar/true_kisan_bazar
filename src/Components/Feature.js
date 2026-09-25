@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Feature = () => {
+  const { t } = useTranslation();
+
   return (
     <div>
         <svg xmlns="http://www.w3.org/2000/svg" style={{display: "none"}}>
@@ -21,8 +24,8 @@ const Feature = () => {
                     <svg width="32" height="32"><use xlinkHref="#package"></use></svg>
                 </div>
                 <div className="card-body p-0">
-                    <h5>Free delivery</h5>
-                    <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                    <h5>{t('home.feature_delivery')}</h5>
+                    <p className="card-text">{t('home.feature_delivery_desc')}</p>
                 </div>
                 </div>
             </div>
@@ -32,8 +35,8 @@ const Feature = () => {
                     <svg width="32" height="32"><use xlinkHref="#secure"></use></svg>
                 </div>
                 <div className="card-body p-0">
-                    <h5>100% secure payment</h5>
-                    <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                    <h5>{t('home.feature_secure')}</h5>
+                    <p className="card-text">{t('home.feature_secure_desc')}</p>
                 </div>
                 </div>
             </div>
@@ -43,8 +46,8 @@ const Feature = () => {
                     <svg width="32" height="32"><use xlinkHref="#quality"></use></svg>
                 </div>
                 <div className="card-body p-0">
-                    <h5>Quality guarantee</h5>
-                    <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                    <h5>{t('home.feature_quality')}</h5>
+                    <p className="card-text">{t('home.feature_quality_desc')}</p>
                 </div>
                 </div>
             </div>
@@ -54,8 +57,8 @@ const Feature = () => {
                     <svg width="32" height="32"><use xlinkHref="#savings"></use></svg>
                 </div>
                 <div className="card-body p-0">
-                    <h5>guaranteed savings</h5>
-                    <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                    <h5>{t('home.feature_savings')}</h5>
+                    <p className="card-text">{t('home.feature_savings_desc')}</p>
                 </div>
                 </div>
             </div>
@@ -65,8 +68,8 @@ const Feature = () => {
                     <svg width="32" height="32"><use xlinkHref="#offers"></use></svg>
                 </div>
                 <div className="card-body p-0">
-                    <h5>Daily offers</h5>
-                    <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                    <h5>{t('home.feature_offers')}</h5>
+                    <p className="card-text">{t('home.feature_offers_desc')}</p>
                 </div>
                 </div>
             </div>
@@ -74,7 +77,7 @@ const Feature = () => {
         </div>
         </section>
     </div>
-  )
-}
+  );
+};
 
 export default Feature;

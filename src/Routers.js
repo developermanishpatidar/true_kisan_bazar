@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Components/Home";
 import Enquiry from "./Components/Enquiry";
 import ProductDetails from "./Components/ProductDetails";
@@ -10,6 +10,16 @@ import Contact from "./Components/Contact";
 import MandiRate from "./Components/MandiRate";
 import Blog from "./Components/Blog";
 import NotFound from "./Components/NotFound";
+
+import AdminLayout from "./Admin/AdminLayout";
+import Overview from "./Admin/pages/Overview";
+import Enquiries from "./Admin/pages/Enquiries";
+import Products from "./Admin/pages/Products";
+import MandiRates from "./Admin/pages/MandiRates";
+import Users from "./Admin/pages/Users";
+import Blogs from "./Admin/pages/Blogs";
+import SupportTickets from "./Admin/pages/SupportTickets";
+import Settings from "./Admin/pages/Settings";
 
 const Routers = () => {
   return (
@@ -26,6 +36,20 @@ const Routers = () => {
         <Route path="/support" element={<Contact />} />
         <Route path="/mandi-rate" element={<MandiRate />} />
         <Route path="/blog" element={<Blog />} />
+
+        {/* Admin Dashboard Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<Overview />} />
+          <Route path="enquiries" element={<Enquiries />} />
+          <Route path="products" element={<Products />} />
+          <Route path="mandi-rates" element={<MandiRates />} />
+          <Route path="users" element={<Users />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="support" element={<SupportTickets />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

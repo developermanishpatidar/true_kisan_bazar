@@ -343,6 +343,7 @@ const Header = () => {
                   </select>
                   <Link to="/enquiry" className="tkb-btn-buy-sell">{t('header.buy_sell')}</Link>
                   <Link to="/login" className="tkb-btn-buy-sell">{t('header.login')}</Link>
+                  <Link to="/admin" className="tkb-btn-buy-sell" style={{ background: '#14532d', color: '#fff', borderColor: '#16a34a' }}>Admin</Link>
                   {/* <div className="tkb-account-wrap">
                     <button type="button" className="tkb-btn-account" id="accountMenuToggle" onClick={toggleAccountPopup} aria-expanded={isAccountOpen} aria-controls="accountPopup">
                       <span className="tkb-btn-account-icon" aria-hidden="true">

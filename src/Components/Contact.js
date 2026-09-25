@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import './Contact.css';
@@ -19,6 +20,9 @@ const YOUTUBE_VIDEOS = [
 ];
 
 const Contact = () => {
+  const { t, i18n } = useTranslation();
+  const isHi = i18n.language === 'hi';
+
   const [formData, setFormData] = useState({
     name: '',
     mobile_number: '',
@@ -113,13 +117,21 @@ const Contact = () => {
           <header className="support-header">
             <div className="support-row">
               <div className="support-text">
-                <h1 className="support-title">Welcome to Fasal Junction Support Center</h1>
-                <p className="support-subtitle">We’re here to support you 24/7 with the best solutions</p>
+                <h1 className="support-title">
+                  {isHi ? 'फसल जंक्शन सहायता केंद्र में आपका स्वागत है' : 'Welcome to Fasal Junction Support Center'}
+                </h1>
+                <p className="support-subtitle">
+                  {isHi ? 'हम 24/7 सर्वोत्तम समाधानों के साथ आपकी सहायता के लिए उपस्थित हैं' : 'We’re here to support you 24/7 with the best solutions'}
+                </p>
                 <p className="Support-Paragraph">
-                  Our support team is available 24/7 to assist you with any queries or issues. Whether it’s related to orders, payments, or platform usage, we're here to provide quick and reliable help.
+                  {isHi
+                    ? 'हमारी सहायता टीम किसी भी प्रश्न या समस्या में आपकी मदद के लिए 24/7 उपलब्ध है। चाहे ऑर्डर, भुगतान या प्लेटफ़ॉर्म के उपयोग से संबंधित हो, हम त्वरित और विश्वसनीय सहायता प्रदान करने के लिए यहां हैं।'
+                    : "Our support team is available 24/7 to assist you with any queries or issues. Whether it’s related to orders, payments, or platform usage, we're here to provide quick and reliable help."}
                 </p>
                 <p className="Support-Paragraph2">
-                  Response and resolution timelines may vary depending on the nature of the request
+                  {isHi
+                    ? 'अनुरोध की प्रकृति के आधार पर प्रतिक्रिया और समाधान की समयसीमा भिन्न हो सकती है'
+                    : 'Response and resolution timelines may vary depending on the nature of the request'}
                 </p>
               </div>
               <div className="support-images">
@@ -144,12 +156,12 @@ const Contact = () => {
                 <div className="Contact-images">
                   <img src={supportClip || "/SupportClip.svg"} alt="Support Ribbon Banner" />
                 </div>
-                <h2 className="section-title">Contact Our Support Team</h2>
+                <h2 className="section-title">{t('contact.form_title')}</h2>
               </div>
 
               {submitted && (
                 <div className="success-message">
-                  <strong>Thank you for contacting us!</strong> Your message has been received. Our support team will get back to you shortly.
+                  <strong>{t('contact.success_title')}</strong> {t('contact.success_desc')}
                 </div>
               )}
 
@@ -161,12 +173,12 @@ const Contact = () => {
 
               <form className="support-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label className="attachments-title" htmlFor="contact-name">Name</label>
+                  <label className="attachments-title" htmlFor="contact-name">{t('contact.full_name')}</label>
                   <input
                     id="contact-name"
                     type="text"
                     name="name"
-                    placeholder="Your Full Name"
+                    placeholder={t('contact.full_name_placeholder')}
                     required
                     value={formData.name}
                     onChange={handleChange}
@@ -175,24 +187,24 @@ const Contact = () => {
 
                 <div className="form-group2">
                   <div className="form-group2-field">
-                    <label className="attachments-title" htmlFor="contact-mobile">Mobile</label>
+                    <label className="attachments-title" htmlFor="contact-mobile">{t('contact.phone')}</label>
                     <input
                       id="contact-mobile"
                       type="tel"
                       name="mobile_number"
-                      placeholder="Mobile Number"
+                      placeholder={t('contact.phone_placeholder')}
                       required
                       value={formData.mobile_number}
                       onChange={handleChange}
                     />
                   </div>
                   <div className="form-group2-field">
-                    <label className="attachments-title" htmlFor="contact-email">Email</label>
+                    <label className="attachments-title" htmlFor="contact-email">{t('contact.email')}</label>
                     <input
                       id="contact-email"
                       type="email"
                       name="email"
-                      placeholder="Email"
+                      placeholder={t('contact.email_placeholder')}
                       required
                       value={formData.email}
                       onChange={handleChange}
@@ -201,12 +213,12 @@ const Contact = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="attachments-title" htmlFor="contact-subject">Subject</label>
+                  <label className="attachments-title" htmlFor="contact-subject">{t('contact.subject')}</label>
                   <input
                     id="contact-subject"
                     type="text"
                     name="subject"
-                    placeholder="Subject"
+                    placeholder={t('contact.subject')}
                     required
                     value={formData.subject}
                     onChange={handleChange}
@@ -214,11 +226,11 @@ const Contact = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="attachments-title" htmlFor="contact-message">Message</label>
+                  <label className="attachments-title" htmlFor="contact-message">{t('contact.message')}</label>
                   <textarea
                     id="contact-message"
                     name="message"
-                    placeholder="How can we help you? Please provide details about your issue or question."
+                    placeholder={t('contact.message_placeholder')}
                     required
                     rows={3}
                     value={formData.message}
@@ -227,7 +239,7 @@ const Contact = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="file-label" htmlFor="contact-files">Attachments (Optional)</label>
+                  <label className="file-label" htmlFor="contact-files">{t('contact.attachment')}</label>
                   <input
                     id="contact-files"
                     ref={fileInputRef}
@@ -247,7 +259,7 @@ const Contact = () => {
                   {attachments.length > 0 && (
                     <div className="attachments-list">
                       <label className="attachments-title" style={{ paddingLeft: 0, marginBottom: '0.4rem' }}>
-                        Attached Files ({attachments.length}):
+                        {isHi ? `संलग्न फ़ाइलें (${attachments.length}):` : `Attached Files (${attachments.length}):`}
                       </label>
                       {attachments.map((file, idx) => (
                         <div className="attachment-item" key={idx}>
@@ -266,12 +278,12 @@ const Contact = () => {
                     </div>
                   )}
                   <small className="file-info">
-                    Supported: Images (JPG, PNG, GIF, WebP), Documents (PDF, DOC, DOCX, TXT, XLS, XLSX, CSV). Max 10MB per file.
+                    {t('contact.attachment_desc')}
                   </small>
                 </div>
 
                 <button className="submit-button" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? t('contact.submitting') : t('contact.submit')}
                 </button>
               </form>
             </section>
@@ -279,7 +291,7 @@ const Contact = () => {
 
           {/* Learn More / Video Grid Section */}
           <section className="support-info">
-            <h2 className="youtube-section-title">Learn More About Fasal Junction</h2>
+            <h2 className="youtube-section-title">{t('contact.video_title')}</h2>
             <div className="video-grid">
               {YOUTUBE_VIDEOS.map((video, index) => (
                 <div className="video-card" key={video.id}>

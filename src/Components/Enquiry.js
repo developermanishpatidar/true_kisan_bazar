@@ -96,9 +96,9 @@ const Enquiry = () => {
                             <input type="number" className="enquiry-input enquiry-quantity-input" id="quantity" name="quantity" placeholder={t('enquiry.enter_quantity')} min="0" step="any" required />
                             <div className="enquiry-quantity-unit">
                                 <select className="enquiry-unit-select" name="quantity_unit" aria-label="Quantity unit" defaultValue="kg">
-                                <option value="kg">kg</option>
-                                <option value="ton">Ton</option>
-                                <option value="quintal">Quintal</option>
+                                <option value="kg">{t('common.kg')}</option>
+                                <option value="ton">{t('common.ton')}</option>
+                                <option value="quintal">{t('common.quintal')}</option>
                                 </select>
                             </div>
                             </div>

@@ -467,6 +467,95 @@ export const initialMandiRates = [
     category: 'Fruits',
     unit: 'Quintal',
     arrival_date: 'Today',
-    image: 'https://d1yqhfsa94yj9h.cloudfront.net/media/product_subcategories/watermelon.png'
   }
 ];
+
+export const MANDI_TRANSLATIONS_HI = {
+  commodities: {
+    'Brinjal': 'बैंगन',
+    'Bhindi(Ladies Fin...': 'भिंडी',
+    'Bhindi': 'भिंडी',
+    'Tomato': 'टमाटर',
+    'Banana': 'केला',
+    'Potato': 'आलू',
+    'Onion': 'प्याज',
+    'Wheat': 'गेहूं',
+    'Rice': 'चावल / धान',
+    'Soybean': 'सोयाबीन',
+    'Mustard': 'सरसों',
+    'Cotton': 'कपास',
+    'Green Chilli': 'हरी मिर्च',
+    'Garlic': 'लहसुन',
+    'Ginger': 'अदरक',
+    'Apple': 'सेब',
+    'Mango': 'आम',
+    'Pomegranate': 'अनार',
+    'Turmeric': 'हल्दी',
+    'Cumin(Jeera)': 'जीरा',
+    'Cumin': 'जीरा',
+    'Red Chilli': 'लाल मिर्च',
+    'Groundnut': 'मूंगफली',
+    'Maize': 'मक्का',
+    'Chickpea(Chana)': 'चना',
+    'Chickpea': 'चना',
+    'Pigeon Pea(Tur)': 'तुअर / अरहर',
+    'Pigeon Pea': 'तुअर / अरहर',
+    'Barley': 'जौ',
+    'Cardamom': 'इलायची',
+    'Watermelon': 'तरबूज',
+    'Cauliflower': 'फूलगोभी',
+    'Cabbage': 'पत्तागोभी',
+    'Carrot': 'गाजर',
+    'Coriander': 'धनिया',
+    'Fenugreek': 'मेथी',
+    'Green Pea': 'हरी मटर',
+    'Lemon': 'नींबू',
+    'Papaya': 'पपीता',
+    'Guava': 'अमरूद',
+    'Orange': 'संतरा',
+    'Grapes': 'अंगूर',
+    'Sugarcane': 'गन्ना',
+    'Moong(Green Gram)': 'मूंग',
+    'Urad(Black Gram)': 'उड़द',
+    'Masoor(Lentil)': 'मसूर'
+  },
+  states: {
+    'Gujarat': 'गुजरात',
+    'Bihar': 'बिहार',
+    'Andhra Pradesh': 'आंध्र प्रदेश',
+    'Uttar Pradesh': 'उत्तर प्रदेश',
+    'Maharashtra': 'महाराष्ट्र',
+    'Madhya Pradesh': 'मध्य प्रदेश',
+    'Rajasthan': 'राजस्थान',
+    'Punjab': 'पंजाब',
+    'Haryana': 'हरियाणा',
+    'Karnataka': 'कर्नाटक',
+    'Tamil Nadu': 'तमिलनाडु',
+    'Kerala': 'केरल',
+    'West Bengal': 'पश्चिम बंगाल',
+    'Telangana': 'तेलंगाना',
+    'Odisha': 'ओडिशा',
+    'India': 'भारत'
+  },
+  units: {
+    'Quintal': 'क्विंटल',
+    'Kg': 'किलो',
+    'Ton': 'टन'
+  },
+  arrival: {
+    'Today': 'आज',
+    'Yesterday': 'कल'
+  }
+};
+
+export const getLocalizedMandiRate = (item, lang = 'en') => {
+  if (!item || lang !== 'hi') return item;
+  return {
+    ...item,
+    commodity: MANDI_TRANSLATIONS_HI.commodities[item.commodity] || item.commodity,
+    state: MANDI_TRANSLATIONS_HI.states[item.state] || item.state,
+    unit: MANDI_TRANSLATIONS_HI.units[item.unit] || item.unit || 'क्विंटल',
+    arrival_date: MANDI_TRANSLATIONS_HI.arrival[item.arrival_date] || item.arrival_date || 'आज'
+  };
+};
+

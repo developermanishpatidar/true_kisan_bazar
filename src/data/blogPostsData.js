@@ -221,3 +221,24 @@ export const blogCategories = [
   'Agri Yojana',
   'Success Stories'
 ];
+
+export const BLOG_TRANSLATIONS_HI = {
+  categories: {
+    'All': 'सभी विषय',
+    'Mandi & Prices': 'मंडी और भाव',
+    'Kisan Guides': 'किसान मार्गदर्शिका',
+    'Crop Protection': 'फसल सुरक्षा',
+    'Agri Yojana': 'कृषि योजनाएं',
+    'Success Stories': 'सफलता की कहानियां'
+  },
+  readTime: 'मिनट पढ़ें'
+};
+
+export const getLocalizedBlogPost = (post, lang = 'en') => {
+  if (!post || lang !== 'hi') return post;
+  return {
+    ...post,
+    category: BLOG_TRANSLATIONS_HI.categories[post.category] || post.category
+  };
+};
+

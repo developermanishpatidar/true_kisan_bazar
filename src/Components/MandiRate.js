@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import './MandiRate.css';
-import { initialMandiRates } from '../data/mandiRatesData';
+import { initialMandiRates, getLocalizedMandiRate } from '../data/mandiRatesData';
 
-const CATEGORIES = ['All', 'Vegetables', 'Fruits', 'Grains & Pulses', 'Spices', 'Cash Crops'];
+const CATEGORIES = [
+  { key: 'all', label: 'All' },
+  { key: 'vegetables', label: 'Vegetables' },
+  { key: 'fruits', label: 'Fruits' },
+  { key: 'grains_pulses', label: 'Grains & Pulses' },
+  { key: 'spices', label: 'Spices' },
+  { key: 'cash_crops', label: 'Cash Crops' }
+];
 
 const MandiRate = () => {
+  const { t, i18n } = useTranslation();
   const [rates, setRates] = useState(initialMandiRates);
   const [visibleCount, setVisibleCount] = useState(12);
   const [searchQuery, setSearchQuery] = useState('');
@@ -79,8 +88,8 @@ const MandiRate = () => {
     setVisibleCount(12); // Reset back to 12 when searching
   };
 
-  const handleCategorySelect = (cat) => {
-    setSelectedCategory(cat);
+  const handleCategorySelect = (catLabel) => {
+    setSelectedCategory(catLabel);
     setVisibleCount(12); // Reset back to 12 when changing category
   };
 
@@ -98,9 +107,9 @@ const MandiRate = () => {
             {/* Header with Title and Live Badge */}
             <div className="mandi-header-bar">
               <div className="mandi-title-group">
-                <h1 className="mandi-main-title">Live Mandi Prices</h1>
+                <h1 className="mandi-main-title">{t('mandi_page.title')}</h1>
                 <div className="mandi-live-badge">
-                  Live <span className="mandi-live-dot" aria-hidden="true" />
+                  {t('mandi_page.live')} <span className="mandi-live-dot" aria-hidden="true" />
                 </div>
               </div>
             </div>
@@ -118,7 +127,7 @@ const MandiRate = () => {
                   <input
                     type="text"
                     className="mandi-search-input"
-                    placeholder="Search by commodity, market, or state..."
+                    placeholder={t('mandi_page.search_placeholder')}
                     value={searchQuery}
                     onChange={handleSearchChange}
                   />
@@ -139,14 +148,14 @@ const MandiRate = () => {
               <div className="mandi-categories-bar" role="tablist">
                 {CATEGORIES.map((cat) => (
                   <button
-                    key={cat}
+                    key={cat.key}
                     type="button"
                     role="tab"
-                    aria-selected={selectedCategory === cat}
-                    className={`mandi-cat-chip ${selectedCategory === cat ? 'active' : ''}`}
-                    onClick={() => handleCategorySelect(cat)}
+                    aria-selected={selectedCategory === cat.label}
+                    className={`mandi-cat-chip ${selectedCategory === cat.label ? 'active' : ''}`}
+                    onClick={() => handleCategorySelect(cat.label)}
                   >
-                    {cat}
+                    {t(`mandi_page.${cat.key}`, cat.label)}
                   </button>
                 ))}
               </div>
@@ -155,47 +164,54 @@ const MandiRate = () => {
             {/* Grid of Mandi Rate Cards */}
             {displayedRates.length > 0 ? (
               <div className="mandi-grid">
-                {displayedRates.map((item) => (
-                  <div className="mandi-card" key={item.id}>
-                    <div className="mandi-card-top">
-                      <div className="mandi-image-circle">
-                        <img
-                          src={item.image}
-                          alt={item.commodity}
-                          loading="lazy"
-                          onError={(e) => {
-                            e.target.src = 'https://d1yqhfsa94yj9h.cloudfront.net/media/product_subcategories/tomato.png';
-                          }}
-                        />
+                {displayedRates.map((rawItem) => {
+                  const item = getLocalizedMandiRate(rawItem, i18n.language);
+                  return (
+                    <div className="mandi-card" key={item.id}>
+                      <div className="mandi-card-top">
+                        <div className="mandi-image-circle">
+                          <img
+                            src={item.image}
+                            alt={item.commodity}
+                            loading="lazy"
+                            onError={(e) => {
+                              e.target.src = 'https://d1yqhfsa94yj9h.cloudfront.net/media/product_subcategories/tomato.png';
+                            }}
+                          />
+                        </div>
+                        <div className="mandi-info">
+                          <h4 title={item.commodity}>{item.commodity}</h4>
+                          <span title={`${item.market}, ${item.state || ''}`}>{item.market}</span>
+                        </div>
                       </div>
-                      <div className="mandi-info">
-                        <h4 title={item.commodity}>{item.commodity}</h4>
-                        <span title={`${item.market}, ${item.state || ''}`}>{item.market}</span>
-                      </div>
-                    </div>
 
-                    {/* Price with Directional Arrow */}
-                    <div className="mandi-price-box">
-                      {item.price_trend === 'up' ? (
-                        <svg width="13" height="10" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Price up">
-                          <path d="M0 14L10.2308 0L21 14H0Z" fill="#19A047" />
-                        </svg>
-                      ) : (
-                        <svg width="13" height="10" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Price down">
-                          <path d="M0 0L10.2308 14L21 0H0Z" fill="#D70000" />
-                        </svg>
-                      )}
-                      <h3>
-                        ₹{Number(item.modal_price).toLocaleString('en-IN')}/- {item.unit || 'Quintal'}
-                      </h3>
+                      {/* Price with Directional Arrow */}
+                      <div className="mandi-price-box">
+                        {item.price_trend === 'up' ? (
+                          <svg width="13" height="10" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Price up">
+                            <path d="M0 14L10.2308 0L21 14H0Z" fill="#19A047" />
+                          </svg>
+                        ) : (
+                          <svg width="13" height="10" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Price down">
+                            <path d="M0 0L10.2308 14L21 0H0Z" fill="#D70000" />
+                          </svg>
+                        )}
+                        <h3>
+                          ₹{Number(item.modal_price).toLocaleString('en-IN')}/- {item.unit || (i18n.language === 'hi' ? 'क्विंटल' : 'Quintal')}
+                        </h3>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="mandi-empty-state">
-                <h3>No mandi prices found</h3>
-                <p>We couldn't find any results matching "{searchQuery}". Try a different keyword or category.</p>
+                <h3>{t('mandi_page.no_results')}</h3>
+                <p>
+                  {i18n.language === 'hi'
+                    ? `"${searchQuery}" से मेल खाने वाला कोई परिणाम नहीं मिला। कृपया अन्य शब्द या श्रेणी खोजें।`
+                    : `We couldn't find any results matching "${searchQuery}". Try a different keyword or category.`}
+                </p>
                 <button
                   type="button"
                   className="mandi-reset-btn"
@@ -204,7 +220,7 @@ const MandiRate = () => {
                     setSelectedCategory('All');
                   }}
                 >
-                  Reset Filters
+                  {i18n.language === 'hi' ? 'फ़िल्टर रीसेट करें' : 'Reset Filters'}
                 </button>
               </div>
             )}
@@ -213,14 +229,16 @@ const MandiRate = () => {
             {hasMore && (
               <div className="mandi-load-more-section">
                 <span className="mandi-count-label">
-                  Showing {displayedRates.length} of {filteredRates.length} mandi prices
+                  {i18n.language === 'hi'
+                    ? `कुल ${filteredRates.length} में से ${displayedRates.length} मंडी भाव`
+                    : `Showing ${displayedRates.length} of ${filteredRates.length} mandi prices`}
                 </span>
                 <button
                   type="button"
                   className="mandi-load-more-btn"
                   onClick={handleLoadMore}
                 >
-                  Load More
+                  {t('mandi_page.load_more')}
                 </button>
               </div>
             )}

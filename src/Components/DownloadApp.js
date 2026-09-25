@@ -1,23 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import img_app_store from '../assets/images/img-app-store.png';
 import img_google_play from '../assets/images/img-google-play.png';
 import banner_onlineapp from '../assets/images/banner-onlineapp.png';
 
 const DownloadApp = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="tkb-app-section">
       <div className="container-lg">
         <div className="tkb-app-banner">
           <div className="row align-items-center g-4">
             <div className="col-lg-6">
-              <p className="tkb-section-kicker tkb-section-kicker--light">Trade on the go</p>
-              <h2 className="tkb-app-title">Download Fasal Junction App</h2>
-              <p className="tkb-app-text">Post crops, check mandi rates and connect with verified buyers and sellers from your phone.</p>
+              <p className="tkb-section-kicker tkb-section-kicker--light">{t('home.app_kicker')}</p>
+              <h2 className="tkb-app-title">{t('home.app_title')}</h2>
+              <p className="tkb-app-text">{t('home.app_desc')}</p>
               <ul className="tkb-app-points">
-                <li>Post a sell or buy enquiry in minutes</li>
-                <li>Follow live rates before you agree a price</li>
-                <li>Chat with verified traders securely</li>
+                <li>{t('home.app_p1')}</li>
+                <li>{t('home.app_p2')}</li>
+                <li>{t('home.app_p3')}</li>
               </ul>
               <div className="tkb-app-stores">
                 <Link to="#" title="App Store">

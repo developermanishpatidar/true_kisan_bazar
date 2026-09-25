@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 
@@ -46,28 +47,29 @@ const PEOPLE = [
   { name: "Tamarind Works", location: "Nagpur, Maharashtra", role: "manufacturer", category: "tamarind" }
 ];
 
-const ROLE_LABEL = {
-  farmer: "Farmer",
-  buyer: "Buyer",
-  manufacturer: "Manufacturer"
-};
-
 const CATEGORIES = [
-  { value: "all", label: "All Categories" },
-  { value: "wheat", label: "Wheat" },
-  { value: "rice", label: "Rice" },
-  { value: "millets", label: "Millets" },
-  { value: "barley", label: "Barley" },
-  { value: "maize", label: "Maize (Corn)" },
-  { value: "sorghum", label: "Sorghum (Jowar)" },
-  { value: "oats", label: "Oats" },
-  { value: "tamarind", label: "Tamarind seeds" }
+  { value: "all", key: "all_categories", defaultLabel: "All Categories" },
+  { value: "wheat", key: "wheat", defaultLabel: "Wheat" },
+  { value: "rice", key: "rice", defaultLabel: "Rice" },
+  { value: "millets", key: "millets", defaultLabel: "Millets" },
+  { value: "barley", key: "barley", defaultLabel: "Barley" },
+  { value: "maize", key: "maize", defaultLabel: "Maize (Corn)" },
+  { value: "sorghum", key: "sorghum", defaultLabel: "Sorghum (Jowar)" },
+  { value: "oats", key: "oats", defaultLabel: "Oats" },
+  { value: "tamarind", key: "tamarind", defaultLabel: "Tamarind seeds" }
+];
+
+const ROLE_TABS = [
+  { key: 'farmer', pluralKey: 'farmers' },
+  { key: 'buyer', pluralKey: 'buyers' },
+  { key: 'manufacturer', pluralKey: 'manufacturers' }
 ];
 
 const PER_PAGE = 8;
 
 const PersonCard = ({ person }) => {
-  const roleLabel = ROLE_LABEL[person.role] || person.role;
+  const { t } = useTranslation();
+  const roleLabel = t(`roles.${person.role}`, person.role);
   return (
     <Link className="tkb-person-card" to="/product-details" data-role={person.role} data-category={person.category}>
       <span className="tkb-person-badge">{roleLabel}</span>
@@ -90,6 +92,7 @@ const PersonCard = ({ person }) => {
 };
 
 const ProductList = () => {
+  const { t } = useTranslation();
   const [activeRole, setActiveRole] = useState('farmer');
   const [activeCategory, setActiveCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -115,8 +118,11 @@ const ProductList = () => {
   const visibleCategories = useMemo(() => {
     const query = categorySearch.toLowerCase().trim();
     if (!query) return CATEGORIES;
-    return CATEGORIES.filter((cat) => cat.label.toLowerCase().includes(query));
-  }, [categorySearch]);
+    return CATEGORIES.filter((cat) => {
+      const translated = t(`categories.${cat.key}`, cat.defaultLabel).toLowerCase();
+      return translated.includes(query) || cat.defaultLabel.toLowerCase().includes(query);
+    });
+  }, [categorySearch, t]);
 
   const handleRoleChange = (role) => {
     setActiveRole(role);
@@ -143,7 +149,8 @@ const ProductList = () => {
     }
   };
 
-  const title = `All Products – ${ROLE_LABEL[activeRole]}s`;
+  const currentRolePlural = t(`product_list.${activeRole === 'farmer' ? 'farmers' : activeRole === 'buyer' ? 'buyers' : 'manufacturers'}`);
+  const title = `${t('product_list.all_products')} – ${currentRolePlural}`;
 
   return (
     <div>
@@ -152,11 +159,11 @@ const ProductList = () => {
         <div className="container-lg">
           <div className="tkb-products-shell">
             <aside className="tkb-category-panel">
-              <h2 className="tkb-category-heading">All Categories</h2>
+              <h2 className="tkb-category-heading">{t('categories.all_categories')}</h2>
               <input
                 type="search"
                 className="tkb-category-search"
-                placeholder="Search categories..."
+                placeholder={t('product_list.search_categories')}
                 value={categorySearch}
                 onChange={(e) => setCategorySearch(e.target.value)}
               />
@@ -169,7 +176,7 @@ const ProductList = () => {
                       data-category={cat.value}
                       onClick={() => handleCategoryChange(cat.value)}
                     >
-                      {cat.label}
+                      {t(`categories.${cat.key}`, cat.defaultLabel)}
                     </button>
                   </li>
                 ))}
@@ -179,15 +186,15 @@ const ProductList = () => {
             <section>
               <h1 className="tkb-products-title">{title}</h1>
               <div className="tkb-role-tabs" role="tablist" aria-label="User type">
-                {Object.entries(ROLE_LABEL).map(([role, label]) => (
+                {ROLE_TABS.map((rt) => (
                   <button
-                    key={role}
+                    key={rt.key}
                     type="button"
-                    className={`tkb-role-tab${activeRole === role ? ' is-active' : ''}`}
-                    data-role={role}
-                    onClick={() => handleRoleChange(role)}
+                    className={`tkb-role-tab${activeRole === rt.key ? ' is-active' : ''}`}
+                    data-role={rt.key}
+                    onClick={() => handleRoleChange(rt.key)}
                   >
-                    {label}s
+                    {t(`product_list.${rt.pluralKey}`)}
                   </button>
                 ))}
               </div>
@@ -203,7 +210,7 @@ const ProductList = () => {
                   disabled={safePage === 1}
                   onClick={() => handlePageChange('prev')}
                 >
-                  Previous
+                  {t('product_list.previous')}
                 </button>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                   <button
@@ -221,7 +228,7 @@ const ProductList = () => {
                   disabled={safePage === totalPages}
                   onClick={() => handlePageChange('next')}
                 >
-                  Next
+                  {t('product_list.next')}
                 </button>
               </nav>
             </section>
