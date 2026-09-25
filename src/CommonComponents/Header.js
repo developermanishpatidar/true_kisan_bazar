@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import logo  from '../assets/images/logo.svg'
+import logo from '../assets/images/fasal-junction-horizontal.png';
 
 const Header = () => {
 
@@ -252,8 +252,13 @@ const Header = () => {
             
             <div className="col-sm-4 col-lg-2 text-center text-sm-start d-flex gap-3 align-items-center justify-content-center justify-content-md-start">
                 <div className="d-flex align-items-center my-3 my-sm-0">
-                <Link to="/">
-                    <img src={logo} alt="logo" className="img-fluid" />
+                <Link to="/" className="d-inline-flex align-items-center text-decoration-none">
+                    <img 
+                      src={logo} 
+                      alt="Fasal Junction - आपका खेत, आपका बाजार" 
+                      className="img-fluid" 
+                      style={{ maxHeight: '48px', width: 'auto', objectFit: 'contain' }}
+                    />
                 </Link>
                 </div>
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -343,7 +348,6 @@ const Header = () => {
                   </select>
                   <Link to="/enquiry" className="tkb-btn-buy-sell">{t('header.buy_sell')}</Link>
                   <Link to="/login" className="tkb-btn-buy-sell">{t('header.login')}</Link>
-                  <Link to="/admin" className="tkb-btn-buy-sell" style={{ background: '#14532d', color: '#fff', borderColor: '#16a34a' }}>Admin</Link>
                   {/* <div className="tkb-account-wrap">
                     <button type="button" className="tkb-btn-account" id="accountMenuToggle" onClick={toggleAccountPopup} aria-expanded={isAccountOpen} aria-controls="accountPopup">
                       <span className="tkb-btn-account-icon" aria-hidden="true">

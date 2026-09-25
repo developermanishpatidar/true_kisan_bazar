@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { AdminProvider } from './context/AdminContext';
 import AdminSidebar from './AdminSidebar';
 import AdminHeader from './AdminHeader';
@@ -8,6 +8,18 @@ import './AdminDashboard.css';
 
 const AdminLayoutInner = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    try {
+      const auth = localStorage.getItem('adminAuth');
+      if (!auth) {
+        navigate('/adminLogon');
+      }
+    } catch (e) {
+      // Fallback
+    }
+  }, [navigate]);
 
   return (
     <div className="adm-wrapper">

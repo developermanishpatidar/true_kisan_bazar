@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import logo from '../assets/images/logo.svg';
+import logo from '../assets/images/fasal-junction-horizontal.png';
 
 const FooterIcon = ({ children }) => (
   <span className="tkb-footer-icon" aria-hidden="true">{children}</span>

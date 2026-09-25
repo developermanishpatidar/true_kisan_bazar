@@ -20,6 +20,7 @@ import Users from "./Admin/pages/Users";
 import Blogs from "./Admin/pages/Blogs";
 import SupportTickets from "./Admin/pages/SupportTickets";
 import Settings from "./Admin/pages/Settings";
+import AdminLogin from "./Admin/pages/AdminLogin";
 
 const Routers = () => {
   return (
@@ -36,6 +37,9 @@ const Routers = () => {
         <Route path="/support" element={<Contact />} />
         <Route path="/mandi-rate" element={<MandiRate />} />
         <Route path="/blog" element={<Blog />} />
+
+        {/* Admin Login */}
+        <Route path="/admin-login" element={<AdminLogin />} />
 
         {/* Admin Dashboard Routes */}
         <Route path="/admin" element={<AdminLayout />}>

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import logo from '../assets/images/logo.svg';
+import logo from '../assets/images/fasal-junction-horizontal.png';
 import loginArt from '../assets/images/img-login.jpg';
 
 const Login = () => {

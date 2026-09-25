@@ -32,8 +32,9 @@ const AdminHeader = ({ onToggleSidebar }) => {
   const handleConfirmLogout = () => {
     setShowLogoutConfirm(false);
     setShowProfileDropdown(false);
+    localStorage.removeItem('adminAuth');
     showToast('You have been logged out of the Admin Portal.', 'info');
-    navigate('/login');
+    navigate('/admin-login');
   };
 
   return (
@@ -162,7 +163,7 @@ const AdminHeader = ({ onToggleSidebar }) => {
         </div>
 
         {/* Direct Quick Logout Button */}
-        <button
+        {/* <button
           type="button"
           className="adm-icon-btn"
           onClick={() => setShowLogoutConfirm(true)}
@@ -175,7 +176,7 @@ const AdminHeader = ({ onToggleSidebar }) => {
             <polyline points="16 17 21 12 16 7" />
             <line x1="21" y1="12" x2="9" y2="12" />
           </svg>
-        </button>
+        </button> */}
 
         {/* Admin Profile Dropdown Trigger */}
         <div style={{ position: 'relative' }} ref={profileRef}>
