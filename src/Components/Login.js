@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState('phone');
   const [country, setCountry] = useState('IN');
-  const [business, setBusiness] = useState('seller');
+  const [business, setBusiness] = useState('farmer');
   const [phone, setPhone] = useState('');
   const [accepted, setAccepted] = useState(false);
   const [otp, setOtp] = useState(['', '', '', '']);
