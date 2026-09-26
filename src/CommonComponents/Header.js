@@ -257,7 +257,7 @@ const Header = () => {
                       src={logo} 
                       alt="Fasal Junction - आपका खेत, आपका बाजार" 
                       className="img-fluid" 
-                      style={{ maxHeight: '48px', width: 'auto', objectFit: 'contain' }}
+                      style={{ maxHeight: '55px', width: 'auto', objectFit: 'contain' }}
                     />
                 </Link>
                 </div>
