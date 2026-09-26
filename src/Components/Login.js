@@ -148,8 +148,14 @@ const Login = () => {
                         value={business}
                         onChange={(event) => setBusiness(event.target.value)}
                       >
-                        <option value="seller">{t('login.seller')}</option>
+                        <option value="farmer">Farmer</option>
                         <option value="buyer">{t('login.buyer')}</option>
+                        <option value="agent">Agent</option>
+                        <option value="distributor">Distributor</option>
+                        <option value="manufacturer">Manufacturer</option>
+                        <option value="company">Company</option>
+                        <option value="importer">Importer</option>
+                        <option value="exporter">Exporter</option>
                       </select>
                     </div>
                   </div>

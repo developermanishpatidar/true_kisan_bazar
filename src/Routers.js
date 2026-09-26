@@ -10,6 +10,7 @@ import Contact from "./Components/Contact";
 import MandiRate from "./Components/MandiRate";
 import Blog from "./Components/Blog";
 import NotFound from "./Components/NotFound";
+import ScrollToTop from "./CommonComponents/ScrollToTop";
 
 import AdminLayout from "./Admin/AdminLayout";
 import Overview from "./Admin/pages/Overview";
@@ -25,6 +26,7 @@ import AdminLogin from "./Admin/pages/AdminLogin";
 const Routers = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/enquiry" element={<Enquiry />} />

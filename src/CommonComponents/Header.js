@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import logo from '../assets/images/fasal-junction-horizontal.png';
@@ -7,6 +7,8 @@ const Header = () => {
 
   const { t, i18n } = useTranslation();
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const headerSentinelRef = useRef(null);
   // const popupRef = useRef(null);
 
   // const toggleAccountPopup = useCallback((e) => {
@@ -23,6 +25,22 @@ const Header = () => {
   //   e.stopPropagation();
   // }, []);
 
+  // React IntersectionObserver for sticky header elevation without window scroll listeners
+  useEffect(() => {
+    const sentinel = headerSentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsScrolled(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
+
   // Close on Escape key
   useEffect(() => {
     const handleKeydown = (e) => {
@@ -35,7 +53,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div>
+    <>
         <svg xmlns="http://www.w3.org/2000/svg" style={{display: "none"}}>
             <defs>
                 <symbol xmlns="http://www.w3.org/2000/svg" id="menu" viewBox="0 0 24 24"><path fill="currentColor" d="M2 6a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m0 6.032a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1m1 5.033a1 1 0 1 0 0 2h18a1 1 0 0 0 0-2z"/></symbol>
@@ -246,7 +264,21 @@ const Header = () => {
       </div>
 
     </div>
-      <header>
+      {/* React ref sentinel for sticky elevation detection */}
+      <div
+        ref={headerSentinelRef}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '1px',
+          width: '100%',
+          pointerEvents: 'none',
+          visibility: 'hidden'
+        }}
+        aria-hidden="true"
+      />
+      <header className={`tkb-sticky-header${isScrolled ? ' tkb-header-scrolled' : ''}`}>
         <div className="container-fluid">
             <div className="row py-3 border-bottom align-items-center">
             
@@ -404,7 +436,7 @@ const Header = () => {
             </div>
         </div>
         </header>
-    </div>
+    </>
   )
 }
 
