@@ -249,6 +249,24 @@
   resize: vertical;
 }
 
+/* Contact Validation Error Styles */
+.support-form input.field-error,
+.support-form textarea.field-error,
+.form-group2-field input.field-error {
+  border-color: #dc3545 !important;
+  background-color: #fff9f9 !important;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important;
+}
+
+.field-error-text {
+  color: #dc3545;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-top: 0.35rem;
+  padding-left: 15px;
+  text-align: left;
+}
+
 .file-label {
   color: #000b04;
   font-weight: 600;

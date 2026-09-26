@@ -30,6 +30,7 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [errors, setErrors] = useState({});
   const [attachments, setAttachments] = useState([]);
   const [fileErrors, setFileErrors] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,6 +50,15 @@ const Contact = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Auto-clear field-specific error as user types
+    if (errors[name]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
   };
 
   const handleFileChange = (e) => {
@@ -82,10 +92,113 @@ const Contact = () => {
     setAttachments((prev) => prev.filter((_, idx) => idx !== indexToRemove));
   };
 
+  // Validation function
+  const validate = () => {
+    const newErrors = {};
+
+    // 1. Name validation
+    if (!formData.name || !formData.name.trim()) {
+      newErrors.name = isHi ? 'कृपया अपना पूरा नाम दर्ज करें' : 'Please enter your full name';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = isHi ? 'नाम कम से कम 2 अक्षरों का होना चाहिए' : 'Name must be at least 2 characters';
+    }
+
+    // 2. Mobile number validation (10 digits Indian phone or standard digits)
+    const phoneRegex = /^[6-9]\d{9}$/;
+    const rawPhone = formData.mobile_number.trim().replace(/\D/g, '');
+    if (!formData.mobile_number || !formData.mobile_number.trim()) {
+      newErrors.mobile_number = isHi ? 'कृपया अपना मोबाइल नंबर दर्ज करें' : 'Please enter your mobile number';
+    } else if (rawPhone.length !== 10 || !phoneRegex.test(rawPhone)) {
+      newErrors.mobile_number = isHi ? 'कृपया 10 अंकों का मान्य मोबाइल नंबर दर्ज करें' : 'Please enter a valid 10-digit mobile number';
+    }
+
+    // 3. Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email || !formData.email.trim()) {
+      newErrors.email = isHi ? 'कृपया अपना ईमेल पता दर्ज करें' : 'Please enter your email address';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = isHi ? 'कृपया एक मान्य ईमेल पता दर्ज करें' : 'Please enter a valid email address';
+    }
+
+    // 4. Subject validation
+    if (!formData.subject || !formData.subject.trim()) {
+      newErrors.subject = isHi ? 'कृपया संदेश का विषय दर्ज करें' : 'Please enter a subject';
+    } else if (formData.subject.trim().length < 3) {
+      newErrors.subject = isHi ? 'विषय कम से कम 3 अक्षरों का होना चाहिए' : 'Subject must be at least 3 characters';
+    }
+
+    // 5. Message validation
+    if (!formData.message || !formData.message.trim()) {
+      newErrors.message = isHi ? 'कृपया अपना संदेश दर्ज करें' : 'Please enter your message';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = isHi ? 'संदेश कम से कम 10 अक्षरों का होना चाहिए' : 'Message must be at least 10 characters';
+    }
+
+    // 6. Attachment errors
+    if (fileErrors.length > 0) {
+      newErrors.attachments = isHi ? 'कृपया अमान्य फ़ाइलें हटाएं' : 'Please resolve invalid file attachments';
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setErrorMessage(null);
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+
+      // Focus and scroll to first invalid field
+      const firstErrorField = Object.keys(validationErrors)[0];
+      const fieldIdMap = {
+        name: 'contact-name',
+        mobile_number: 'contact-mobile',
+        email: 'contact-email',
+        subject: 'contact-subject',
+        message: 'contact-message',
+        attachments: 'contact-files'
+      };
+      const targetId = fieldIdMap[firstErrorField] || firstErrorField;
+      const errorElem = document.getElementById(targetId);
+      if (errorElem) {
+        errorElem.focus();
+        errorElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    setErrors({});
+    setIsSubmitting(true);
+
+    // Extract submitted values
+    const contactPayload = {
+      id: `TICKET-${Date.now()}`,
+      name: formData.name.trim(),
+      mobile_number: formData.mobile_number.trim(),
+      email: formData.email.trim(),
+      subject: formData.subject.trim(),
+      message: formData.message.trim(),
+      attachments: attachments.map((f) => ({
+        name: f.name,
+        size: f.size,
+        type: f.type
+      })),
+      submittedAt: new Date().toISOString(),
+      status: 'Open'
+    };
+
+    console.log('✅ [Contact Form Submitted Values]:', contactPayload);
+
+    // Persist ticket to localStorage for Admin Support Tickets integration
+    try {
+      const existingTickets = JSON.parse(localStorage.getItem('fasal_support_tickets') || '[]');
+      localStorage.setItem('fasal_support_tickets', JSON.stringify([contactPayload, ...existingTickets]));
+    } catch (err) {
+      console.error('Failed to save support ticket to localStorage:', err);
+    }
 
     // Simulate sending message with attachments
     setTimeout(() => {
@@ -101,11 +214,11 @@ const Contact = () => {
       setAttachments([]);
       setFileErrors([]);
 
-      // Automatically hide the success banner after 5 seconds
+      // Automatically hide the success banner after 6 seconds
       setTimeout(() => {
         setSubmitted(false);
-      }, 5000);
-    }, 900);
+      }, 6000);
+    }, 700);
   };
 
   return (
@@ -171,71 +284,76 @@ const Contact = () => {
                 </div>
               )}
 
-              <form className="support-form" onSubmit={handleSubmit}>
+              <form className="support-form" onSubmit={handleSubmit} noValidate>
                 <div className="form-group">
-                  <label className="attachments-title" htmlFor="contact-name">{t('contact.full_name')}</label>
+                  <label className="attachments-title" htmlFor="contact-name">{t('contact.full_name')} *</label>
                   <input
                     id="contact-name"
                     type="text"
                     name="name"
                     placeholder={t('contact.full_name_placeholder')}
-                    required
                     value={formData.name}
                     onChange={handleChange}
+                    className={errors.name ? 'field-error' : ''}
                   />
+                  {errors.name && <span className="field-error-text">{errors.name}</span>}
                 </div>
 
                 <div className="form-group2">
                   <div className="form-group2-field">
-                    <label className="attachments-title" htmlFor="contact-mobile">{t('contact.phone')}</label>
+                    <label className="attachments-title" htmlFor="contact-mobile">{t('contact.phone')} *</label>
                     <input
                       id="contact-mobile"
                       type="tel"
                       name="mobile_number"
                       placeholder={t('contact.phone_placeholder')}
-                      required
                       value={formData.mobile_number}
                       onChange={handleChange}
+                      className={errors.mobile_number ? 'field-error' : ''}
                     />
+                    {errors.mobile_number && <span className="field-error-text">{errors.mobile_number}</span>}
                   </div>
                   <div className="form-group2-field">
-                    <label className="attachments-title" htmlFor="contact-email">{t('contact.email')}</label>
+                    <label className="attachments-title" htmlFor="contact-email">{t('contact.email')} *</label>
                     <input
                       id="contact-email"
                       type="email"
                       name="email"
                       placeholder={t('contact.email_placeholder')}
-                      required
                       value={formData.email}
                       onChange={handleChange}
+                      className={errors.email ? 'field-error' : ''}
                     />
+                    {errors.email && <span className="field-error-text">{errors.email}</span>}
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label className="attachments-title" htmlFor="contact-subject">{t('contact.subject')}</label>
+                  <label className="attachments-title" htmlFor="contact-subject">{t('contact.subject')} *</label>
                   <input
                     id="contact-subject"
                     type="text"
                     name="subject"
                     placeholder={t('contact.subject')}
-                    required
                     value={formData.subject}
                     onChange={handleChange}
+                    className={errors.subject ? 'field-error' : ''}
                   />
+                  {errors.subject && <span className="field-error-text">{errors.subject}</span>}
                 </div>
 
                 <div className="form-group">
-                  <label className="attachments-title" htmlFor="contact-message">{t('contact.message')}</label>
+                  <label className="attachments-title" htmlFor="contact-message">{t('contact.message')} *</label>
                   <textarea
                     id="contact-message"
                     name="message"
                     placeholder={t('contact.message_placeholder')}
-                    required
                     rows={3}
                     value={formData.message}
                     onChange={handleChange}
+                    className={errors.message ? 'field-error' : ''}
                   />
+                  {errors.message && <span className="field-error-text">{errors.message}</span>}
                 </div>
 
                 <div className="form-group">
@@ -249,6 +367,9 @@ const Contact = () => {
                     multiple
                     onChange={handleFileChange}
                   />
+                  {errors.attachments && (
+                    <p className="error-text" style={{ paddingLeft: '15px' }}>{errors.attachments}</p>
+                  )}
                   {fileErrors.length > 0 && (
                     <div className="file-errors">
                       {fileErrors.map((err, idx) => (
