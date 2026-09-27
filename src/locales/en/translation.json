@@ -439,5 +439,21 @@
     "view_toggle_guest": "Guest / Logged-out View",
     "view_toggle_member": "Member / Logged-in View",
     "preview_mode_hint": "Toggle between visitor (promotional) and logged-in subscriber plan view"
+  },
+  "seeds_coming_soon": {
+    "kicker": "Seeds Marketplace",
+    "title": "Coming Soon",
+    "desc": "We are preparing a certified marketplace for high-yield, lab-tested seeds. This feature will be live soon for the upcoming sowing season.",
+    "notify_label": "Get notified when seeds booking opens",
+    "notify_placeholder": "Enter mobile number or email",
+    "notify_btn": "Notify Me",
+    "submitting": "Submitting...",
+    "error_required": "Please enter your mobile number or email.",
+    "error_invalid": "Please enter a valid 10-digit mobile number or email address.",
+    "success_title": "Thank you for showing interest!",
+    "success_desc": "We will notify you via SMS / WhatsApp as soon as seed booking opens.",
+    "go_home": "Back to Home",
+    "mandi_rates": "Check Mandi Rates",
+    "crop_listings": "Browse Crop Listings"
   }
 }

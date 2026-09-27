@@ -13,6 +13,7 @@ import TermsConditions from "./Components/TermsConditions";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import Faq from "./Components/Faq";
 import NotFound from "./Components/NotFound";
+import SeedsComingSoon from "./Components/SeedsComingSoon";
 import Subscription from "./Components/Subscription";
 import UserDetail from "./Components/UserDetail";
 import Marketplace from "./Components/Marketplace";
@@ -53,6 +54,8 @@ const Routers = () => {
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/seeds" element={<SeedsComingSoon />} />
+        <Route path="/coming-soon" element={<SeedsComingSoon />} />
 
         {/* Admin Login */}
         <Route path="/admin-login" element={<AdminLogin />} />

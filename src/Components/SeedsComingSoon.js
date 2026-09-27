@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
@@ -7,66 +7,113 @@ import './SeedsComingSoon.css';
 
 const SeedsComingSoon = () => {
   const { t } = useTranslation();
+  const [contact, setContact] = useState('');
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const QUICK_LINKS = [
-    { to: '/', label: t('seeds_coming_soon.go_home') },
-    { to: '/mandi-rate', label: t('seeds_coming_soon.explore_mandi') },
-    { to: '/product-list', label: t('seeds_coming_soon.browse_products') },
-    { to: '/enquiry', label: t('header.buy_sell') },
-  ];
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    const trimmed = contact.trim();
+    if (!trimmed) {
+      setError(t('seeds_coming_soon.error_required'));
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[6-9]\d{9}$/;
+
+    if (!emailRegex.test(trimmed) && !phoneRegex.test(trimmed)) {
+      setError(t('seeds_coming_soon.error_invalid'));
+      return;
+    }
+
+    setError('');
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      try {
+        const stored = JSON.parse(localStorage.getItem('fasal_seed_notifications') || '[]');
+        stored.push({ contact: trimmed, date: new Date().toISOString() });
+        localStorage.setItem('fasal_seed_notifications', JSON.stringify(stored));
+      } catch (err) {
+        console.error('Error saving notification preference:', err);
+      }
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 400);
+  }, [contact, t]);
 
   return (
-    <div className="tkb-page tkb-seeds-page">
+    <div className="tkb-page tkb-seeds-simple-page">
       <Header />
       <main>
-        <section className="tkb-seeds-simple" aria-labelledby="seeds-title">
+        <section className="tkb-seeds-simple-section" aria-labelledby="seeds-coming-title">
           <div className="container-lg">
             <div className="tkb-seeds-simple-card">
-              {/* Agricultural Sprout Badge */}
-              <div className="tkb-seeds-icon-wrap" aria-hidden="true">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
-                  <path d="M12 12v6" />
-                  <path d="M12 15l2-2" />
+              {/* Sprout & Seed Visual Badge */}
+              <div className="tkb-seeds-simple-icon-wrap" aria-hidden="true">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>
+                  <path d="M12 12v6"/>
+                  <path d="M12 15l2.5-2.5"/>
                 </svg>
               </div>
 
-              <p className="tkb-seeds-simple-kicker">{t('seeds_coming_soon.kicker')}</p>
-              <h1 id="seeds-title" className="tkb-seeds-simple-title">{t('seeds_coming_soon.title')}</h1>
+              <span className="tkb-seeds-simple-kicker">{t('seeds_coming_soon.kicker')}</span>
               
-              <p className="tkb-seeds-simple-copy">
-                {t('seeds_coming_soon.message')}
+              <h1 id="seeds-coming-title" className="tkb-seeds-simple-title">
+                {t('seeds_coming_soon.title')}
+              </h1>
+
+              <p className="tkb-seeds-simple-desc">
+                {t('seeds_coming_soon.desc')}
               </p>
 
-              {/* Action Buttons */}
+              {/* Simple 1-line Notification Form */}
+              <div className="tkb-seeds-simple-notify">
+                {isSubmitted ? (
+                  <div className="tkb-seeds-simple-success" role="alert">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>{t('seeds_coming_soon.success_desc')}</span>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} noValidate>
+                    <div className="tkb-seeds-simple-input-group">
+                      <input
+                        type="text"
+                        placeholder={t('seeds_coming_soon.notify_placeholder')}
+                        value={contact}
+                        onChange={(e) => {
+                          setContact(e.target.value);
+                          if (error) setError('');
+                        }}
+                        className={`tkb-seeds-simple-input${error ? ' has-error' : ''}`}
+                        aria-label="Mobile number or email"
+                        disabled={isSubmitting}
+                      />
+                      <button type="submit" className="tkb-seeds-simple-btn" disabled={isSubmitting}>
+                        {isSubmitting ? t('seeds_coming_soon.submitting') : t('seeds_coming_soon.notify_btn')}
+                      </button>
+                    </div>
+                    {error && <p className="tkb-seeds-simple-error" role="alert">{error}</p>}
+                  </form>
+                )}
+              </div>
+
+              {/* Quick Navigation Actions */}
               <div className="tkb-seeds-simple-actions">
                 <Link to="/" className="tkb-seeds-btn-primary">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9 22 9 12 15 12 15 22"/>
-                  </svg>
                   {t('seeds_coming_soon.go_home')}
                 </Link>
                 <Link to="/mandi-rate" className="tkb-seeds-btn-ghost">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <line x1="12" y1="20" x2="12" y2="10"/>
-                    <line x1="18" y1="20" x2="18" y2="4"/>
-                    <line x1="6" y1="20" x2="6" y2="16"/>
-                  </svg>
-                  {t('seeds_coming_soon.explore_mandi')}
+                  {t('seeds_coming_soon.mandi_rates')}
                 </Link>
-              </div>
-
-              {/* Quick Navigation Links */}
-              <div className="tkb-seeds-simple-footer">
-                <span className="tkb-seeds-links-label">{t('footer.quick_links')}:</span>
-                <div className="tkb-seeds-links-group">
-                  {QUICK_LINKS.map((item) => (
-                    <Link key={item.to} to={item.to} className="tkb-seeds-link-pill">
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
+                <Link to="/product-list" className="tkb-seeds-btn-ghost">
+                  {t('seeds_coming_soon.crop_listings')}
+                </Link>
               </div>
             </div>
           </div>

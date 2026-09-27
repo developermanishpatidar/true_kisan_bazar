@@ -146,7 +146,7 @@ const Header = () => {
                 <Link to="/subscription" className={`tkb-nav-link${isActive('/subscription') ? ' tkb-nav-active' : ''}`}>{t('header.subscription')}</Link>
               </li>
               <li className="tkb-nav-item">
-                <Link to="#" className={`tkb-nav-link`}>{t('header.seeds')}</Link>
+                <Link to="/seeds" className={`tkb-nav-link${isActive('/seeds') ? ' tkb-nav-active' : ''}`}>{t('header.seeds')}</Link>
               </li>
               <li className="tkb-nav-item tkb-nav-mandi-item">
                 <Link to="/mandi-rate" className={`tkb-nav-link tkb-nav-mandi-link${isActive('/mandi-rate') ? ' tkb-nav-active' : ''}`}>
@@ -257,7 +257,7 @@ const Header = () => {
               <Link to="/subscription" className={`tkb-mobile-nav-link${isActive('/subscription') ? ' tkb-nav-active' : ''}`} onClick={closeMobile}>{t('header.subscription')}</Link>
             </li>
             <li>
-              <Link to="#" className="tkb-mobile-nav-link" onClick={closeMobile}>{t('header.seeds')}</Link>
+              <Link to="/seeds" className={`tkb-mobile-nav-link${isActive('/seeds') ? ' tkb-nav-active' : ''}`} onClick={closeMobile}>{t('header.seeds')}</Link>
             </li>
             <li>
               <Link to="/mandi-rate" className={`tkb-mobile-nav-link${isActive('/mandi-rate') ? ' tkb-nav-active' : ''}`} onClick={closeMobile}>
