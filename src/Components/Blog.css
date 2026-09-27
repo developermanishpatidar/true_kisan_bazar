@@ -135,14 +135,32 @@
 /* --------------------------------------------------------------------------
    Category Filter Strip
    -------------------------------------------------------------------------- */
+.blog-category-sentinel {
+  width: 100%;
+  height: 1px;
+  margin-top: -1px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .blog-category-strip {
   background: #ffffff;
   border-bottom: 1px solid #e5ebe7;
-  padding: 1rem 1.5rem;
+  padding: 0.9rem 1.5rem;
+  position: -webkit-sticky;
   position: sticky;
-  top: 0;
-  z-index: 20;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  top: var(--tkb-header-height, 80px);
+  z-index: 1020;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.blog-category-strip.is-sticky {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom-color: rgba(22, 163, 74, 0.2);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
 }
 
 .blog-category-inner {

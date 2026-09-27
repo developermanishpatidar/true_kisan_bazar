@@ -9,6 +9,9 @@ import About from "./Components/About";
 import Contact from "./Components/Contact";
 import MandiRate from "./Components/MandiRate";
 import Blog from "./Components/Blog";
+import TermsConditions from "./Components/TermsConditions";
+import PrivacyPolicy from "./Components/PrivacyPolicy";
+import Faq from "./Components/Faq";
 import NotFound from "./Components/NotFound";
 import ScrollToTop from "./CommonComponents/ScrollToTop";
 
@@ -39,6 +42,9 @@ const Routers = () => {
         <Route path="/support" element={<Contact />} />
         <Route path="/mandi-rate" element={<MandiRate />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/faq" element={<Faq />} />
 
         {/* Admin Login */}
         <Route path="/admin-login" element={<AdminLogin />} />

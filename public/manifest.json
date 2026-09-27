@@ -1,11 +1,17 @@
 {
   "short_name": "Fasal Junction",
-  "name": "Fasal Junction",
+  "name": "Fasal Junction - आपका खेत, आपका बाजार",
+  "description": "Fasal Junction - भारत का प्रमुख कृषि व्यापार मंच। आपका खेत, आपका बाजार।",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "64x64 48x48 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     },
     {
       "src": "logo192.png",
@@ -20,6 +26,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#16a34a",
   "background_color": "#ffffff"
 }

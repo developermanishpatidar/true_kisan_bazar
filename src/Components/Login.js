@@ -195,7 +195,7 @@ const Login = () => {
                       checked={accepted}
                       onChange={(event) => setAccepted(event.target.checked)}
                     />
-                    <span>{t('login.terms_accept')} <Link to="#">{t('login.terms')}</Link> & <Link to="#">{t('login.privacy_policy')}</Link></span>
+                    <span>{t('login.terms_accept')} <Link to="/terms-conditions">{t('login.terms')}</Link> & <Link to="/privacy-policy">{t('login.privacy_policy')}</Link></span>
                   </label>
 
                   <button type="submit" className="tkb-login-next" disabled={!canContinue}>

@@ -25,6 +25,8 @@ const Header = () => {
   //   e.stopPropagation();
   // }, []);
 
+  const headerRef = useRef(null);
+
   // React IntersectionObserver for sticky header elevation without window scroll listeners
   useEffect(() => {
     const sentinel = headerSentinelRef.current;
@@ -39,6 +41,18 @@ const Header = () => {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
+  }, []);
+
+  // Broadcast sticky header height for secondary sticky bars (e.g. Blog category strip)
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        document.documentElement.style.setProperty('--tkb-header-height', `${headerRef.current.offsetHeight}px`);
+      }
+    };
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
 
   // Close on Escape key
@@ -278,7 +292,7 @@ const Header = () => {
         }}
         aria-hidden="true"
       />
-      <header className={`tkb-sticky-header${isScrolled ? ' tkb-header-scrolled' : ''}`}>
+      <header ref={headerRef} className={`tkb-sticky-header${isScrolled ? ' tkb-header-scrolled' : ''}`}>
         <div className="container-fluid">
             <div className="row py-3 border-bottom align-items-center">
             

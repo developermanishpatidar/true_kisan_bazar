@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
@@ -338,6 +338,41 @@ const Blog = () => {
   const [openArticle, setOpenArticle] = useState(null);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterDone, setNewsletterDone] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(80);
+  const [isCategorySticky, setIsCategorySticky] = useState(false);
+  const sentinelRef = useRef(null);
+
+  // Dynamically track sticky header height
+  useEffect(() => {
+    const updateHeight = () => {
+      const headerEl = document.querySelector('.tkb-sticky-header');
+      if (headerEl) {
+        setHeaderHeight(headerEl.offsetHeight);
+      }
+    };
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, []);
+
+  // IntersectionObserver to detect when category strip reaches sticky position
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsCategorySticky(!entry.isIntersecting);
+      },
+      {
+        rootMargin: `-${headerHeight}px 0px 0px 0px`,
+        threshold: 0
+      }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [headerHeight]);
 
   /* Derived data */
   const filtered = useMemo(() => {
@@ -403,8 +438,14 @@ const Blog = () => {
             </div>
           </section>
 
+          {/* Category Strip Sentinel */}
+          <div ref={sentinelRef} className="blog-category-sentinel" aria-hidden="true" />
+
           {/* ── Category Strip ── */}
-          <div className="blog-category-strip">
+          <div
+            className={`blog-category-strip${isCategorySticky ? ' is-sticky' : ''}`}
+            style={{ top: `${headerHeight}px` }}
+          >
             <div className="blog-category-inner">
               {CATEGORIES.map((cat) => (
                 <button

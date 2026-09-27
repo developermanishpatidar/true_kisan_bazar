@@ -1,0 +1,268 @@
+/* Privacy Policy Page Styles - Fasal Junction */
+.tkb-privacy-page {
+  background-color: #f7faf7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.tkb-privacy-hero {
+  position: relative;
+  background: linear-gradient(135deg, #0d3b1e 0%, #155724 50%, #1e7e34 100%);
+  color: #ffffff;
+  padding: 4.5rem 0 3.5rem;
+  overflow: hidden;
+}
+
+.tkb-privacy-hero-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image: radial-gradient(#dcfce7 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.tkb-privacy-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.tkb-privacy-kicker {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #86efac;
+  background: rgba(134, 239, 172, 0.15);
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+
+.tkb-privacy-hero h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.tkb-privacy-hero p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #e2f5e7;
+  margin-bottom: 0.5rem;
+}
+
+.tkb-privacy-meta {
+  font-size: 0.875rem;
+  color: #a7f3d0;
+  margin-top: 1rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.tkb-privacy-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Main Content Area */
+.tkb-privacy-content {
+  padding: 3.5rem 0 5rem;
+}
+
+.tkb-privacy-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2ece3;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.tkb-privacy-section {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #edf2ee;
+}
+
+.tkb-privacy-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.tkb-privacy-section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tkb-privacy-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.tkb-privacy-section h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.tkb-privacy-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.tkb-privacy-section p {
+  color: #4b5563;
+  line-height: 1.7;
+  font-size: 0.975rem;
+  margin-bottom: 0.85rem;
+}
+
+.tkb-privacy-section ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tkb-privacy-section li {
+  color: #4b5563;
+  line-height: 1.7;
+  font-size: 0.975rem;
+  margin-bottom: 0.5rem;
+}
+
+.tkb-privacy-callout {
+  background: #f0fdf4;
+  border-left: 4px solid #16a34a;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 12px 12px 0;
+  margin: 1.25rem 0;
+}
+
+.tkb-privacy-callout p {
+  margin: 0;
+  color: #166534;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Sidebar Quick Nav */
+.tkb-privacy-sidebar {
+  position: sticky;
+  top: 90px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2ece3;
+  padding: 1.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.tkb-privacy-sidebar h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tkb-privacy-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tkb-privacy-nav-list li {
+  margin-bottom: 0.65rem;
+}
+
+.tkb-privacy-nav-list a {
+  display: block;
+  font-size: 0.9rem;
+  color: #4b5563;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.tkb-privacy-nav-list a:hover {
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-weight: 600;
+  padding-left: 0.85rem;
+}
+
+/* Help Box in Sidebar */
+.tkb-privacy-help-box {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #edf2ee;
+}
+
+.tkb-privacy-help-box h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.tkb-privacy-help-box p {
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.tkb-privacy-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: #16a34a;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.tkb-privacy-contact-btn:hover {
+  background: #15803d;
+  color: #ffffff;
+}
+
+@media (max-width: 991px) {
+  .tkb-privacy-card {
+    padding: 1.75rem;
+  }
+  .tkb-privacy-sidebar {
+    margin-top: 2rem;
+    position: static;
+  }
+}

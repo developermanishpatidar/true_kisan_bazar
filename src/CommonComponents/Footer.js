@@ -152,7 +152,7 @@ const Footer = () => {
               <h5 className="tkb-footer-title">{t('footer.customer_service')}</h5>
               <ul className="tkb-footer-links">
                 <li>
-                  <Link to="/contact">
+                  <Link to="/support">
                     <FooterIcon>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v.5M12 11v5"/></svg>
                     </FooterIcon>
@@ -160,7 +160,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#">
+                  <Link to="/faq">
                     <FooterIcon>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="8"/><path d="M9.6 9.5a2.4 2.4 0 1 1 3.8 2c-.8.5-1.4 1-1.4 2v.3M12 16.5h.01"/></svg>
                     </FooterIcon>
@@ -176,11 +176,25 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#">
+                  <Link to="/privacy-policy">
                     <FooterIcon>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 3 5 6v6c0 5 3.2 8.4 7 9.5 3.8-1.1 7-4.5 7-9.5V6z"/></svg>
                     </FooterIcon>
                     {t('footer.privacy_policy')}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/terms-conditions">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <path d="M14 2v6h6" />
+                        <path d="M16 13H8" />
+                        <path d="M16 17H8" />
+                        <path d="M10 9H8" />
+                      </svg>
+                    </FooterIcon>
+                    {t('footer.terms_conditions')}
                   </Link>
                 </li>
               </ul>

@@ -63,6 +63,7 @@
     "support": "Support",
     "faq": "FAQ",
     "privacy_policy": "Privacy Policy",
+    "terms_conditions": "Terms & Conditions",
     "india": "India",
     "copyright": "© 2026 Fasal Junction. All rights reserved."
   },
@@ -359,5 +360,18 @@
     "email": "Email",
     "phone": "Phone",
     "save_changes": "Save Changes"
+  },
+  "terms": {
+    "kicker": "Legal & Policy",
+    "hero_desc": "Please read these Terms and Conditions carefully before using the Fasal Junction agricultural marketplace platform."
+  },
+  "privacy": {
+    "kicker": "Data Privacy & Security",
+    "hero_desc": "Your trust is our foundation. Learn how Fasal Junction safeguards your personal, trade, and agricultural data."
+  },
+  "faq": {
+    "kicker": "Help & Knowledge Center",
+    "hero_desc": "Got questions about crop trading, live mandi rates, or posting enquiries? Find clear answers below.",
+    "search_placeholder": "Search answers, crop enquiry, mandi rates, payments..."
   }
 }
