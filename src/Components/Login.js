@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import logo from '../assets/images/fasal-junction-horizontal.png';
+import logo_512 from '../assets/images/logo512.png';
 import loginArt from '../assets/images/img-login.jpg';
 
 const Login = () => {
@@ -116,7 +117,7 @@ const Login = () => {
         <div className="tkb-login-card-wrap">
           <div className="tkb-login-card">
             <div className="tkb-login-mark">
-              <img src={logo} alt="" />
+              <img src={logo_512} alt="" />
             </div>
             <h1 className="tkb-login-brand">Fasal Junction</h1>
 

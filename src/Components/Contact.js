@@ -112,13 +112,6 @@ const Contact = () => {
       newErrors.mobile_number = isHi ? 'कृपया 10 अंकों का मान्य मोबाइल नंबर दर्ज करें' : 'Please enter a valid 10-digit mobile number';
     }
 
-    // 3. Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email || !formData.email.trim()) {
-      newErrors.email = isHi ? 'कृपया अपना ईमेल पता दर्ज करें' : 'Please enter your email address';
-    } else if (!emailRegex.test(formData.email.trim())) {
-      newErrors.email = isHi ? 'कृपया एक मान्य ईमेल पता दर्ज करें' : 'Please enter a valid email address';
-    }
 
     // 4. Subject validation
     if (!formData.subject || !formData.subject.trim()) {
@@ -314,7 +307,7 @@ const Contact = () => {
                     {errors.mobile_number && <span className="field-error-text">{errors.mobile_number}</span>}
                   </div>
                   <div className="form-group2-field">
-                    <label className="attachments-title" htmlFor="contact-email">{t('contact.email')} *</label>
+                    <label className="attachments-title" htmlFor="contact-email">{t('contact.email')}</label>
                     <input
                       id="contact-email"
                       type="email"

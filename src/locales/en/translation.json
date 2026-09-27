@@ -149,7 +149,9 @@
     "quantity": "Quantity",
     "enter_quantity": "Enter quantity",
     "expected_price": "Expected Price",
+    "enter_expected_price": "Enter expected price",
     "min_expected_price": "Minimum Expected Price",
+    "enter_min_expected_price": "Enter minimum expected price",
     "harvesting_date": "Harvesting Date",
     "additional_notes": "Additional Notes",
     "notes_placeholder": "Any additional information...",
@@ -373,5 +375,13 @@
     "kicker": "Help & Knowledge Center",
     "hero_desc": "Got questions about crop trading, live mandi rates, or posting enquiries? Find clear answers below.",
     "search_placeholder": "Search answers, crop enquiry, mandi rates, payments..."
+  },
+  "seeds_coming_soon": {
+    "kicker": "Seeds Marketplace",
+    "title": "Coming Soon",
+    "message": "We are preparing a certified marketplace for high-yield crop and vegetable seeds. This feature will be available soon!",
+    "go_home": "Back to Home",
+    "explore_mandi": "Check Mandi Rates",
+    "browse_products": "Browse Crop Listings"
   }
 }

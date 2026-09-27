@@ -1,0 +1,238 @@
+/* ==========================================================================
+   Fasal Junction - Simple Seeds Coming Soon Styles
+   ========================================================================== */
+
+.tkb-seeds-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f6faf6;
+  color: #1e293b;
+}
+
+.tkb-seeds-page main {
+  flex: 1 0 auto;
+}
+
+.tkb-seeds-simple {
+  position: relative;
+  padding: 4.5rem 1rem 5rem;
+  overflow: hidden;
+}
+
+.tkb-seeds-simple::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(22, 163, 74, 0.16), transparent 60%),
+    linear-gradient(180deg, #eef7f0 0%, #f6faf6 55%);
+  pointer-events: none;
+}
+
+.tkb-seeds-simple-card {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e4efe4;
+  border-radius: 24px;
+  padding: 3rem 2rem 2.5rem;
+  box-shadow: 0 18px 40px rgba(22, 53, 28, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Icon Badge
+   -------------------------------------------------------------------------- */
+.tkb-seeds-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #dcfce7;
+  border: 2px solid #86efac;
+  color: #16a34a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.18);
+  transition: transform 0.3s ease;
+}
+
+.tkb-seeds-icon-wrap:hover {
+  transform: scale(1.06) rotate(3deg);
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+.tkb-seeds-simple-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 0.65rem;
+  padding: 5px 16px;
+  border-radius: 999px;
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.22);
+  color: #15803d;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tkb-seeds-simple-title {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 60%, #d97706 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tkb-seeds-simple-copy {
+  margin: 0 auto 2rem;
+  max-width: 520px;
+  color: #4b6350;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   Action Buttons
+   -------------------------------------------------------------------------- */
+.tkb-seeds-simple-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  margin-bottom: 2.25rem;
+}
+
+.tkb-seeds-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid #16a34a;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.28);
+}
+
+.tkb-seeds-btn-primary:hover {
+  background: #15803d;
+  border-color: #15803d;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+}
+
+.tkb-seeds-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px;
+  background: transparent;
+  color: #165b2f;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid #c8dec9;
+  transition: all 0.2s ease;
+}
+
+.tkb-seeds-btn-ghost:hover {
+  background: #f0f7f1;
+  border-color: #16a34a;
+  color: #14532d;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Footer Quick Links
+   -------------------------------------------------------------------------- */
+.tkb-seeds-simple-footer {
+  padding-top: 1.5rem;
+  border-top: 1px solid #eef4ee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tkb-seeds-links-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8da491;
+}
+
+.tkb-seeds-links-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tkb-seeds-link-pill {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3b5340;
+  background: #f4f8f4;
+  border: 1px solid #e2ebe2;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.tkb-seeds-link-pill:hover {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #86efac;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 576px) {
+  .tkb-seeds-simple {
+    padding: 3rem 1rem 3.5rem;
+  }
+
+  .tkb-seeds-simple-card {
+    padding: 2.25rem 1.25rem 1.75rem;
+    border-radius: 18px;
+  }
+
+  .tkb-seeds-icon-wrap {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 1.25rem;
+  }
+
+  .tkb-seeds-simple-actions {
+    flex-direction: column;
+  }
+
+  .tkb-seeds-btn-primary,
+  .tkb-seeds-btn-ghost {
+    width: 100%;
+  }
+}

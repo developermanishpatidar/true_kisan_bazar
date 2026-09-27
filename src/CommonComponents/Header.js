@@ -334,7 +334,7 @@ const Header = () => {
                     <Link to="#" className="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">Cart</Link>
                 </li> */}
                 <li className="nav-item">
-                    <Link to="#" className="nav-link">{t('header.seeds')}</Link>
+                    <Link to="/seed" className="nav-link">{t('header.seeds')}</Link>
                 </li>
                 <li className="nav-item tkb-nav-mandi-item">
                     <Link to="/mandi-rate" className="nav-link tkb-nav-mandi-link">

@@ -45,58 +45,6 @@ const CATEGORY_DATA = {
   }
 };
 
-// Dynamic price bracket options based on selected quantityUnit
-const UNIT_PRICE_OPTIONS = {
-  kg: {
-    expected: [
-      { value: '10 - 30', label: '₹10 - ₹30 / kg' },
-      { value: '30 - 60', label: '₹30 - ₹60 / kg' },
-      { value: '60 - 100', label: '₹60 - ₹100 / kg' },
-      { value: '100 - 200', label: '₹100 - ₹200 / kg' },
-      { value: '200+', label: '₹200+ / kg' }
-    ],
-    min: [
-      { value: '5 - 15', label: '₹5 - ₹15 / kg' },
-      { value: '15 - 30', label: '₹15 - ₹30 / kg' },
-      { value: '30 - 50', label: '₹30 - ₹50 / kg' },
-      { value: '50 - 100', label: '₹50 - ₹100 / kg' },
-      { value: '100+', label: '₹100+ / kg' }
-    ]
-  },
-  quintal: {
-    expected: [
-      { value: '1,500 - 2,500', label: '₹1,500 - ₹2,500 / quintal' },
-      { value: '2,500 - 4,000', label: '₹2,500 - ₹4,000 / quintal' },
-      { value: '4,000 - 6,000', label: '₹4,000 - ₹6,000 / quintal' },
-      { value: '6,000 - 10,000', label: '₹6,000 - ₹10,000 / quintal' },
-      { value: '10,000+', label: '₹10,000+ / quintal' }
-    ],
-    min: [
-      { value: '1,000 - 2,000', label: '₹1,000 - ₹2,000 / quintal' },
-      { value: '2,000 - 3,500', label: '₹2,000 - ₹3,500 / quintal' },
-      { value: '3,500 - 5,000', label: '₹3,500 - ₹5,000 / quintal' },
-      { value: '5,000 - 8,000', label: '₹5,000 - ₹8,000 / quintal' },
-      { value: '8,000+', label: '₹8,000+ / quintal' }
-    ]
-  },
-  ton: {
-    expected: [
-      { value: '15,000 - 25,000', label: '₹15,000 - ₹25,000 / ton' },
-      { value: '25,000 - 45,000', label: '₹25,000 - ₹45,000 / ton' },
-      { value: '45,000 - 75,000', label: '₹45,000 - ₹75,000 / ton' },
-      { value: '75,000 - 1,20,000', label: '₹75,000 - ₹1,20,000 / ton' },
-      { value: '1,20,000+', label: '₹1,20,000+ / ton' }
-    ],
-    min: [
-      { value: '10,000 - 20,000', label: '₹10,000 - ₹20,000 / ton' },
-      { value: '20,000 - 35,000', label: '₹20,000 - ₹35,000 / ton' },
-      { value: '35,000 - 60,000', label: '₹35,000 - ₹60,000 / ton' },
-      { value: '60,000 - 1,00,000', label: '₹60,000 - ₹1,00,000 / ton' },
-      { value: '1,00,000+', label: '₹1,00,000+ / ton' }
-    ]
-  }
-};
-
 const INITIAL_FORM_STATE = {
   productCategory: '',
   subCategory: '',
@@ -137,12 +85,6 @@ const Enquiry = () => {
     return foundSub ? foundSub.varieties : [];
   }, [availableSubCategories, formData.subCategory]);
 
-  // Available price options based on selected quantityUnit (kg / quintal / ton)
-  const currentPriceOptions = useMemo(() => {
-    const unitKey = formData.quantityUnit || 'kg';
-    return UNIT_PRICE_OPTIONS[unitKey] || UNIT_PRICE_OPTIONS.kg;
-  }, [formData.quantityUnit]);
-
   // Handle generic input change and clear field-specific error
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -156,11 +98,6 @@ const Enquiry = () => {
       // Reset variety if subCategory changes
       if (name === 'subCategory') {
         updated.variety = '';
-      }
-      // Reset expectedPrice and minExpectedPrice if quantityUnit changes
-      if (name === 'quantityUnit') {
-        updated.expectedPrice = '';
-        updated.minExpectedPrice = '';
       }
       return updated;
     });
@@ -206,8 +143,8 @@ const Enquiry = () => {
       newErrors.quantity = t('enquiry.error_quantity', 'Please enter a valid quantity greater than 0');
     }
 
-    if (!formData.expectedPrice) {
-      newErrors.expectedPrice = t('enquiry.error_price', 'Please select expected price');
+    if (!formData.expectedPrice || !formData.expectedPrice.trim()) {
+      newErrors.expectedPrice = t('enquiry.error_price', 'Please enter expected price');
     }
 
     return newErrors;
@@ -554,24 +491,15 @@ const Enquiry = () => {
                         <label className="enquiry-label" htmlFor="expectedPrice">
                           {t('enquiry.expected_price')} ({t(`common.${formData.quantityUnit}`, formData.quantityUnit)})<span className="enquiry-required">*</span>
                         </label>
-                        <div className={`enquiry-select-wrap${errors.expectedPrice ? ' enquiry-input-error' : ''}`}>
-                          <select
-                            className="enquiry-input enquiry-select"
-                            id="expectedPrice"
-                            name="expectedPrice"
-                            value={formData.expectedPrice}
-                            onChange={handleChange}
-                          >
-                            <option value="" disabled>
-                              {t('enquiry.expected_price')} ({t(`common.${formData.quantityUnit}`, formData.quantityUnit)})
-                            </option>
-                            {currentPriceOptions.expected.map((opt) => (
-                              <option key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                        <input
+                          type="text"
+                          className={`enquiry-input${errors.expectedPrice ? ' enquiry-input-error' : ''}`}
+                          id="expectedPrice"
+                          name="expectedPrice"
+                          placeholder={`${t('enquiry.enter_expected_price')} (₹ / ${t(`common.${formData.quantityUnit}`, formData.quantityUnit)})`}
+                          value={formData.expectedPrice}
+                          onChange={handleChange}
+                        />
                         {errors.expectedPrice && (
                           <span className="enquiry-error-msg">{errors.expectedPrice}</span>
                         )}
@@ -582,24 +510,15 @@ const Enquiry = () => {
                         <label className="enquiry-label" htmlFor="minExpectedPrice">
                           {t('enquiry.min_expected_price')} ({t(`common.${formData.quantityUnit}`, formData.quantityUnit)})
                         </label>
-                        <div className="enquiry-select-wrap">
-                          <select
-                            className="enquiry-input enquiry-select"
-                            id="minExpectedPrice"
-                            name="minExpectedPrice"
-                            value={formData.minExpectedPrice}
-                            onChange={handleChange}
-                          >
-                            <option value="" disabled>
-                              {t('enquiry.min_expected_price')} ({t(`common.${formData.quantityUnit}`, formData.quantityUnit)})
-                            </option>
-                            {currentPriceOptions.min.map((opt) => (
-                              <option key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                        <input
+                          type="text"
+                          className="enquiry-input"
+                          id="minExpectedPrice"
+                          name="minExpectedPrice"
+                          placeholder={`${t('enquiry.enter_min_expected_price')} (₹ / ${t(`common.${formData.quantityUnit}`, formData.quantityUnit)})`}
+                          value={formData.minExpectedPrice}
+                          onChange={handleChange}
+                        />
                       </div>
 
                       {/* 9. Harvesting Date */}
