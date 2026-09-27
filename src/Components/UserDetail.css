@@ -1,0 +1,408 @@
+/* ==========================================================================
+   FARMER / BUYER USER DETAILS PAGE — Pixel Perfect Styles
+   ========================================================================== */
+
+.tkb-detail-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafbfc;
+  color: #111827;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Control Bar to Switch Roles / Test Views */
+.tkb-role-preview-bar {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.65rem 0;
+  font-size: 0.84rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 30;
+}
+
+.tkb-role-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tkb-role-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tkb-role-bar-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.7);
+}
+
+.tkb-role-bar-active-tag {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.tkb-role-pills {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 3px;
+  border-radius: 8px;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.tkb-role-pill {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tkb-role-pill:hover {
+  color: #ffffff;
+}
+
+.tkb-role-pill.is-selected {
+  background: #16a34a;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.35);
+}
+
+/* Toast Message */
+.tkb-detail-toast {
+  position: fixed;
+  top: 85px;
+  right: 24px;
+  background: #ffffff;
+  color: #15803d;
+  border: 1.5px solid #86efac;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 100;
+  animation: dropIn 0.3s ease;
+}
+
+@keyframes dropIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main Content Shell */
+.tkb-detail-main {
+  flex: 1;
+  padding: 28px 0 70px;
+}
+
+.tkb-detail-main .container-lg {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Back Button */
+.tkb-detail-top-nav {
+  margin-bottom: 22px;
+}
+
+.tkb-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #ffffff;
+  color: #16a34a;
+  border: 1.5px solid #16a34a;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tkb-btn-back:hover {
+  background: #f0fdf4;
+  color: #15803d;
+  transform: translateX(-2px);
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.15);
+}
+
+/* Page Heading */
+.tkb-detail-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 22px;
+  letter-spacing: -0.3px;
+}
+
+/* Information Container Card */
+.tkb-info-card {
+  background: #f4fbf7;
+  border: 1px solid #c7edd3;
+  border-radius: 12px;
+  padding: 26px 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.tkb-info-section-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 18px;
+  letter-spacing: -0.2px;
+}
+
+/* 2-Column Details Grid */
+.tkb-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 20px;
+  column-gap: 32px;
+}
+
+.tkb-info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.tkb-info-label {
+  font-size: 0.82rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.tkb-info-value {
+  font-size: 0.92rem;
+  color: #111827;
+  font-weight: 600;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.tkb-val-organic {
+  color: #4b5563;
+}
+
+.tkb-contact-link {
+  color: #111827;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.tkb-contact-link:hover {
+  color: #16a34a;
+  text-decoration: underline;
+}
+
+/* Blur / Masked Pill for Restricted Details */
+.tkb-masked-pill {
+  display: inline-block;
+  width: 76px;
+  height: 14px;
+  background: #9ca3af;
+  border-radius: 3px;
+  opacity: 0.7;
+  filter: blur(2.5px);
+  user-select: none;
+  pointer-events: none;
+  margin-top: 3px;
+}
+
+/* Divider inside card */
+.tkb-info-divider {
+  height: 1px;
+  background: #dcfce7;
+  margin: 26px 0;
+}
+
+/* Restricted Warning Box & Purchase Button */
+.tkb-restricted-notice-box {
+  margin-top: 26px;
+  padding-top: 4px;
+}
+
+.tkb-restricted-text {
+  font-size: 0.85rem;
+  color: #374151;
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.tkb-btn-purchase {
+  background: #70c042;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(112, 192, 66, 0.3);
+}
+
+.tkb-btn-purchase:hover {
+  background: #5ea834;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(112, 192, 66, 0.4);
+}
+
+/* Outer Section (Product Interests, Products) */
+.tkb-outer-section {
+  margin-bottom: 28px;
+}
+
+.tkb-outer-section-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 14px;
+  letter-spacing: -0.2px;
+}
+
+.tkb-tag-pill {
+  display: inline-block;
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  padding: 5px 14px;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* Products Box */
+.tkb-products-container {
+  background: #f4fbf7;
+  border: 1px solid #c7edd3;
+  border-radius: 12px;
+  padding: 24px 28px;
+}
+
+.tkb-products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Product Card */
+.tkb-product-card {
+  width: 195px;
+  background: #ffffff;
+  border: 1.5px solid #86efac;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tkb-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px -4px rgba(22, 163, 74, 0.15);
+  border-color: #4ade80;
+}
+
+.tkb-product-img-wrap {
+  width: 100%;
+  height: 145px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 8px;
+  border-bottom: 1px solid #f0fdf4;
+}
+
+.tkb-product-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+.tkb-product-card:hover .tkb-product-img {
+  transform: scale(1.05);
+}
+
+.tkb-product-info {
+  padding: 12px 14px 14px;
+}
+
+.tkb-product-name {
+  color: #15803d;
+  font-size: 0.96rem;
+  font-weight: 700;
+  margin: 0 0 3px;
+  line-height: 1.3;
+}
+
+.tkb-product-category {
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: block;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 768px) {
+  .tkb-info-card,
+  .tkb-products-container {
+    padding: 20px 18px;
+  }
+
+  .tkb-info-grid {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+
+  .tkb-products-grid {
+    justify-content: center;
+  }
+
+  .tkb-product-card {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .tkb-role-bar-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tkb-role-bar-info {
+    justify-content: center;
+  }
+
+  .tkb-role-pills {
+    justify-content: center;
+  }
+}

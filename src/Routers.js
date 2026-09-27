@@ -13,7 +13,9 @@ import TermsConditions from "./Components/TermsConditions";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import Faq from "./Components/Faq";
 import NotFound from "./Components/NotFound";
-import SeedsComingSoon from "./Components/SeedsComingSoon";
+import Subscription from "./Components/Subscription";
+import UserDetail from "./Components/UserDetail";
+import Marketplace from "./Components/Marketplace";
 import ScrollToTop from "./CommonComponents/ScrollToTop";
 
 import AdminLayout from "./Admin/AdminLayout";
@@ -33,10 +35,15 @@ const Routers = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/market-place" element={<Marketplace />} />
         <Route path="/enquiry" element={<Enquiry />} />
         <Route path="/product-detail" element={<ProductDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product-list" element={<ProductList />} />
+        <Route path="/user-detail" element={<UserDetail />} />
+        <Route path="/user-details" element={<UserDetail />} />
+        <Route path="/subscription" element={<Subscription />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
@@ -46,7 +53,6 @@ const Routers = () => {
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/faq" element={<Faq />} />
-        <Route path="/seed" element={<SeedsComingSoon />} />
 
         {/* Admin Login */}
         <Route path="/admin-login" element={<AdminLogin />} />

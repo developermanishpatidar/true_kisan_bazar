@@ -71,7 +71,13 @@ const PersonCard = ({ person }) => {
   const { t } = useTranslation();
   const roleLabel = t(`roles.${person.role}`, person.role);
   return (
-    <Link className="tkb-person-card" to="/product-details" data-role={person.role} data-category={person.category}>
+    <Link
+      className="tkb-person-card"
+      to={`/user-detail?role=${person.role}&name=${encodeURIComponent(person.name)}`}
+      state={{ person }}
+      data-role={person.role}
+      data-category={person.category}
+    >
       <span className="tkb-person-badge">{roleLabel}</span>
       <div className="tkb-person-avatar" aria-hidden="true">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">

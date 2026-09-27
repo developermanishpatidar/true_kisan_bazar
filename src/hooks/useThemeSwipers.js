@@ -4,18 +4,19 @@ import { Navigation } from 'swiper/modules';
 
 const categoryConfig = {
   modules: [Navigation],
-  slidesPerView: 8,
-  spaceBetween: 30,
-  speed: 500,
+  slidesPerView: 9,
+  spaceBetween: 14,
+  speed: 400,
   navigation: {
     nextEl: '.category-carousel-next',
     prevEl: '.category-carousel-prev',
   },
   breakpoints: {
-    0: { slidesPerView: 2 },
-    768: { slidesPerView: 3 },
-    991: { slidesPerView: 5 },
-    1500: { slidesPerView: 8 },
+    0: { slidesPerView: 2.2, spaceBetween: 10 },
+    480: { slidesPerView: 3.2, spaceBetween: 12 },
+    768: { slidesPerView: 5.2, spaceBetween: 12 },
+    992: { slidesPerView: 7, spaceBetween: 14 },
+    1200: { slidesPerView: 9, spaceBetween: 14 },
   },
 };
 
