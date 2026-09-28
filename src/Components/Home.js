@@ -10,7 +10,6 @@ import Discount from './Discount';
 import FeatureProduct from './FeatureProduct';
 import Form from './Form';
 import PopularProduct from './PopularProduct';
-// import JustArrived from './JustArrived';
 import RecentBlog from './RecentBlog';
 import DownloadApp from './DownloadApp';
 import Feature from './Feature';
@@ -31,7 +30,6 @@ const Home = () => {
                 </defs>
             </svg>
             <Header />
-            {/* <section style="background-image: url('../assets/images/banner-1.jpg');background-repeat: no-repeat;background-size: cover;"> */}
             <section className="tkb-hero" style={{ backgroundImage: `url(${background})` }}>
                 <div className="tkb-hero-overlay" aria-hidden="true" />
 
@@ -136,7 +134,6 @@ const Home = () => {
             <FeatureProduct />
             <Form />
             <PopularProduct />
-            {/* <JustArrived /> */}
             <RecentBlog />
             <DownloadApp />
             <Feature />
