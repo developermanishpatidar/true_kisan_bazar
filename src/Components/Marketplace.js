@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import './Marketplace.css';
@@ -377,13 +376,33 @@ const MOCK_ENQUIRIES = [
 
 const ITEMS_PER_PAGE = 10;
 
-const Marketplace = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+const highlightMatch = (text, query) => {
+  if (!query) return text;
+  const qLower = query.toLowerCase();
+  const textLower = text.toLowerCase();
+  const startIndex = textLower.indexOf(qLower);
+  if (startIndex === -1) return text;
 
-  // Search input
+  const before = text.slice(0, startIndex);
+  const match = text.slice(startIndex, startIndex + query.length);
+  const after = text.slice(startIndex + query.length);
+
+  return (
+    <>
+      {before}
+      <mark className="tkb-search-highlight">{match}</mark>
+      {after}
+    </>
+  );
+};
+
+const Marketplace = () => {
+  // Search input and interactive suggestions state
   const [searchTerm, setSearchTerm] = useState('');
   const [activeSearch, setActiveSearch] = useState('');
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
+  const searchContainerRef = useRef(null);
 
   // Category filter
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -402,8 +421,218 @@ const Marketplace = () => {
   // Quick enquiry detail preview modal
   const [previewEnquiry, setPreviewEnquiry] = useState(null);
 
-  // Handle category tile click
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
+        setSuggestionsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Real-time suggested list based on active search input
+  const suggestions = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return [];
+
+    const results = [];
+    const seen = new Set();
+
+    // 1. Search in Enquiry Titles
+    MOCK_ENQUIRIES.forEach((item) => {
+      const titleLower = item.title.toLowerCase();
+      if (titleLower.includes(q) && !seen.has(titleLower)) {
+        seen.add(titleLower);
+        results.push({
+          id: `enq-${item.id}`,
+          type: 'enquiry',
+          tag: 'Enquiry',
+          label: item.title,
+          subtext: `${item.location} · ${item.price} · ${item.type}`,
+          value: item.title,
+          category: item.category,
+        });
+      }
+    });
+
+    // 2. Search in Crop Subcategories / Varieties
+    CATEGORIES.forEach((cat) => {
+      if (cat.subcategories) {
+        cat.subcategories.forEach((sub) => {
+          const subLower = sub.toLowerCase();
+          if (subLower.includes(q) && !seen.has(subLower)) {
+            seen.add(subLower);
+            results.push({
+              id: `sub-${cat.id}-${sub}`,
+              type: 'crop',
+              tag: 'Crop',
+              label: sub,
+              subtext: `In ${cat.label}`,
+              value: sub,
+              categoryId: cat.id,
+              subCategory: sub,
+            });
+          }
+        });
+      }
+    });
+
+    // 3. Search in Locations
+    MOCK_ENQUIRIES.forEach((item) => {
+      const locLower = item.location.toLowerCase();
+      if (locLower.includes(q) && !seen.has(locLower)) {
+        seen.add(locLower);
+        results.push({
+          id: `loc-${item.id}`,
+          type: 'location',
+          tag: 'Location',
+          label: item.location,
+          subtext: `Marketplace location`,
+          value: item.location,
+        });
+      }
+    });
+
+    // 4. Search in Categories
+    CATEGORIES.forEach((cat) => {
+      if (cat.id !== 'all' && cat.label.toLowerCase().includes(q) && !seen.has(cat.label.toLowerCase())) {
+        seen.add(cat.label.toLowerCase());
+        results.push({
+          id: `cat-${cat.id}`,
+          type: 'category',
+          tag: 'Category',
+          label: cat.label,
+          subtext: `${cat.subcategories ? cat.subcategories.length : 0} crop varieties`,
+          value: cat.label,
+          categoryId: cat.id,
+        });
+      }
+    });
+
+    return results.slice(0, 8);
+  }, [searchTerm]);
+
+  // Real-time search handler on basis of onChange event
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setActiveSearch(value.trim()); // Real-time filtering on keystroke
+    setActiveSuggestionIndex(-1);
+    setSuggestionsOpen(value.trim().length > 0);
+    setCurrentPage(1);
+  };
+
+  // Clear search input
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    setActiveSearch('');
+    setSuggestionsOpen(false);
+    setActiveSuggestionIndex(-1);
+    setCurrentPage(1);
+  };
+
+  // Handle click on suggestion item
+  const handleSelectSuggestion = (suggestion) => {
+    setSearchTerm(suggestion.value);
+    setActiveSearch(suggestion.value);
+    setSuggestionsOpen(false);
+    setActiveSuggestionIndex(-1);
+    setCurrentPage(1);
+
+    if (suggestion.type === 'category' && suggestion.categoryId) {
+      setSelectedCategory(suggestion.categoryId);
+      setSelectedSubcategory(null);
+    } else if (suggestion.type === 'crop' && suggestion.subCategory) {
+      setSelectedCategory(suggestion.categoryId);
+      setSelectedSubcategory(suggestion.subCategory);
+    }
+  };
+
+  // Keyboard navigation for search suggestions (ArrowUp, ArrowDown, Enter, Escape)
+  const handleSearchKeyDown = (e) => {
+    if (!suggestionsOpen || suggestions.length === 0) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        setActiveSearch(searchTerm.trim());
+        setSuggestionsOpen(false);
+        setCurrentPage(1);
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveSuggestionIndex((prev) => (prev < suggestions.length - 1 ? prev + 1 : 0));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveSuggestionIndex((prev) => (prev > 0 ? prev - 1 : suggestions.length - 1));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeSuggestionIndex >= 0 && activeSuggestionIndex < suggestions.length) {
+        handleSelectSuggestion(suggestions[activeSuggestionIndex]);
+      } else {
+        setActiveSearch(searchTerm.trim());
+        setSuggestionsOpen(false);
+        setCurrentPage(1);
+      }
+    } else if (e.key === 'Escape') {
+      setSuggestionsOpen(false);
+    }
+  };
+
+  const hoverTimeoutRef = useRef(null);
+
+  // Clear pending timeout for hiding the subcategories panel
+  const cancelHoverTimeout = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+  };
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // When hovering on a category tile, show its subcategories immediately
+  const handleCategoryMouseEnter = (category) => {
+    cancelHoverTimeout();
+
+    if (category.id === 'all' || !category.subcategories || category.subcategories.length === 0) {
+      hoverTimeoutRef.current = setTimeout(() => {
+        setSubcategoryModalOpen(false);
+      }, 150);
+      return;
+    }
+
+    setModalCategory(category);
+    setSubcategoryModalOpen(true);
+  };
+
+  // When mouse leaves category area, close after brief delay
+  const handleCategoriesAreaMouseLeave = () => {
+    cancelHoverTimeout();
+    hoverTimeoutRef.current = setTimeout(() => {
+      setSubcategoryModalOpen(false);
+    }, 280);
+  };
+
+  // When mouse enters category area or subcategory panel, keep it open
+  const handleCategoriesAreaMouseEnter = () => {
+    cancelHoverTimeout();
+  };
+
+  // Handle category tile click (selects category and shows subcategories)
   const handleCategoryClick = (category) => {
+    cancelHoverTimeout();
+
     if (category.id === 'all') {
       setSelectedCategory('all');
       setSelectedSubcategory(null);
@@ -412,15 +641,15 @@ const Marketplace = () => {
       return;
     }
 
-    // Toggle subcategories modal
+    setSelectedCategory(category.id);
+    setSelectedSubcategory(null);
+    setCurrentPage(1);
+
     if (category.subcategories && category.subcategories.length > 0) {
       setModalCategory(category);
       setSubcategoryModalOpen(true);
     } else {
-      setSelectedCategory(category.id);
-      setSelectedSubcategory(null);
       setSubcategoryModalOpen(false);
-      setCurrentPage(1);
     }
   };
 
@@ -500,43 +729,135 @@ const Marketplace = () => {
               1. SEARCH ENQUIRIES BAR (Image 1 & 2)
               ======================================================== */}
           <section className="tkb-market-search-section">
-            <form className="tkb-market-search-form" onSubmit={handleSearchSubmit}>
-              <div className="tkb-market-search-wrap">
-                <svg className="tkb-market-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input
-                  type="text"
-                  className="tkb-market-search-input"
-                  placeholder="Search enquiries..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  aria-label="Search enquiries"
-                />
-                <button type="submit" className="tkb-market-search-btn" aria-label="Submit search">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className="tkb-market-search-container" ref={searchContainerRef}>
+              <form className="tkb-market-search-form" onSubmit={handleSearchSubmit}>
+                <div className="tkb-market-search-wrap">
+                  <svg className="tkb-market-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
-                </button>
-              </div>
-            </form>
+                  <input
+                    type="text"
+                    className="tkb-market-search-input"
+                    placeholder="Search crop, variety, location, category..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    onFocus={() => {
+                      if (searchTerm.trim().length > 0) {
+                        setSuggestionsOpen(true);
+                      }
+                    }}
+                    onKeyDown={handleSearchKeyDown}
+                    aria-label="Search enquiries"
+                    autoComplete="off"
+                  />
+                  {searchTerm && (
+                    <button
+                      type="button"
+                      className="tkb-market-search-clear-btn"
+                      onClick={handleClearSearch}
+                      aria-label="Clear search"
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  )}
+                  <button type="submit" className="tkb-market-search-btn" aria-label="Submit search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </button>
+                </div>
+              </form>
+
+              {/* Suggestions Dropdown List Below Search Box */}
+              {suggestionsOpen && searchTerm.trim().length > 0 && (
+                <div className="tkb-search-suggestions-dropdown" role="listbox">
+                  {suggestions.length > 0 ? (
+                    <>
+                      <div className="tkb-suggestions-header">
+                        <span>Suggested Matches ({suggestions.length})</span>
+                        <span className="tkb-suggestions-hint">Click or press Enter to filter</span>
+                      </div>
+                      <ul className="tkb-suggestions-list">
+                        {suggestions.map((item, index) => {
+                          const isSelected = index === activeSuggestionIndex;
+                          return (
+                            <li
+                              key={item.id}
+                              className={`tkb-suggestion-item${isSelected ? ' is-active' : ''}`}
+                              onClick={() => handleSelectSuggestion(item)}
+                              onMouseEnter={() => setActiveSuggestionIndex(index)}
+                              role="option"
+                              aria-selected={isSelected}
+                            >
+                              <div className="tkb-suggestion-icon-wrap">
+                                {item.type === 'location' ? (
+                                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 21s-7-4.4-7-11a7 7 0 1 1 14 0c0 6.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                                ) : item.type === 'category' ? (
+                                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+                                ) : item.type === 'crop' ? (
+                                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M4.9 6.5l2.1 2.1M17 15.4l2.1 2.1M3 12h3M18 12h3M4.9 17.5 7 15.4M17 8.6l2.1-2.1"/></svg>
+                                ) : (
+                                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                )}
+                              </div>
+                              <div className="tkb-suggestion-info">
+                                <div className="tkb-suggestion-title-row">
+                                  <span className="tkb-suggestion-label">{highlightMatch(item.label, searchTerm)}</span>
+                                  <span className={`tkb-suggestion-tag tkb-tag-${item.type}`}>{item.tag}</span>
+                                </div>
+                                {item.subtext && (
+                                  <span className="tkb-suggestion-subtext">{item.subtext}</span>
+                                )}
+                              </div>
+                              <span className="tkb-suggestion-arrow">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  ) : (
+                    <div className="tkb-suggestions-empty">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="1.8" strokeLinecap="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                      </svg>
+                      <p>No suggestions found for "<strong>{searchTerm}</strong>"</p>
+                      <span>Showing all matching results in list below</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </section>
 
           {/* ========================================================
-              2. CATEGORIES ROW (Image 1 & 2)
+              2. CATEGORIES ROW & HOVER SUBCATEGORIES
               ======================================================== */}
-          <section className="tkb-market-categories-section">
+          <section
+            className="tkb-market-categories-section"
+            onMouseEnter={handleCategoriesAreaMouseEnter}
+            onMouseLeave={handleCategoriesAreaMouseLeave}
+          >
             <div className="tkb-market-categories-scroll">
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat.id;
+                const isHovered = subcategoryModalOpen && modalCategory?.id === cat.id;
                 return (
                   <button
                     type="button"
                     key={cat.id}
-                    className={`tkb-cat-tile${isActive ? ' is-active' : ''}`}
+                    className={`tkb-cat-tile${isActive ? ' is-active' : ''}${isHovered ? ' is-hovered' : ''}`}
                     onClick={() => handleCategoryClick(cat)}
+                    onMouseEnter={() => handleCategoryMouseEnter(cat)}
+                    aria-expanded={isHovered}
                   >
                     <div className="tkb-cat-icon">{cat.icon}</div>
                     <span className="tkb-cat-label">{cat.label}</span>
@@ -559,40 +880,63 @@ const Marketplace = () => {
                 </button>
               </div>
             )}
+
+            {/* ========================================================
+                3. SUBCATEGORIES PANEL (Shows on Hover & Click)
+                ======================================================== */}
+            {subcategoryModalOpen && modalCategory && modalCategory.subcategories && modalCategory.subcategories.length > 0 && (
+              <div
+                className="tkb-subcat-modal-panel"
+                role="region"
+                aria-label={`${modalCategory.label} subcategories`}
+                onMouseEnter={handleCategoriesAreaMouseEnter}
+                onMouseLeave={handleCategoriesAreaMouseLeave}
+              >
+                <div className="tkb-subcat-header">
+                  <div className="tkb-subcat-title-wrap">
+                    <span className="tkb-subcat-header-label">{modalCategory.label}</span>
+                    <span className="tkb-subcat-count-badge">{modalCategory.subcategories.length} varieties</span>
+                  </div>
+                  <div className="tkb-subcat-header-actions">
+                    <button
+                      type="button"
+                      className="tkb-subcat-select-all-btn"
+                      onClick={() => {
+                        setSelectedCategory(modalCategory.id);
+                        setSelectedSubcategory(null);
+                        setSubcategoryModalOpen(false);
+                        setCurrentPage(1);
+                      }}
+                    >
+                      View All {modalCategory.label}
+                    </button>
+                    <button
+                      type="button"
+                      className="tkb-subcat-close-btn"
+                      onClick={() => setSubcategoryModalOpen(false)}
+                      aria-label="Close subcategories"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+
+                <div className="tkb-subcat-grid">
+                  {modalCategory.subcategories.map((sub, idx) => (
+                    <button
+                      type="button"
+                      key={idx}
+                      className={`tkb-subcat-item${selectedSubcategory === sub ? ' is-selected' : ''}`}
+                      onClick={() => handleSelectSubcategory(sub)}
+                    >
+                      <span className="tkb-subcat-bullet" aria-hidden="true">›</span>
+                      <span>{sub}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
-
-          {/* ========================================================
-              3. SUBCATEGORIES MODEL / MODAL / PANEL (Reference Image 2)
-              ======================================================== */}
-          {subcategoryModalOpen && modalCategory && (
-            <div className="tkb-subcat-modal-panel" role="region" aria-label="Subcategories dropdown">
-              <div className="tkb-subcat-header">
-                <button
-                  type="button"
-                  className="tkb-subcat-back-btn"
-                  onClick={() => setSubcategoryModalOpen(false)}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                  <span>{modalCategory.label}</span>
-                </button>
-              </div>
-
-              <div className="tkb-subcat-grid">
-                {modalCategory.subcategories.map((sub, idx) => (
-                  <button
-                    type="button"
-                    key={idx}
-                    className={`tkb-subcat-item${selectedSubcategory === sub ? ' is-selected' : ''}`}
-                    onClick={() => handleSelectSubcategory(sub)}
-                  >
-                    {sub}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* ========================================================
               4. ROLE TYPE FILTER PILLS (All Types, Buyer, Seller) (Image 1)

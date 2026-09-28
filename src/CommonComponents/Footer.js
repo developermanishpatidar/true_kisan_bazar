@@ -44,19 +44,27 @@ const Footer = () => {
               <h5 className="tkb-footer-title">{t('footer.menu')}</h5>
               <ul className="tkb-footer-links">
                 <li>
-                  <Link to="/">
+                  <Link to="/marketplace">
                     <FooterIcon>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10.5V19h11V10.5"/></svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
                     </FooterIcon>
-                    {t('footer.home')}
+                    {t('footer.marketplace')}
                   </Link>
                 </li>
                 <li>
-                  <Link to="#">
+                  <Link to="/product-list">
                     <FooterIcon>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 3c2.8 4.2 7 6.4 7 11a7 7 0 1 1-14 0c0-4.6 4.2-6.8 7-11Z"/><path d="M12 14.5v4"/></svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
                     </FooterIcon>
-                    {t('footer.crops')}
+                    {t('footer.listing')}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/subscription">
+                    <FooterIcon>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </FooterIcon>
+                    {t('footer.subscription')}
                   </Link>
                 </li>
                 <li>
@@ -72,23 +80,7 @@ const Footer = () => {
                     <FooterIcon>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 19V7l8-3 8 3v12"/><path d="M4 11h16M12 4v15"/></svg>
                     </FooterIcon>
-                    {t('footer.mandi_rate')}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/about">
-                    <FooterIcon>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c.6-3.4 3.1-5.2 6.5-5.2s5.9 1.8 6.5 5.2"/></svg>
-                    </FooterIcon>
-                    {t('footer.about_us')}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact">
-                    <FooterIcon>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
-                    </FooterIcon>
-                    {t('footer.contact')}
+                    {t('footer.mandi_rates')}
                   </Link>
                 </li>
               </ul>

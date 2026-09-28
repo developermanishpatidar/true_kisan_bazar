@@ -13,7 +13,6 @@ const Header = () => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [mobileInsightsOpen, setMobileInsightsOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
-  const headerSentinelRef = useRef(null);
   const headerRef = useRef(null);
   const insightsRef = useRef(null);
   const moreRef = useRef(null);
@@ -29,20 +28,16 @@ const Header = () => {
     closeMobile();
   }, [location.pathname, closeMobile]);
 
-  // React IntersectionObserver for sticky header elevation without window scroll listeners
+  // Handle scroll detection for sticky header elevation and backdrop styling
   useEffect(() => {
-    const sentinel = headerSentinelRef.current;
-    if (!sentinel) return;
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 8;
+      setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
+    };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsScrolled(!entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
-
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Broadcast sticky header height for secondary sticky bars (e.g. Blog category strip)
@@ -108,21 +103,15 @@ const Header = () => {
 
   return (
     <>
-      {/* React ref sentinel for sticky elevation detection */}
-      <div
-        ref={headerSentinelRef}
+      <header
+        ref={headerRef}
+        className={`tkb-sticky-header tkb-header-v2${isScrolled ? ' tkb-header-scrolled' : ''}`}
         style={{
-          position: 'absolute',
+          position: 'sticky',
           top: 0,
-          left: 0,
-          height: '1px',
-          width: '100%',
-          pointerEvents: 'none',
-          visibility: 'hidden'
+          zIndex: 1030
         }}
-        aria-hidden="true"
-      />
-      <header ref={headerRef} className={`tkb-sticky-header tkb-header-v2${isScrolled ? ' tkb-header-scrolled' : ''}`}>
+      >
         <div className="tkb-header-inner">
           {/* Logo */}
           <Link to="/" className="tkb-header-logo" onClick={closeMobile}>
