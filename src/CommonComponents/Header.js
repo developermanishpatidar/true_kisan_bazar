@@ -16,6 +16,44 @@ const Header = () => {
   const headerRef = useRef(null);
   const insightsRef = useRef(null);
   const moreRef = useRef(null);
+  const insightsTimeoutRef = useRef(null);
+  const moreTimeoutRef = useRef(null);
+
+  const handleInsightsEnter = useCallback(() => {
+    if (insightsTimeoutRef.current) clearTimeout(insightsTimeoutRef.current);
+    if (moreTimeoutRef.current) clearTimeout(moreTimeoutRef.current);
+    setMoreOpen(false);
+    setInsightsOpen(true);
+  }, []);
+
+  const handleInsightsLeave = useCallback(() => {
+    if (insightsTimeoutRef.current) clearTimeout(insightsTimeoutRef.current);
+    insightsTimeoutRef.current = setTimeout(() => {
+      setInsightsOpen(false);
+    }, 180);
+  }, []);
+
+  const handleMoreEnter = useCallback(() => {
+    if (moreTimeoutRef.current) clearTimeout(moreTimeoutRef.current);
+    if (insightsTimeoutRef.current) clearTimeout(insightsTimeoutRef.current);
+    setInsightsOpen(false);
+    setMoreOpen(true);
+  }, []);
+
+  const handleMoreLeave = useCallback(() => {
+    if (moreTimeoutRef.current) clearTimeout(moreTimeoutRef.current);
+    moreTimeoutRef.current = setTimeout(() => {
+      setMoreOpen(false);
+    }, 180);
+  }, []);
+
+  // Clear dropdown timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (insightsTimeoutRef.current) clearTimeout(insightsTimeoutRef.current);
+      if (moreTimeoutRef.current) clearTimeout(moreTimeoutRef.current);
+    };
+  }, []);
 
   const closeMobile = useCallback(() => {
     setMobileOpen(false);
@@ -149,11 +187,16 @@ const Header = () => {
                 </Link>
               </li>
               {/* Insights with Quick Links submenu */}
-              <li className="tkb-nav-item tkb-nav-dropdown" ref={insightsRef}>
+              <li
+                className="tkb-nav-item tkb-nav-dropdown"
+                ref={insightsRef}
+                onMouseEnter={handleInsightsEnter}
+                onMouseLeave={handleInsightsLeave}
+              >
                 <button
                   type="button"
                   className={`tkb-nav-link tkb-nav-dropdown-toggle${insightsOpen ? ' tkb-dropdown-open' : ''}`}
-                  onClick={() => { setInsightsOpen(!insightsOpen); setMoreOpen(false); }}
+                  onClick={() => { setInsightsOpen((prev) => !prev); setMoreOpen(false); }}
                   aria-expanded={insightsOpen}
                   aria-haspopup="true"
                 >
@@ -169,11 +212,16 @@ const Header = () => {
                 </div>
               </li>
               {/* More dropdown */}
-              <li className="tkb-nav-item tkb-nav-dropdown" ref={moreRef}>
+              <li
+                className="tkb-nav-item tkb-nav-dropdown"
+                ref={moreRef}
+                onMouseEnter={handleMoreEnter}
+                onMouseLeave={handleMoreLeave}
+              >
                 <button
                   type="button"
                   className={`tkb-nav-link tkb-nav-dropdown-toggle${moreOpen ? ' tkb-dropdown-open' : ''}`}
-                  onClick={() => { setMoreOpen(!moreOpen); setInsightsOpen(false); }}
+                  onClick={() => { setMoreOpen((prev) => !prev); setInsightsOpen(false); }}
                   aria-expanded={moreOpen}
                   aria-haspopup="true"
                 >
