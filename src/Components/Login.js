@@ -68,6 +68,7 @@ const Login = () => {
   const handleOtpSubmit = (event) => {
     event.preventDefault();
     if (!otpComplete) return;
+    localStorage.setItem('isLoggedIn', 'true');
     navigate('/profile');
   };
 
