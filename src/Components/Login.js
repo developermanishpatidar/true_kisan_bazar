@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useMemo, useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import logo from '../assets/images/fasal-junction-horizontal.png';
 import logo512 from '../assets/images/logo512.png';
@@ -8,9 +8,19 @@ import loginArt from '../assets/images/img-login.jpg';
 const Login = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const roleParam = searchParams.get('role');
+
   const [step, setStep] = useState('phone');
   const [country, setCountry] = useState('IN');
-  const [business, setBusiness] = useState('farmer');
+  const [business, setBusiness] = useState(roleParam === 'buyer' ? 'buyer' : 'farmer');
+
+  useEffect(() => {
+    const role = new URLSearchParams(location.search).get('role');
+    if (role === 'buyer') setBusiness('buyer');
+    else if (role === 'farmer') setBusiness('farmer');
+  }, [location.search]);
   const [phone, setPhone] = useState('');
   const [accepted, setAccepted] = useState(false);
   const [otp, setOtp] = useState(['', '', '', '']);

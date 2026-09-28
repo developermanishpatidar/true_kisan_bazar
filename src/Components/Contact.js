@@ -4,8 +4,8 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import './Contact.css';
 import supportClip from '../assets/images/SupportClip.svg';
-import supportImg1 from '../assets/images/SupportImg1.avif';
-import supportImg2 from '../assets/images/SupportImg2.avif';
+import contactFarmer from '../assets/images/contact-farmer.jpg';
+import contactAgent from '../assets/images/contact-agent.jpg';
 
 const ALLOWED_EXTENSIONS = [
   '.jpg', '.jpeg', '.png', '.gif', '.webp',
@@ -241,15 +241,20 @@ const Contact = () => {
                 </p>
               </div>
               <div className="support-images">
-                <img
-                  src={supportImg1 || "https://res.cloudinary.com/dhjabv5fn/image/upload/v1786618282/SupportImg1_purp3k.avif"}
-                  alt="Farmer receiving support call assistance"
-                />
-                <img
-                  src={supportImg2 || "https://res.cloudinary.com/dhjabv5fn/image/upload/v1786618598/SupportImg2_cgpcnh.avif"}
-                  alt="Fasal Junction customer support agent helping via chat"
-                  className="second-img"
-                />
+                <div className="support-circle-wrap">
+                  <img
+                    src={contactFarmer}
+                    alt="Farmer receiving support call assistance"
+                    className="support-circle-img"
+                  />
+                </div>
+                <div className="support-circle-wrap second-img">
+                  <img
+                    src={contactAgent}
+                    alt="Fasal Junction customer support agent helping via chat"
+                    className="support-circle-img"
+                  />
+                </div>
               </div>
             </div>
           </header>
