@@ -61,10 +61,10 @@ const Category = () => {
             </div>
             <div>
               <h2 className="tkb-category-heading">
-                {t('home.shop_by_category')} <span>{t('home.shop_category_hl')}</span>
+                {t('home.shop_by_category', 'Explore Crop')} <span>{t('home.shop_category_hl', 'Categories')}</span>
               </h2>
               <p className="tkb-category-subtitle">
-                {t('home.shop_category_sub')}
+                {t('home.shop_category_sub', 'Buy and sell bulk agricultural produce directly from verified farmers and traders across India')}
               </p>
             </div>
           </div>
